@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>解决form.submit()无法触发onsubmit事件问 | freefish</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:
+
+The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explore">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决form.submit()无法触发onsubmit事件问">
+<meta property="og:url" content="http://yoursite.com/2015/03/08/解决form-submit-无法触发onsubmit事件问/index.html">
+<meta property="og:site_name" content="freefish">
+<meta property="og:description" content="有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:
+
+The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explore">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解决form.submit()无法触发onsubmit事件问">
+<meta name="twitter:description" content="有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:
+
+The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explore">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/avatar.jpg">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">angrytoro</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/categories/JavaScript">JavaScript</a></li>
+				        
+							<li><a href="/categories/HTML">HTML</a></li>
+				        
+							<li><a href="/categories/CSS">CSS</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/angrytoro" title="github">github</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.doyoe.com/">杜瑶的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://css.doyoe.com/">杜瑶CSS参考手册</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">angrytoro</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/img/avatar.jpg">
+				<hgroup>
+				  <h1 class="header-author">angrytoro</h1>
+				</hgroup>
+			</div>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/categories/JavaScript">JavaScript</a></li>
+		        
+					<li><a href="/categories/HTML">HTML</a></li>
+		        
+					<li><a href="/categories/CSS">CSS</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/angrytoro" title="github">github</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-解决form-submit-无法触发onsubmit事件问" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/08/解决form-submit-无法触发onsubmit事件问/" class="article-date">
+  	<time datetime="2015-03-08T11:04:04.000Z" itemprop="datePublished">2015-03-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      解决form.submit()无法触发onsubmit事件问
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:</p>
+<blockquote>
+<p>The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explorer 5.5 and later, you can call the fireEvent method with a value of onsubmit in the sEvent parameter. </p>
+</blockquote>
+<p>大家知道啥回事了吧。原生js在执行<code>form.submit()</code>的时候根本不会去触发onsubmit事件。<br>所以在<code>submit</code>之前，先手动绑定一个<strong>submit</strong>事件（叫其他名字也行，如<strong>gaga</strong>）:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> form = <span class="built_in">document</span>.getElementById(<span class="string">'xxx'</span>);</span><br><span class="line">$(form).bind(<span class="string">'submit'</span>,<span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123; <span class="comment">//绑定事件</span></span><br><span class="line">    <span class="built_in">console</span>.log(e);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(form.fireEvent) &#123; <span class="comment">// if IE Browser</span></span><br><span class="line">    form.fireEvent(<span class="string">'onsubmit'</span>); <span class="comment">//激活submit事件</span></span><br><span class="line">    form.submit(); <span class="comment">//促发sbumit事件</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">'HTMLEvents'</span>);</span><br><span class="line">    event.initEvent(<span class="string">'submit'</span>, <span class="literal">false</span>, <span class="literal">true</span>); <span class="comment">//初始化submit事件</span></span><br><span class="line">    event.dispatchEvent(event); <span class="comment">//触发submit事件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>也就是我们不能简单的<code>form.submit()</code>。得在之前构造相应的函数，太费劲了。尽量绕过这种需求吧，实在是没办法的时候再用这种解决方案。</p>
+
+        
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/03/08/不同浏览器求滚动距离的办法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">不同浏览器求滚动距离的办法</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="解决form-submit-无法触发onsubmit事件问" data-title="解决form.submit()无法触发onsubmit事件问" data-url="http://yoursite.com/2015/03/08/解决form-submit-无法触发onsubmit事件问/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"angrytoro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 angrytoro
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/angrytoro/hexo-them-fish" target="_blank">fish</a> by fish
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>
