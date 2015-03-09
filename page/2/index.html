@@ -109,7 +109,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/chrome/" style="font-size: 10px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -180,6 +180,79 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-git常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/08/git常用命令/" class="article-date">
+  	<time datetime="2015-03-08T10:15:55.000Z" itemprop="datePublished">2015-03-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/08/git常用命令/">git常用命令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p><strong>Create a new repository on the command line</strong></p>
+<blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch README.md&#10;git init&#10;git add README.md&#10;git commit -m &#34;first commit&#34;&#10;git remote add origin git@github.com:angrytoro/zepto.plug.git&#10;git push -u origin master</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p><strong>Push an existing repository from the command line</strong></p>
+<blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:angrytoro/zepto.plug.git&#10;git push -u origin master</span><br></pre></td></tr></table></figure></blockquote>
+</li>
+</ol>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/工具/">工具</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-Angularjs之Directive-指令" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -419,67 +492,6 @@
         <hr/>
         <p class="article-more-link">
           <a  href="/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/#more">more >></a>
-        </p>
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-angularjs开发笔记之ng-class" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/08/angularjs开发笔记之ng-class/" class="article-date">
-  	<time datetime="2015-03-08T08:07:52.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/angularjs开发笔记之ng-class/">angularjs开发笔记之ng-class</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="参考AngularJS_ng-class用法">参考<a href="http://my.oschina.net/gejiawen0913/blog/188547">AngularJS ng-class用法</a></h4><p><code>ng-class</code>有三种用法，最简单的就是<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.className = <span class="string">'abc'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div class=<span class="string">"&#123;&#123;className&#125;&#125;"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>第二种：<br>
-        <hr/>
-        <p class="article-more-link">
-          <a  href="/2015/03/08/angularjs开发笔记之ng-class/#more">more >></a>
         </p>
       
     </div>
