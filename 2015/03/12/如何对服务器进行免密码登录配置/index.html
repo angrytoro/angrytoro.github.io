@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>angularjs开发笔记之ng-class | freefish</title>
+  <title>如何对服务器进行免密码登录配置 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="参考AngularJS ng-class用法ng-class有三种用法，最简单的就是123456function contrller($scope) &amp;#123;    $scope.className = &apos;abc&apos;;&amp;#125;;&amp;lt;div class=&quot;&amp;#123;&amp;#123;className&amp;#125;&amp;#125;&quot;&amp;gt;...&amp;lt;/div&amp;gt;
+  <meta name="description" content="用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName
 
-第二种：">
+用户操作12useradd xxx //新增用户xxxpasswd xxx //为xxx用户设置密码">
 <meta property="og:type" content="article">
-<meta property="og:title" content="angularjs开发笔记之ng-class">
-<meta property="og:url" content="http://yoursite.com/2015/03/08/angularjs开发笔记之ng-class/index.html">
+<meta property="og:title" content="如何对服务器进行免密码登录配置">
+<meta property="og:url" content="http://yoursite.com/2015/03/12/如何对服务器进行免密码登录配置/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="参考AngularJS ng-class用法ng-class有三种用法，最简单的就是123456function contrller($scope) &amp;#123;    $scope.className = &apos;abc&apos;;&amp;#125;;&amp;lt;div class=&quot;&amp;#123;&amp;#123;className&amp;#125;&amp;#125;&quot;&amp;gt;...&amp;lt;/div&amp;gt;
+<meta property="og:description" content="用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName
 
-第二种：">
+用户操作12useradd xxx //新增用户xxxpasswd xxx //为xxx用户设置密码">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="angularjs开发笔记之ng-class">
-<meta name="twitter:description" content="参考AngularJS ng-class用法ng-class有三种用法，最简单的就是123456function contrller($scope) &amp;#123;    $scope.className = &apos;abc&apos;;&amp;#125;;&amp;lt;div class=&quot;&amp;#123;&amp;#123;className&amp;#125;&amp;#125;&quot;&amp;gt;...&amp;lt;/div&amp;gt;
+<meta name="twitter:title" content="如何对服务器进行免密码登录配置">
+<meta name="twitter:description" content="用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName
 
-第二种：">
+用户操作12useradd xxx //新增用户xxxpasswd xxx //为xxx用户设置密码">
   
   
     <link rel="icon" href="/favicon.png">
@@ -185,11 +185,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-angularjs开发笔记之ng-class" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-如何对服务器进行免密码登录配置" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/03/08/angularjs开发笔记之ng-class/" class="article-date">
-  	<time datetime="2015-03-08T08:07:52.000Z" itemprop="datePublished">2015-03-08</time>
+      <a href="/2015/03/12/如何对服务器进行免密码登录配置/" class="article-date">
+  	<time datetime="2015-03-12T04:32:33.000Z" itemprop="datePublished">2015-03-12</time>
 </a>
     </div>
   
@@ -202,7 +202,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      angularjs开发笔记之ng-class
+      如何对服务器进行免密码登录配置
     </h1>
   
 
@@ -210,13 +210,9 @@
       
       <div class="article-info">
         
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	<a class="article-category-link" href="/categories/linux/">linux</a>
 	</div>
 
 
@@ -226,15 +222,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="参考AngularJS_ng-class用法">参考<a href="http://my.oschina.net/gejiawen0913/blog/188547" target="_blank" rel="external">AngularJS ng-class用法</a></h4><p><code>ng-class</code>有三种用法，最简单的就是<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.className = <span class="string">'abc'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div class=<span class="string">"&#123;&#123;className&#125;&#125;"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+        <h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
 <hr>
-<p>第二种：<br><a id="more"></a><br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.isActive = true;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div ng-class=<span class="string">"&#123;true: 'active', false: 'inactive'&#125;[isActive]"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
-<p>这里的isActive也可以是简单的判断表达式，比如!!isActive.</p>
-<hr>
-<p>第三种：<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&#125;;</span><br><span class="line">&lt;div ng-class=<span class="string">"&#123;'selected': isSelected, 'car': isCar&#125;"</span>&gt;&lt;/div&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
-<p>当 isSelected = true 则增加selected class，当isCar=true,则增加car class。以此类推。</p>
-<hr>
-<p>上面几种用法，大家应该看一眼就懂，在这就不再shuo</p>
+<h1 id="用户操作">用户操作</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx <span class="comment">//新增用户<span class="label">xxx</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="新增用户并赋予某个组的脚本">新增用户并赋予某个组的脚本</h1><p>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line">useradd <span class="variable">$1</span></span><br><span class="line">passwd <span class="variable">$1</span></span><br><span class="line">gpasswd <span class="operator">-a</span> <span class="variable">$1</span> fontend</span><br></pre></td></tr></table></figure></p>
+<p>我们可以这么执行<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sh</span> useradd.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以取一个别名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> addFontendUser = <span class="string">'sh useradd.sh'</span></span><br></pre></td></tr></table></figure></p>
+<p>那么之后我们就可以直接在系统执行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addFontendUser</span><br></pre></td></tr></table></figure></p>
+<p>来添加fontend组的用户了</p>
+<h1 id="免密码登录">免密码登录</h1><p>假设创建了个用户abc，那么用abc登录服务器<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#cd</span> ~</span><br><span class="line"><span class="id">#mkdir</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#chmod</span> <span class="number">700</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#cd</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#vi</span> authorized_keys <span class="comment">//将你pc的公钥放进去</span></span><br><span class="line"><span class="id">#chmod</span> <span class="number">655</span> authorized_keys</span><br></pre></td></tr></table></figure></p>
+<p>设置完，退出登录，然后就可以享受免密码登录了<br>注意事项</p>
+<blockquote>
+<ol>
+<li>必须设置.ssh的权限为700</li>
+<li>必须设置authorized_keys的权限为655（有人说644也行，不太懂）</li>
+</ol>
+</blockquote>
 
         
       
@@ -245,18 +249,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          AngularJS 从1.2迁移到1.3的变动记录
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/03/08/angularjs开发笔记之checkbox/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">angularjs开发笔记之checkbox</div>
+    <a href="/2015/03/09/chrome重度用户必装插件/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">chrome重度用户必备插件</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -285,7 +280,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="angularjs开发笔记之ng-class" data-title="angularjs开发笔记之ng-class" data-url="http://yoursite.com/2015/03/08/angularjs开发笔记之ng-class/"></div>
+	<div class="ds-thread" data-thread-key="如何对服务器进行免密码登录配置" data-title="如何对服务器进行免密码登录配置" data-url="http://yoursite.com/2015/03/12/如何对服务器进行免密码登录配置/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
