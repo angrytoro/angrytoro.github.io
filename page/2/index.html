@@ -181,6 +181,70 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-IE9-BUG-overflow-auto-底部空白解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/08/IE9-BUG-overflow-auto-底部空白解决方案/" class="article-date">
+  	<time datetime="2015-03-08T11:00:17.000Z" itemprop="datePublished">2015-03-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/08/IE9-BUG-overflow-auto-底部空白解决方案/">IE9 BUG overflow :auto 底部空白解决方案</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果容器设置了max-height，overflow:auto。那么当js动态加载内容，或者鼠标点击容器的时候，容器底部会自动被撑大，留着空白。<br>解决办法是为容器添加min-height:0%。不过用grunt压缩的时候，会变成min-height:0;IE直接把这个当成min-height:0px。所以如果要压缩，那么我们应该把min-height设置成0.1%或者0.01%或者其他适合的数字。</p>
+<h3 id="参考">参考</h3><p><a href="http://social.microsoft.com/Forums/id-ID/1c239c1d-84d2-461b-991d-d7834edaa121/ie9bug?forum=267" target="_blank" rel="external">ie9渲染bug</a></p>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hack/">hack</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/CSS/">CSS</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
     <article id="post-HTML中用到的data类型的url" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -419,69 +483,6 @@
         <hr/>
         <p class="article-more-link">
           <a  href="/2015/03/08/Angularjs实践（一）/#more">more >></a>
-        </p>
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-Angularjs实践（二）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/08/Angularjs实践（二）/" class="article-date">
-  	<time datetime="2015-03-08T10:08:54.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/Angularjs实践（二）/">Angularjs实践（二）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="图片模板">图片模板</h3><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">img</span> <span class="attribute">ng-src</span>=<span class="value">"</span></span></span><span class="expression">&#123;&#123;<span class="variable">phone.imageUrl</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>ng-src就是为了防止浏览器默认请求无效的图片地址，在页面还没初始化完成的时候，浏览器会在js代码执行前请求图片，所以直接设置src会导致浏览器请求无效地址，造成端口占用。</p>
-<h2 id="路由与多视图">路由与多视图</h2><p>这个章节挺复杂的，需要花点时间理解，参考<a href="http://angularjs.cn/A00a">AngularJS入门教程07：路由与多视图</a></p>
-<hr>
-<p>这个章节有几个注意点<br>
-        <hr/>
-        <p class="article-more-link">
-          <a  href="/2015/03/08/Angularjs实践（二）/#more">more >></a>
         </p>
       
     </div>

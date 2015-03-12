@@ -181,6 +181,88 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-为了运行fekit-sync，在服务器配置rsync的时候遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/" class="article-date">
+  	<time datetime="2015-03-12T14:40:48.000Z" itemprop="datePublished">2015-03-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/">为了运行fekit sync，在服务器配置rsync的时候遇到的问题</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题一、sudo：抱歉，您必须拥有一个终端来执行_sudo">问题一、<code>sudo：抱歉，您必须拥有一个终端来执行 sudo</code></h2><p>在执行<code>fekit sync</code>的时候遇到这个问题。解决办法</p>
+<blockquote>
+<p>以root权限进入服务器，编辑<code>/etc/sudoers</code>，注释掉 <code>Default requiretty</code>这 一行</p>
+</blockquote>
+<h2 id="问题二、sudo:_no_tty_present_and_no_askpass_program_specified">问题二、<code>sudo: no tty present and no askpass program specified</code></h2><p>第一个问题解决后运行时曝出了这个错误，解决办法</p>
+<blockquote>
+<p>以root权限进入服务器，编辑<code>/etc/sudoers</code>，设置<code>Defaults visiblepw</code></p>
+</blockquote>
+<h2 id="问题三、Error:_Command_failed:_[sudo]_password_for_xxx">问题三、<code>Error: Command failed: [sudo] password for xxx</code></h2><p>上面的解决后，在运行<code>fekit sync</code>还是会爆出这个错误，其中<code>xxx</code>是用户名。那是因为你配置了免密码登录，但是普通用户在运行<code>sudo</code>的时候还是需要输入密码，这导致了这个错误的出现。解决办法</p>
+<blockquote>
+<p>以root权限进入服务器，输入<code>visudo</code>，然后有几种方法</p>
+<ol>
+<li>添加<code>yourname ALL=(ALL) NOPASSWD: ALL</code>——这个意思是<code>yourname</code>这个用户可以免密码<code>sudo</code>.</li>
+<li><code>%groupname ALL=(ALL) NOPASSWD: ALL</code> ——这个意思是<code>groupname</code>这个组的用户都可以免密码<code>sudo</code>，那么多人都可以免密码<code>sudo</code>，这会带来安全问题的。</li>
+<li><code>%groupname ALL= NOPASSWD:/usr/bin/rsync</code>——只为<code>rsync</code>开了sudo的免密码。相对安全。</li>
+</ol>
+</blockquote>
+<h1 id="总结">总结</h1><p>按照上面的解决办法绝对可以成功免密码rsync。谢谢大家。</p>
+<h2 id="配置免密码fekit_sync注意事项">配置免密码fekit sync注意事项</h2><blockquote>
+<ol>
+<li>用户需要配置免密码ssh</li>
+<li>用户需要有sudo权限</li>
+</ol>
+</blockquote>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/linux/">linux</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
     <article id="post-如何对服务器进行免密码登录配置" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -444,70 +526,6 @@
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-IE9-BUG-overflow-auto-底部空白解决方案" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/08/IE9-BUG-overflow-auto-底部空白解决方案/" class="article-date">
-  	<time datetime="2015-03-08T11:00:17.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/IE9-BUG-overflow-auto-底部空白解决方案/">IE9 BUG overflow :auto 底部空白解决方案</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如果容器设置了max-height，overflow:auto。那么当js动态加载内容，或者鼠标点击容器的时候，容器底部会自动被撑大，留着空白。<br>解决办法是为容器添加min-height:0%。不过用grunt压缩的时候，会变成min-height:0;IE直接把这个当成min-height:0px。所以如果要压缩，那么我们应该把min-height设置成0.1%或者0.01%或者其他适合的数字。</p>
-<h3 id="参考">参考</h3><p><a href="http://social.microsoft.com/Forums/id-ID/1c239c1d-84d2-461b-991d-d7834edaa121/ie9bug?forum=267" target="_blank" rel="external">ie9渲染bug</a></p>
-
-        
-          <!-- show an end symbol if the article is fully displayed -->
-          <hr/>
-          <p class="article-more-link">
-            <a>end</a>
-          </p>
-        
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hack/">hack</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/CSS/">CSS</a>
 	</div>
 
 
