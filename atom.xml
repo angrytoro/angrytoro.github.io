@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[freefish]]></title>
+  
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://yoursite.com/"/>
+  <updated>2015-03-12T14:48:46.000Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name><![CDATA[freefish]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[为了运行fekit sync，在服务器配置rsync的时候遇到的问题]]></title>
+    <link href="http://yoursite.com/2015/03/12/%E4%B8%BA%E4%BA%86%E8%BF%90%E8%A1%8Cfekit-sync%EF%BC%8C%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AErsync%E7%9A%84%E6%97%B6%E5%80%99%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://yoursite.com/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/</id>
+    <published>2015-03-12T14:40:48.000Z</published>
+    <updated>2015-03-12T14:48:46.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="问题一、sudo：抱歉，您必须拥有一个终端来执行_sudo">问题一、<code>sudo：抱歉，您必须拥有一个终端来执行 sudo</code></h2><p>在执行<code>fekit sync</code>的时候遇到这个问题。解决办法</p>
+<blockquote>
+<p>以root权限进入服务器，编辑<code>/etc/sudoers</code>，注释掉 <code>Default requiretty</code>这 一行</p>
+</blockquote>
+<h2 id="问题二、sudo:_no_tty_present_and_no_askpass_program_specified">问题二、<code>sudo: no tty present and no askpass program specified</code></h2><p>第一个问题解决后运行时曝出了这个错误，解决办法</p>
+<blockquote>
+<p>以root权限进入服务器，编辑<code>/etc/sudoers</code>，设置<code>Defaults visiblepw</code></p>
+</blockquote>
+<h2 id="问题三、Error:_Command_failed:_[sudo]_password_for_xxx">问题三、<code>Error: Command failed: [sudo] password for xxx</code></h2><p>上面的解决后，在运行<code>fekit sync</code>还是会爆出这个错误，其中<code>xxx</code>是用户名。那是因为你配置了免密码登录，但是普通用户在运行<code>sudo</code>的时候还是需要输入密码，这导致了这个错误的出现。解决办法</p>
+<blockquote>
+<p>以root权限进入服务器，输入<code>visudo</code>，然后有几种方法</p>
+<ol>
+<li>添加<code>yourname ALL=(ALL) NOPASSWD: ALL</code>——这个意思是<code>yourname</code>这个用户可以免密码<code>sudo</code>.</li>
+<li><code>%groupname ALL=(ALL) NOPASSWD: ALL</code> ——这个意思是<code>groupname</code>这个组的用户都可以免密码<code>sudo</code>，那么多人都可以免密码<code>sudo</code>，这会带来安全问题的。</li>
+<li><code>%groupname ALL= NOPASSWD:/usr/bin/rsync</code>——只为<code>rsync</code>开了sudo的免密码。相对安全。</li>
+</ol>
+</blockquote>
+<h1 id="总结">总结</h1><p>按照上面的解决办法绝对可以成功免密码rsync。谢谢大家。</p>
+<h2 id="配置免密码fekit_sync注意事项">配置免密码fekit sync注意事项</h2><blockquote>
+<ol>
+<li>用户需要配置免密码ssh</li>
+<li>用户需要有sudo权限</li>
+</ol>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="问题一、sudo：抱歉，您必须拥有一个终端来执行_sudo">问题一、<code>sudo：抱歉，您必须拥有一个终端来执行 sudo</code></h2><p>在执行<code>fekit sync</code>的时候遇到这个问题。解决办法</p>
+<block]]>
+    </summary>
+    
+      <category term="linux" scheme="http://yoursite.com/categories/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何对服务器进行免密码登录配置]]></title>
+    <link href="http://yoursite.com/2015/03/12/%E5%A6%82%E4%BD%95%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/"/>
+    <id>http://yoursite.com/2015/03/12/如何对服务器进行免密码登录配置/</id>
+    <published>2015-03-12T04:32:33.000Z</published>
+    <updated>2015-03-12T04:36:26.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="用户操作">用户操作</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx <span class="comment">//新增用户<span class="label">xxx</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="新增用户并赋予某个组的脚本">新增用户并赋予某个组的脚本</h1><p>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line">useradd <span class="variable">$1</span></span><br><span class="line">passwd <span class="variable">$1</span></span><br><span class="line">gpasswd <span class="operator">-a</span> <span class="variable">$1</span> fontend</span><br></pre></td></tr></table></figure></p>
+<p>我们可以这么执行<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sh</span> useradd.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以取一个别名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> addFontendUser = <span class="string">'sh useradd.sh'</span></span><br></pre></td></tr></table></figure></p>
+<p>那么之后我们就可以直接在系统执行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addFontendUser</span><br></pre></td></tr></table></figure></p>
+<p>来添加fontend组的用户了</p>
+<h1 id="免密码登录">免密码登录</h1><p>假设创建了个用户abc，那么用abc登录服务器<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#cd</span> ~</span><br><span class="line"><span class="id">#mkdir</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#chmod</span> <span class="number">700</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#cd</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#vi</span> authorized_keys <span class="comment">//将你pc的公钥放进去</span></span><br><span class="line"><span class="id">#chmod</span> <span class="number">655</span> authorized_keys</span><br></pre></td></tr></table></figure></p>
+<p>设置完，退出登录，然后就可以享受免密码登录了<br>注意事项</p>
+<blockquote>
+<ol>
+<li>必须设置.ssh的权限为700</li>
+<li>必须设置authorized_keys的权限为655（有人说644也行，不太懂）</li>
+</ol>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="用户操作">用户操作</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx <span class="comment">//新增用户<span class="label">xxx</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>]]>
+    
+    </summary>
+    
+      <category term="linux" scheme="http://yoursite.com/categories/linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[chrome重度用户必备插件]]></title>
+    <link href="http://yoursite.com/2015/03/09/chrome%E9%87%8D%E5%BA%A6%E7%94%A8%E6%88%B7%E5%BF%85%E8%A3%85%E6%8F%92%E4%BB%B6/"/>
+    <id>http://yoursite.com/2015/03/09/chrome重度用户必装插件/</id>
+    <published>2015-03-09T12:48:05.000Z</published>
+    <updated>2015-03-09T13:49:48.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="此文原创，转载请标明出处。谢谢。">此文原创，转载请标明出处。谢谢。</h1><p>博主使用chrome将近5年，这些插件是博主在使用chrome时精心收藏下来的，大家定会喜欢。事先说明，这篇博文适合那些懂翻墙的人看。对于每个插件，相信大家会使用的，不会使用的在下面被博主留言，必仔细教你怎么使用。</p>
+<h1 id="生活工具篇">生活工具篇</h1><ol>
+<li><a href="https://chrome.google.com/webstore/detail/adblock/gighmmpiobklfepjocnamgkkbiglidom" target="_blank" rel="external">AdBlock</a>:这个屏蔽广告插件简直是妇孺皆知，这里就不都做介绍了。</li>
+<li><a href="https://chrome.google.com/webstore/detail/cfhdojbkjhnklbpkdaibdccddilifddb" target="_blank" rel="external">Adblock Plus</a>:这个也是广告屏蔽插件，用了以上两个插件，妈妈再也不担心我被各种广告诱惑了。</li>
+<li><a href="https://chrome.google.com/webstore/detail/ajgnnllmjadopdlmpplonojbfogkjlcl" target="_blank" rel="external">PasswordBox</a>:1Password有没有很贵，lastpass有没有很坑爹，说好的免费呢。好吧，博主是个穷逼，只能找个免费的用，PasswordBox这个插件是密码管理插件，已经被英特尔收购，使用简单方便，全平台支持（windows，mac，ios，mac，linux，Android）弱智都能上手，还免费，尤其还是有英特尔这个靠山，两三年内应该不会倒闭。</li>
+<li><a href="https://chrome.google.com/webstore/detail/niloccemoadcdkdjlinkgdfekeahmflj" target="_blank" rel="external">Pocket</a>:大名鼎鼎的稍后阅读应用，看到那片文章好看，就直接用这个保存下来。改软件支持全平台。极力推荐。</li>
+<li><a href="https://chrome.google.com/webstore/detail/ojcflmmmcfpacggndoaaflkmcoblhnbh" target="_blank" rel="external">Wunderlist</a>:说白了就是个todo工具，简单好用，也是支持全平台，不用担心，免费的。</li>
+<li><a href="https://chrome.google.com/webstore/detail/keigpnkjljkelclbjbekcfnaomfodamj" target="_blank" rel="external">如意淘</a>:诶这大家一定要安装，网购比价神器，安装这个插件后，你只要浏览网站上的商品，它基本都会给你显示出最近一段时间，这个商品的价格走势。</li>
+</ol>
+<h1 id="开发篇">开发篇</h1><ol>
+<li><a href="https://chrome.google.com/webstore/detail/ighdmehidhipcmcojjgiloacoafjmpfk" target="_blank" rel="external">AngularJS Batarang</a>:开发angular的时候必会用到的插件，功能强悍，用了就知道，这里不再详细介绍。</li>
+<li><a href="https://chrome.google.com/webstore/detail/bhlhnicpbhignbdhedgjhgdocnmhomnp" target="_blank" rel="external">ColorZilla</a>:网页上的颜色取色器，对web开发人员或者设计上很用用处。</li>
+<li><a href="https://chrome.google.com/webstore/detail/mfoaclfeiefiehgaojbmncmefhdnikeg" target="_blank" rel="external">HostAdmin App</a>:修改host应用，这个是离线应用，不是插件，原来是有插件的，相当好用，变成离线应用之后就just soso了。</li>
+<li><a href="https://chrome.google.com/webstore/detail/kpfmckjjpabojdhlncnccfhkfhbmnjfi" target="_blank" rel="external">hosts文件管理工具</a>:也是个不错的hosts修改插件。</li>
+<li><a href="https://chrome.google.com/webstore/detail/eglomijmggnafcfejliedcljabfgblia" target="_blank" rel="external">HTML 标签检测器|HTML TAG CHECKER</a>:这个插件是web开发神器，利用这个插件可以检查有哪些标签没有闭合。</li>
+<li><a href="https://chrome.google.com/webstore/detail/iahnhfdhidomcpggpaimmmahffihkfnj" target="_blank" rel="external">JSON-handle</a>:这个就不用多介绍了，json格式化工具</li>
+<li><a href="https://chrome.google.com/webstore/detail/jlpkojjdgbllmedoapgfodplfhcbnbpn" target="_blank" rel="external">Page Ruler</a>:尺子，web开发的时候，用来量网页上的尺寸。</li>
+<li><a href="https://chrome.google.com/webstore/detail/dkaagdgjmgdmbnecmcefdhjekcoceebi" target="_blank" rel="external">PerfectPixel by WellDoneCode</a>:web开发的时候，用来对比写出来的html页面是不是跟设计稿一样，非常神器。</li>
+<li><a href="https://chrome.google.com/webstore/detail/fhbjgbiflinjbdggehcddcbncdddomop" target="_blank" rel="external">Postman - REST Client</a>:提供功能强大的 Web API &amp; HTTP 请求调试。在调试接口的时候非常有用。</li>
+<li><a href="https://github.com/justjavac/ReplaceGoogleCDN" target="_blank" rel="external">Replace Google CDN</a>: 把谷歌cdn重定向到国内的服务器。诶，大家懂的，这工具还是挺有用的。</li>
+</ol>
+<h1 id="图表篇">图表篇</h1><ol>
+<li><a href="https://chrome.google.com/webstore/detail/bhmicilclplefnflapjmnngmkkkkpfad" target="_blank" rel="external">Gliffy Diagrams</a>:就是画图表的，例如流程图，用例图等，没啥好介绍的。</li>
+<li><a href="https://chrome.google.com/webstore/detail/djejicklhojeokkfmdelnempiecmdomj" target="_blank" rel="external">Lucidchart 离线图表</a>:在线和离线绘制流程图、实体模型、UML、思维导图等。</li>
+</ol>
+<h1 id="其他">其他</h1><p>这些插件也是很好玩的</p>
+<ol>
+<li><a href="https://chrome.google.com/webstore/detail/dbepggeogbaibhgnhhndojpepiihcmeb" target="_blank" rel="external">Vimium</a>:这个插件可以让你用vim的快捷键来控制网页，超级好用。</li>
+<li><a href="https://chrome.google.com/webstore/detail/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="external">Proxy SwitchyOmega</a>: 咋们想免费翻墙的时候经常需要用到的，轻松快捷地管理和切换多个代理设置。</li>
+<li><a href="https://chrome.google.com/webstore/detail/kidnkfckhbdkfgbicccmdggmpgogehop" target="_blank" rel="external">马克飞象</a>: 个人觉得最好的MarkDown编辑器，没有之一。</li>
+</ol>
+<p>最后感谢这些开发者，给我们带来这么好的工具。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[chrome从出世到现在，博主最喜爱的插件，都在此了。]]>
+    
+    </summary>
+    
+      <category term="chrome" scheme="http://yoursite.com/tags/chrome/"/>
+    
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[解决form.submit()无法触发onsubmit事件问]]></title>
+    <link href="http://yoursite.com/2015/03/08/%E8%A7%A3%E5%86%B3form-submit-%E6%97%A0%E6%B3%95%E8%A7%A6%E5%8F%91onsubmit%E4%BA%8B%E4%BB%B6%E9%97%AE/"/>
+    <id>http://yoursite.com/2015/03/08/解决form-submit-无法触发onsubmit事件问/</id>
+    <published>2015-03-08T11:04:04.000Z</published>
+    <updated>2015-03-08T11:04:40.000Z</updated>
+    <content type="html"><![CDATA[<p>有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:</p>
+<blockquote>
+<p>The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explorer 5.5 and later, you can call the fireEvent method with a value of onsubmit in the sEvent parameter. </p>
+</blockquote>
+<p>大家知道啥回事了吧。原生js在执行<code>form.submit()</code>的时候根本不会去触发onsubmit事件。<br>所以在<code>submit</code>之前，先手动绑定一个<strong>submit</strong>事件（叫其他名字也行，如<strong>gaga</strong>）:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> form = <span class="built_in">document</span>.getElementById(<span class="string">'xxx'</span>);</span><br><span class="line">$(form).bind(<span class="string">'submit'</span>,<span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123; <span class="comment">//绑定事件</span></span><br><span class="line">    <span class="built_in">console</span>.log(e);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(form.fireEvent) &#123; <span class="comment">// if IE Browser</span></span><br><span class="line">    form.fireEvent(<span class="string">'onsubmit'</span>); <span class="comment">//激活submit事件</span></span><br><span class="line">    form.submit(); <span class="comment">//促发sbumit事件</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">'HTMLEvents'</span>);</span><br><span class="line">    event.initEvent(<span class="string">'submit'</span>, <span class="literal">false</span>, <span class="literal">true</span>); <span class="comment">//初始化submit事件</span></span><br><span class="line">    event.dispatchEvent(event); <span class="comment">//触发submit事件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>也就是我们不能简单的<code>form.submit()</code>。得在之前构造相应的函数，太费劲了。尽量绕过这种需求吧，实在是没办法的时候再用这种解决方案。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:</p>
+<blockquote>
+<p>The submit method does not invoke the onsubmit event handler]]>
+    </summary>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[不同浏览器求滚动距离的办法]]></title>
+    <link href="http://yoursite.com/2015/03/08/%E4%B8%8D%E5%90%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B1%82%E6%BB%9A%E5%8A%A8%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%8A%9E%E6%B3%95/"/>
+    <id>http://yoursite.com/2015/03/08/不同浏览器求滚动距离的办法/</id>
+    <published>2015-03-08T11:02:26.000Z</published>
+    <updated>2015-03-08T11:03:15.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="chrome">chrome</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</span><br><span class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</span><br><span class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</span><br></pre></td></tr></table></figure>
+<h1 id="firefox">firefox</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.documentElement.scrollTop</span><br><span class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</span><br><span class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</span><br></pre></td></tr></table></figure>
+<h1 id="IE">IE</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</span><br></pre></td></tr></table></figure>
+<h1 id="注释">注释</h1><blockquote>
+<p>还没有测试safari,估计跟chrome的差不多。同理可以求X轴的偏移量。</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="chrome">chrome</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span clas]]>
+    </summary>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[IE9 BUG overflow :auto 底部空白解决方案]]></title>
+    <link href="http://yoursite.com/2015/03/08/IE9-BUG-overflow-auto-%E5%BA%95%E9%83%A8%E7%A9%BA%E7%99%BD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>http://yoursite.com/2015/03/08/IE9-BUG-overflow-auto-底部空白解决方案/</id>
+    <published>2015-03-08T11:00:17.000Z</published>
+    <updated>2015-03-08T11:01:09.000Z</updated>
+    <content type="html"><![CDATA[<p>如果容器设置了max-height，overflow:auto。那么当js动态加载内容，或者鼠标点击容器的时候，容器底部会自动被撑大，留着空白。<br>解决办法是为容器添加min-height:0%。不过用grunt压缩的时候，会变成min-height:0;IE直接把这个当成min-height:0px。所以如果要压缩，那么我们应该把min-height设置成0.1%或者0.01%或者其他适合的数字。</p>
+<h3 id="参考">参考</h3><p><a href="http://social.microsoft.com/Forums/id-ID/1c239c1d-84d2-461b-991d-d7834edaa121/ie9bug?forum=267" target="_blank" rel="external">ie9渲染bug</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>如果容器设置了max-height，overflow:auto。那么当js动态加载内容，或者鼠标点击容器的时候，容器底部会自动被撑大，留着空白。<br>解决办法是为容器添加min-height:0%。不过用grunt压缩的时候，会变成min-height:0;IE直接把这个]]>
+    </summary>
+    
+      <category term="hack" scheme="http://yoursite.com/tags/hack/"/>
+    
+      <category term="CSS" scheme="http://yoursite.com/categories/CSS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[HTML中用到的data类型的url]]></title>
+    <link href="http://yoursite.com/2015/03/08/HTML%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84data%E7%B1%BB%E5%9E%8B%E7%9A%84url/"/>
+    <id>http://yoursite.com/2015/03/08/HTML中用到的data类型的url/</id>
+    <published>2015-03-08T10:17:31.000Z</published>
+    <updated>2015-03-08T10:17:46.000Z</updated>
+    <content type="html"><![CDATA[<p>针对一些小的数据，我们可以直接在网页中嵌入，而不是引用外部文件，例如一些小的loading图片等。这样的好处是可以减少一次网络请求，缺点是页面内容变大。</p>
+<hr>
+<p>data的url类型有以下几种：<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span>:,&lt;文本数据&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/plain,&lt;文本数据&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/html,&lt;<span class="type">HTML</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/html;base64,&lt;base64编码的<span class="type">HTML</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/css,&lt;<span class="type">CSS</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/css;base64,&lt;base64编码的<span class="type">CSS</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/javascript,&lt;<span class="type">Javascript</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/javascript;base64,&lt;base64编码的<span class="type">Javascript</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:image/gif;base64,base64编码的gif图片数据</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:image/png;base64,base64编码的png图片数据</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:image/jpeg;base64,base64编码的jpeg图片数据</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:image/x-icon;base64,base64编码的icon图片数据</span></span><br></pre></td></tr></table></figure></p>
+<p>一般我们经常用到的就是最下面跟图片有关的几种，当然黑客会经常用到<code>data:text/javascript,&lt;Javascript代码&gt;</code></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>针对一些小的数据，我们可以直接在网页中嵌入，而不是引用外部文件，例如一些小的loading图片等。这样的好处是可以减少一次网络请求，缺点是页面内容变大。</p>
+<hr>
+<p>data的url类型有以下几种：<br><figure class="highlight has]]>
+    </summary>
+    
+      <category term="img" scheme="http://yoursite.com/tags/img/"/>
+    
+      <category term="HTML" scheme="http://yoursite.com/categories/HTML/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[git常用命令]]></title>
+    <link href="http://yoursite.com/2015/03/08/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2015/03/08/git常用命令/</id>
+    <published>2015-03-08T10:15:55.000Z</published>
+    <updated>2015-03-08T10:16:49.000Z</updated>
+    <content type="html"><![CDATA[<ol>
+<li><p><strong>Create a new repository on the command line</strong></p>
+<blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch README.md&#10;git init&#10;git add README.md&#10;git commit -m &#34;first commit&#34;&#10;git remote add origin git@github.com:angrytoro/zepto.plug.git&#10;git push -u origin master</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p><strong>Push an existing repository from the command line</strong></p>
+<blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:angrytoro/zepto.plug.git&#10;git push -u origin master</span><br></pre></td></tr></table></figure></blockquote>
+</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<ol>
+<li><p><strong>Create a new repository on the command line</strong></p>
+<blockquote>
+<figure class="highlight"><table><tr><td class="gu]]>
+    </summary>
+    
+      <category term="git" scheme="http://yoursite.com/tags/git/"/>
+    
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Angularjs之Directive(指令)]]></title>
+    <link href="http://yoursite.com/2015/03/08/Angularjs%E4%B9%8BDirective-%E6%8C%87%E4%BB%A4/"/>
+    <id>http://yoursite.com/2015/03/08/Angularjs之Directive-指令/</id>
+    <published>2015-03-08T10:13:49.000Z</published>
+    <updated>2015-03-08T10:14:28.000Z</updated>
+    <content type="html"><![CDATA[<p>简要的讲讲配置及要点，如果看不懂就看下面的参考lian</p>
+<ol>
+<li><strong><code>restrict:</code></strong>主要有两种<code>&quot;E&quot;(element)</code>和<code>&quot;A&quot;(attribute)</code>,分别是创建元素指令和属性指令用的。一般情况下只用到这两个。</li>
+<li><strong><code>template:</code></strong>就是这个指令使用的模板。</li>
+<li><strong><code>templateUrl:</code></strong>模板的url地址，主要是用这个。</li>
+<li><strong><code>compile:</code></strong>当指令第一次被AngularJS编译的时候，<code>compile()</code>被调用，也就是说当AngularJS遇到第二个相同的指令的时候，不会再进行编译，<code>compile()</code>函数返回<code>link()</code>.该函数的写法是<code>function(element,attributes){//todo}</code>,<code>element</code>是该指令所在的元素对象，我们可以像在用jQuery操作dom一样操作它，<code>attributes</code>包含了dom元素所包含的所有属性集合的object对象。<a id="more"></a></li>
+<li><strong><code>link:</code></strong>该函数每次跟<code>$scope</code>绑定的时，都会被调用，这个函数相当于，遇到数据时，就被调用，用来渲染dom（compile是创建dom），它带有3个参数，<code>$scope</code>,<code>element</code>,<code>attributes</code>,这两个参数就不多做解释了。(<strong>link和compile不能同时存在，否则只运行compile</strong>)</li>
+<li><strong><code>transclude:</code></strong>用来指示directive是否包含directive所包含的内容,如果是的话，那么值为true,并且要在模板中相应的html元素上加上<code>ng-transclude</code>属性，来告诉angularjs，相应的内容要插到哪里。</li>
+<li><strong><code>replace:</code></strong>这个比较经常用，用来告诉angularjs是否需要把我们编写的directive替换成规范的dom标签（自己尝试下就知道是干嘛用的了）。</li>
+<li><strong><code>scope:</code></strong>这个属性比较复杂，还是看运行<a href="http://runjs.cn/code/rk9spiif" target="_blank" rel="external">实例</a>吧.</li>
+<li><strong><code>controller:</code></strong><code>function($scope, $element, $attrs, $transclude){...}</code>,太烦了，不想写了，大家看参考吧。</li>
+<li><strong><code>require:</code></strong>请求另外的<code>controller</code>,传入当前directive的linking function中.</li>
+</ol>
+<hr>
+<h3 id="参考">参考</h3><blockquote>
+<ol>
+<li><a href="http://my.oschina.net/ilivebox/blog/289670" target="_blank" rel="external">AngularJS 自定义控件</a></li>
+<li><a href="http://blog.51yip.com/jsjquery/1607.html" target="_blank" rel="external">angularjs directive 实例 详解</a></li>
+<li><a href="http://www.ifeenan.com/angularjs/2014-08-19-%5B%E8%AF%91%5D%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3NG%E9%87%8C%E7%9A%84scope%2F" target="_blank" rel="external">深入理解ng里的scope</a></li>
+<li><a href="http://www.html-js.com/article/Using-Angular-to-develop-web-application-to-AngularJS-instruction-to-create-controller-interacts-with-ngModel" target="_blank" rel="external">如何在AngularJS指令中创建controller与ngModel进行交互</a></li>
+<li><a href="http://www.html-js.com/article/1985" target="_blank" rel="external">AngularJS指令进阶 — ngModelController详解</a>js.com/article/1985)</li>
+</ol>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>简要的讲讲配置及要点，如果看不懂就看下面的参考lian</p>
+<ol>
+<li><strong><code>restrict:</code></strong>主要有两种<code>&quot;E&quot;(element)</code>和<code>&quot;A&quot;(attribute)</code>,分别是创建元素指令和属性指令用的。一般情况下只用到这两个。</li>
+<li><strong><code>template:</code></strong>就是这个指令使用的模板。</li>
+<li><strong><code>templateUrl:</code></strong>模板的url地址，主要是用这个。</li>
+<li><strong><code>compile:</code></strong>当指令第一次被AngularJS编译的时候，<code>compile()</code>被调用，也就是说当AngularJS遇到第二个相同的指令的时候，不会再进行编译，<code>compile()</code>函数返回<code>link()</code>.该函数的写法是<code>function(element,attributes){//todo}</code>,<code>element</code>是该指令所在的元素对象，我们可以像在用jQuery操作dom一样操作它，<code>attributes</code>包含了dom元素所包含的所有属性集合的object对象。]]>
+    
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Angularjs实践（一）]]></title>
+    <link href="http://yoursite.com/2015/03/08/Angularjs%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://yoursite.com/2015/03/08/Angularjs实践（一）/</id>
+    <published>2015-03-08T10:12:24.000Z</published>
+    <updated>2015-03-08T10:13:17.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="简单迭代器">简单迭代器</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span>&gt;</span><span class="tag">&lt;<span class="title">tr</span>&gt;</span><span class="tag">&lt;<span class="title">th</span>&gt;</span>row number<span class="tag">&lt;/<span class="title">th</span>&gt;</span><span class="tag">&lt;/<span class="title">tr</span>&gt;</span><span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span> <span class="attribute">ng-repeat</span>=<span class="value">"i in [0, 1, 2, 3, 4, 5, 6, 7]"</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>&#123; &#123;i+1&#125; &#125;<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Angularjs会运行<code>{ { } }</code>中的表达式<br>for循环用in这个关键字来遍历</p>
+<hr>
+<h3 id="ngBind和ngBindTemplate">ngBind和ngBindTemplate</h3><p>这两个指令让页面在有相应model的时候才显示真正的内容，例如：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;title ng-<span class="keyword">bind</span>-<span class="keyword">template</span>=<span class="string">"Google Phone Gallery: &#123;&#123;query&#125;&#125;"</span>&gt;<span class="type">Google</span> <span class="type">Phone</span> <span class="type">Gallery</span>&lt;/title&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在没有query的时候，title显示的是Google Phone Gallery，当query有值得时候，会显示Google Phone Gallery:xxx。</p>
+<hr>
+<a id="more"></a>
+<h3 id="过滤器和排序">过滤器和排序</h3><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">Search: <span class="tag">&lt;<span class="title">input</span> <span class="attribute">ng-model</span>=<span class="value">"query"</span>&gt;</span></span><br><span class="line">Sort by:</span><br><span class="line"><span class="tag">&lt;<span class="title">select</span> <span class="attribute">ng-model</span>=<span class="value">"orderProp"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"name"</span>&gt;</span>Alphabetical<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"age"</span>&gt;</span>Newest<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"phones"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"phone in phones | filter:query | orderBy:orderProp"</span>&gt;</span></span><br><span class="line">    </span><span class="expression">&#123;&#123;<span class="variable">phone.name</span>&#125;&#125;</span><span class="xml"></span><br><span class="line">    <span class="tag">&lt;<span class="title">p</span>&gt;</span></span><span class="expression">&#123;&#123;<span class="variable">phone.snippet</span>&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p><code>filter</code>是Angularjs自带的过滤器，当用户输入的query值不同的时候，Angularjs会根据query，来过滤模型里面的数据，这里过滤的是phones中每个phone对象的数据（无论phone有多少对象，都要进行遍历）。<br><code>orderBy</code>是Angujs提供的排序工具，这里根据orderProp的值排序。</p>
+<hr>
+<h3 id="依赖注入和XHR">依赖注入和XHR</h3><p><strong>依赖注入:</strong>为了使用AngularJS的服务，你只需要在控制器的构造函数里面作为参数声明出所需服务的名字，就像这样：<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> PhoneListCtrl($scope, $http) &#123;<span class="keyword">...</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里的<code>$scope</code>和<code>$http</code>。当控制器构造的时候，AngularJS的依赖注入器会将这些服务注入到你的控制器中。当然，依赖注入器也会处理所需服务可能存在的任何传递性依赖（一个服务通常会依赖于其他的服务）。<br>注意到参数名字非常重要，因为注入器会用他们去寻找相应的依赖。</p>
+<h4 id="‘$’前缀命名">‘$’前缀命名</h4><p>作为一个命名习惯，AngularJS内建服务，作用域方法，以及一些其他的AngularJS API都在名字前面使用一个‘<code>$</code>’前缀。不要使用‘<code>$</code>’前缀来命名你自己的服务和模型，否则可能会产生名字冲突。</p>
+<h4 id="js压缩">js压缩</h4><p>由于AngularJS是通过控制器构造函数的参数名字来推断依赖服务名称的。所以大家就懂了。为了克服压缩造成的问题。Angularjs提供了两个解决方案：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PhoneListCtrl.<span class="variable">$inject</span> = [<span class="string">'$scope'</span>, <span class="string">'$http'</span>];</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> PhoneListCtrl = [<span class="string">'$scope'</span>, <span class="string">'$http'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>, <span class="variable">$http</span>)</span> </span>&#123; <span class="comment">/* constructor body */</span> &#125;];</span><br></pre></td></tr></table></figure>
+<p>按照自己的习惯来选择解决方案。</p>
+<blockquote>
+<p>上面的笔记都是查看<a href="http://angularjs.cn/" target="_blank" rel="external">Angularjs入门教程</a>前五节的总结。</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="简单迭代器">简单迭代器</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span>&gt;</span><span class="tag">&lt;<span class="title">tr</span>&gt;</span><span class="tag">&lt;<span class="title">th</span>&gt;</span>row number<span class="tag">&lt;/<span class="title">th</span>&gt;</span><span class="tag">&lt;/<span class="title">tr</span>&gt;</span><span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span> <span class="attribute">ng-repeat</span>=<span class="value">"i in [0, 1, 2, 3, 4, 5, 6, 7]"</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>&#123; &#123;i+1&#125; &#125;<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Angularjs会运行<code>{ { } }</code>中的表达式<br>for循环用in这个关键字来遍历</p>
+<hr>
+<h3 id="ngBind和ngBindTemplate">ngBind和ngBindTemplate</h3><p>这两个指令让页面在有相应model的时候才显示真正的内容，例如：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;title ng-<span class="keyword">bind</span>-<span class="keyword">template</span>=<span class="string">"Google Phone Gallery: &#123;&#123;query&#125;&#125;"</span>&gt;<span class="type">Google</span> <span class="type">Phone</span> <span class="type">Gallery</span>&lt;/title&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在没有query的时候，title显示的是Google Phone Gallery，当query有值得时候，会显示Google Phone Gallery:xxx。</p>
+<hr>]]>
+    
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Angularjs实践（二）]]></title>
+    <link href="http://yoursite.com/2015/03/08/Angularjs%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>http://yoursite.com/2015/03/08/Angularjs实践（二）/</id>
+    <published>2015-03-08T10:08:54.000Z</published>
+    <updated>2015-03-08T10:11:34.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="图片模板">图片模板</h3><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">img</span> <span class="attribute">ng-src</span>=<span class="value">"</span></span></span><span class="expression">&#123;&#123;<span class="variable">phone.imageUrl</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>ng-src就是为了防止浏览器默认请求无效的图片地址，在页面还没初始化完成的时候，浏览器会在js代码执行前请求图片，所以直接设置src会导致浏览器请求无效地址，造成端口占用。</p>
+<h2 id="路由与多视图">路由与多视图</h2><p>这个章节挺复杂的，需要花点时间理解，参考<a href="http://angularjs.cn/A00a" target="_blank" rel="external">AngularJS入门教程07：路由与多视图</a></p>
+<hr>
+<p>这个章节有几个注意点<br><a id="more"></a></p>
+<ul>
+<li><code>ng-view</code>指令的角色是为当前路由把对应的视图模板载入到布局模板中。</li>
+<li><code>$routeProvider</code>:Angularjs中应用的路由通过它来生命，<code>$routeProvider</code>是<code>$route</code>服务的提供者。这项服务使得控制器、试图模板与当前浏览器的URL可以轻易集成。<code>$route</code>服务通常和<code>ng-view</code>指令一起使用。</li>
+<li><strong>依赖注入：</strong>这东西自己根据前面章节，自己理解下</li>
+<li><p><code>app.js</code>中模块定义和<code>controllers.js</code>的代码</p>
+<blockquote>
+<p>app.js中的代码：</p>
+<pre><code><span class="comment"><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="reserved">var</span> phonecatApp = angular.<span class="built_in">module</span>(<span class="string">'phonecatApp'</span>, [</span><br><span class="line">  <span class="string">'ngRoute'</span>,</span><br><span class="line">  <span class="string">'phonecatControllers'</span></span><br><span class="line">]);</span><br></pre></td></tr></table></figure></span>
+</code></pre></blockquote>
+<pre><code>这里定义了phonecateApp模块，然后用到了ngRoute和phoneControllers这两个模块，phoneControllers是我们在`controllers.js`中定义的。
+<span class="comment"><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">phonecatApp.config([<span class="string">'$routeProvider'</span>,</span><br><span class="line">  <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$routeProvider</span>)</span> </span>&#123;</span><br><span class="line">    <span class="variable">$routeProvider</span>.</span><br><span class="line">      when(<span class="string">'/phones'</span>, &#123;</span><br><span class="line">        templateUrl: <span class="string">'partials/phone-list.html'</span>,</span><br><span class="line">        controller: <span class="string">'PhoneListCtrl'</span></span><br><span class="line">      &#125;).</span><br><span class="line">      when(<span class="string">'/phones/:phoneId'</span>, &#123;</span><br><span class="line">        templateUrl: <span class="string">'partials/phone-detail.html'</span>,</span><br><span class="line">        controller: <span class="string">'PhoneDetailCtrl'</span></span><br><span class="line">      &#125;).</span><br><span class="line">      otherwise(&#123;</span><br><span class="line">        redirectTo: <span class="string">'/phones'</span></span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;]);</span><br></pre></td></tr></table></figure></span>
+
+这块代码里面的PhoneListCtrl和PhoneDetailCtrl在`controllers.js`中定义，并且挂在phoneControllers模块下面。这快代码的路由映射关系应该很容易理解，每个templateUrl对应一个controller。
+</code></pre></li>
+<li><p><strong>路由声明中参数的使用：</strong>注意到在第二条路由声明中:phoneId参数的使用。<code>$route</code>服务使用路由声明<code>/phones/:phoneId</code>作为一个匹配当前URL的模板。所有以<code>:</code>符号声明的变量（此处变量为phoneId）都会被提取，然后存放在<code>$routeParams</code>对象中。所以在PhoneDetailCtrl中我们就能按<code>$routeParams.phoneId</code>这种方式获取phoneId的值。</p>
+</li>
+<li>注意控制器与视图的对应关系。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="图片模板">图片模板</h3><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">img</span> <span class="attribute">ng-src</span>=<span class="value">"</span></span></span><span class="expression">&#123;&#123;<span class="variable">phone.imageUrl</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>ng-src就是为了防止浏览器默认请求无效的图片地址，在页面还没初始化完成的时候，浏览器会在js代码执行前请求图片，所以直接设置src会导致浏览器请求无效地址，造成端口占用。</p>
+<h2 id="路由与多视图">路由与多视图</h2><p>这个章节挺复杂的，需要花点时间理解，参考<a href="http://angularjs.cn/A00a">AngularJS入门教程07：路由与多视图</a></p>
+<hr>
+<p>这个章节有几个注意点<br>]]>
+    
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[AngularJS 从1.2迁移到1.3的变动记录]]></title>
+    <link href="http://yoursite.com/2015/03/08/AngularJS-%E4%BB%8E1-2%E8%BF%81%E7%A7%BB%E5%88%B01-3%E7%9A%84%E5%8F%98%E5%8A%A8%E8%AE%B0%E5%BD%95/"/>
+    <id>http://yoursite.com/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/</id>
+    <published>2015-03-08T09:29:40.000Z</published>
+    <updated>2015-03-08T09:51:40.000Z</updated>
+    <content type="html"><![CDATA[<p>公司前端升级了<code>AngularJS</code>，那就顺便记录下1.2到1.3的变化吧。主要是记录一些可能大多数人会遇到的改变，以及1.3的新特性。</p>
+<hr>
+<h1 id="表达式解析">表达式解析</h1><ol>
+<li>我们不能在表达式中使用以<code>.bind,.call,.apply</code>这些关键字命名的函数。例如<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;&#123; &#123;user.sendInfo.call(&#123; &#125;, <span class="constant">true</span>)&#125; &#125;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这绝对会抛出异常</p>
+<ol>
+<li>在表达式中不能使用Object。例如<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scope.foo = &#123; <span class="string">"bar"</span>: <span class="built_in">Object</span> &#125;;</span><br><span class="line">scope.$<span class="built_in">eval</span>(<span class="string">'foo["bar"]'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这绝对会抛出解析异常</p>
+<ol>
+<li>字符串<code>&#39;f&#39;, &#39;0&#39;, &#39;false&#39;, &#39;no&#39;, &#39;n&#39;, &#39;[]&#39;</code>不在被当做false来处理。只有<code>false,null, undefined,NaN,0,&quot;&quot;</code>被当做false来处理。</li>
+</ol>
+<blockquote>
+<p>参考<a href="https://github.com/angular/angular.js/commit/528be29d1662122a34e204dd607e1c0bd9c16bbc" target="_blank" rel="external">528be29d</a></p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Angular工具函数">Angular工具函数</h1><ol>
+<li><code>angylar.copy</code>：以前copy的时候原型链没有被真正的copy过去，只是用指针引用。现在全部都copy过去了。</li>
+<li><code>angular.tojson</code>：双美元符号<code>$$</code>开头的字段直接被忽略。</li>
+</ol>
+<blockquote>
+<p>参考<a href="https://github.com/angular/angular.js/commit/c054288c9722875e3595e6e6162193e0fb67a251" target="_blank" rel="external">c054288c</a></p>
+</blockquote>
+<h1 id="Angular_HTML编译器">Angular HTML编译器</h1><ol>
+<li><code>replace</code>：指令里面的这个配置项将会在下个大发布中删除掉，所以大家从现在开始尽量不要用这个关键字。</li>
+<li><code>attr.$observe</code>：不再返回一个observer函数（ps：用过的人都懂的）。</li>
+</ol>
+<blockquote>
+<p>参考<a href="https://github.com/angular/angular.js/commit/299b220f5e05e1d4e26bfd58d0b2fd7329ca76b1" target="_blank" rel="external">299b220f</a></p>
+</blockquote>
+<h1 id="Forms,_Inputs_And_NgModel">Forms, Inputs And NgModel</h1><ol>
+<li><p><code>ng-pattern</code>：给个升级前后的代码对比，大家就知道了</p>
+ <figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//before</span></span><br><span class="line"><span class="variable">$scope</span>.<span class="keyword">exp</span> = <span class="string">'/abc/i'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//After</span></span><br><span class="line"><span class="variable">$scope</span>.<span class="keyword">exp</span> = /abc/i;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>$cancelUpdate()</code>：现在被改名成<code>$rollbackViewValue()</code></p>
+</li>
+<li><code>checkbox</code>: <code>ng-true-value,ng-false-value</code>里面只能放常量，比如数字或者字符<code>&#39;Y&#39;,&#39;N&#39;</code>记得字符常量一定要用引号包裹。</li>
+<li><code>ngModelOptions</code>：新的牛逼指令，等下单独讲</li>
+</ol>
+<h1 id="Scopes_And_Digests">Scopes And Digests</h1><p><code>$broadcast</code>和<code>$emit</code>在事件结束后，会把<code>event.currentScope</code>设置为<code>null</code>，如果要获得相应的<code>scope</code>，那么我们使用<code>event.targetScope</code>来获取。</p>
+<blockquote>
+<p>参考<a href="https://github.com/angular/angular.js/commit/82f45aee5bd84d1cc53fb2e8f645d2263cdaacbc" target="_blank" rel="external">82f45aee</a></p>
+</blockquote>
+<h1 id="Server_Requests_($http,_$resource)">Server Requests ($http, $resource)</h1><p>主要的变化是删除了<code>$httpProvider</code>的属性<code>responseInterceptors</code>。现在这个拦截器已经不用了，所以我们还是老老实实使用<code>interceptors</code>吧。大家在迁移这个的时候，一定要注意逻辑，因为<code>responseInterceptors</code>返回的东西，在逻辑上很让人捉急，一不小心就会错误，然后让你排查到哭（偶就是干了这种事）。</p>
+<blockquote>
+<p>参考<a href="https://github.com/angular/angular.js/commit/ad4336f9359a073e272930f8f9bcd36587a8648f" target="_blank" rel="external">ad4336f9</a></p>
+</blockquote>
+<h1 id="新特性">新特性</h1><p>好了这是<code>AngularJS</code>给的一些大家最想要的功能。</p>
+<h2 id="One-time_binding">One-time binding</h2><p>顾名思义就是只绑定一次，无论最后那个值在scope上怎么变化，那么在界面上永远只呈现第一次的赋值。用法<code>{ {::xxx} }</code>(xxx是scope上的一个值)。大家还是看例子<a href="https://docs.angularjs.org/guide/expression#one-time-binding" target="_blank" rel="external">one-time-binding</a><br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//html 代码</span></span><br><span class="line">&lt;div ng-controller=<span class="string">"EventController"</span>&gt;</span><br><span class="line">  &lt;button ng-click=<span class="string">"clickMe($event)"</span>&gt;Click Me&lt;/button&gt;</span><br><span class="line">  &lt;p id=<span class="string">"one-time-binding-example"</span>&gt;One time binding: &#123; &#123;::name&#125;&#125;&lt;/p&gt;</span><br><span class="line">  &lt;p id=<span class="string">"normal-binding-example"</span>&gt;Normal binding: &#123; &#123;name&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//javascript 代码</span></span><br><span class="line">angular.module(<span class="string">'oneTimeBidingExampleApp'</span>, []).</span><br><span class="line">controller(<span class="string">'EventController'</span>, [<span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> counter = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> names = [<span class="string">'Igor'</span>, <span class="string">'Misko'</span>, <span class="string">'Chirayu'</span>, <span class="string">'Lucas'</span>];</span><br><span class="line">  <span class="comment">/*</span><br><span class="line">   * expose the event object to the scope</span><br><span class="line">   */</span></span><br><span class="line">  <span class="variable">$scope</span>.clickMe = <span class="function"><span class="keyword">function</span><span class="params">(clickEvent)</span> </span>&#123;</span><br><span class="line">    <span class="variable">$scope</span>.name = names[counter % names.length];</span><br><span class="line">    counter++;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure></p>
+<h2 id="ngMessages">ngMessages</h2><p>这个指令用来展示form填写错误时的提示信息。使用方式也是比较简单，看个例子就很容易明白。<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;form <span class="property">name</span>=<span class="string">"myForm"</span>&gt;</span><br><span class="line">  &lt;label&gt;Enter your <span class="property">name</span>:&lt;/label&gt;</span><br><span class="line">  &lt;input type=<span class="string">"text"</span></span><br><span class="line">         <span class="property">name</span>=<span class="string">"myName"</span></span><br><span class="line">         ng-model=<span class="string">"name"</span></span><br><span class="line">         ng-minlength=<span class="string">"5"</span></span><br><span class="line">         ng-maxlength=<span class="string">"20"</span></span><br><span class="line">         required /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;pre&gt;myForm.myName.$<span class="keyword">error</span> = &#123; &#123; myForm.myName.$<span class="keyword">error</span> | json &#125;&#125;&lt;/pre&gt;</span><br><span class="line"></span><br><span class="line">  &lt;<span class="keyword">div</span> ng-messages=<span class="string">"myForm.myName.$error"</span> style=<span class="string">"color:maroon"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span> ng-message=<span class="string">"required"</span>&gt;You did <span class="keyword">not</span> enter a field&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span> ng-message=<span class="string">"minlength"</span>&gt;Your field <span class="keyword">is</span> too short&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span> ng-message=<span class="string">"maxlength"</span>&gt;Your field <span class="keyword">is</span> too long&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">  &lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="ngModelOptions">ngModelOptions</h2><p>这东西如果详细讲起来，又是一篇博客。这里就简要的说一下吧，不明白的直接看<a href="https://docs.angularjs.org/api/ng/directive/ngModelOptions" target="_blank" rel="external">文档</a>，文档还是说得很详细的。<br>这个指令的主要功能，是可以让我们定义一系列事件来触发model更新或者延迟model更新，这个指令的一个经典用例是：当我们输入关键字来进行搜索的时候，我们不想让<code>AngularJS</code>马上响应输入框的值的变化，我们希望等到用户输入完成的时候再触发搜索。这个时候我们就可以用到<code>ngModelOptions</code>了。</p>
+<h3 id="配置项说明">配置项说明</h3><p>就讲本人用到的，剩下的几个配置项，没有用过，就不好在这里说。希望有高人把它给补齐了。</p>
+<ol>
+<li><code>updateOn</code>：为input绑定model更新事件，有个<code>default</code>的默认事件。可以同时绑定多个事件，用空格隔开。这个属性可以跟<code>debounce</code>配合使用。<blockquote>
+<p>备注：由于文档上没有说可以绑定哪些事件，在查看源码的时候发现了一段代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; element.on(modelCtrl.<span class="variable">$options</span>.updateOn, <span class="function"><span class="keyword">function</span><span class="params">(ev)</span> </span>&#123;</span><br><span class="line">&gt;   modelCtrl.<span class="variable">$$debounceViewValueCommit</span>(ev &amp;&amp; ev.type);</span><br><span class="line">&gt; &#125;);</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>因此可以90%肯定，可以绑定任何跟该元素有关的原生事件。</p>
+</blockquote>
+<ol>
+<li><code>debounce</code>：没有包含这个属性的input,model会根据<code>updateOn</code>来更新值。如果包含这个属性，那么model就会根据<code>debounce</code>设置的参数来决定什么时候更新model。例如:<code>ng-model-options=&quot;{ updateOn: &#39;default blur&#39;, debounce: {&#39;default&#39;: 500, &#39;blur&#39;: 0} }&quot;</code>，default事件在input值变化后延迟500毫秒更新model，blur事件会马上触发model的更新。这个属性也可以单独使用，例如：<code>ng-model-options=&quot;{debounce: 1000}&quot;</code>。这表示在input值改变1秒之后改变model的值。</li>
+</ol>
+<blockquote>
+<p>注意事项：</p>
+<ol>
+<li>我们可以用<code>$rollbackViewValue</code>来阻止model的变化。它的作用就是input显示的值回滚到上一次的记录。要使用这个东西，必须要为form表单和相应的input设置name属性。</li>
+<li>还有一些特性请大家补充了。</li>
+</ol>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>公司前端升级了<code>AngularJS</code>，那就顺便记录下1.2到1.3的变化吧。主要是记录一些可能大多数人会遇到的改变，以及1.3的新特性。</p>
+<hr>
+<h1 id="表达式解析">表达式解析</h1><ol>
+<li>我们不能在表达式中使用以<code>.bind,.call,.apply</code>这些关键字命名的函数。例如<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;&#123; &#123;user.sendInfo.call(&#123; &#125;, <span class="constant">true</span>)&#125; &#125;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这绝对会抛出异常</p>
+<ol>
+<li>在表达式中不能使用Object。例如<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scope.foo = &#123; <span class="string">"bar"</span>: <span class="built_in">Object</span> &#125;;</span><br><span class="line">scope.$<span class="built_in">eval</span>(<span class="string">'foo["bar"]'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这绝对会抛出解析异常</p>
+<ol>
+<li>字符串<code>&#39;f&#39;, &#39;0&#39;, &#39;false&#39;, &#39;no&#39;, &#39;n&#39;, &#39;[]&#39;</code>不在被当做false来处理。只有<code>false,null, undefined,NaN,0,&quot;&quot;</code>被当做false来处理。</li>
+</ol>
+<blockquote>
+<p>参考<a href="https://github.com/angular/angular.js/commit/528be29d1662122a34e204dd607e1c0bd9c16bbc">528be29d</a></p>
+</blockquote>]]>
+    
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[angularjs开发笔记之ng-class]]></title>
+    <link href="http://yoursite.com/2015/03/08/angularjs%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0%E4%B9%8Bng-class/"/>
+    <id>http://yoursite.com/2015/03/08/angularjs开发笔记之ng-class/</id>
+    <published>2015-03-08T08:07:52.000Z</published>
+    <updated>2015-03-08T10:06:13.000Z</updated>
+    <content type="html"><![CDATA[<h4 id="参考AngularJS_ng-class用法">参考<a href="http://my.oschina.net/gejiawen0913/blog/188547" target="_blank" rel="external">AngularJS ng-class用法</a></h4><p><code>ng-class</code>有三种用法，最简单的就是<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.className = <span class="string">'abc'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div class=<span class="string">"&#123;&#123;className&#125;&#125;"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>第二种：<br><a id="more"></a><br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.isActive = true;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div ng-class=<span class="string">"&#123;true: 'active', false: 'inactive'&#125;[isActive]"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这里的isActive也可以是简单的判断表达式，比如!!isActive.</p>
+<hr>
+<p>第三种：<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&#125;;</span><br><span class="line">&lt;div ng-class=<span class="string">"&#123;'selected': isSelected, 'car': isCar&#125;"</span>&gt;&lt;/div&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>当 isSelected = true 则增加selected class，当isCar=true,则增加car class。以此类推。</p>
+<hr>
+<p>上面几种用法，大家应该看一眼就懂，在这就不再shuo</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h4 id="参考AngularJS_ng-class用法">参考<a href="http://my.oschina.net/gejiawen0913/blog/188547">AngularJS ng-class用法</a></h4><p><code>ng-class</code>有三种用法，最简单的就是<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.className = <span class="string">'abc'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div class=<span class="string">"&#123;&#123;className&#125;&#125;"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>第二种：<br>]]>
+    
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[angularjs开发笔记之checkbox]]></title>
+    <link href="http://yoursite.com/2015/03/08/angularjs%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0%E4%B9%8Bcheckbox/"/>
+    <id>http://yoursite.com/2015/03/08/angularjs开发笔记之checkbox/</id>
+    <published>2015-03-08T08:06:45.000Z</published>
+    <updated>2015-03-08T08:07:30.000Z</updated>
+    <content type="html"><![CDATA[<p>这篇笔记终于不是参考国内的博文了。<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="keyword">type</span>=<span class="string">"checkbox"</span> ng-check=<span class="string">"&#123;&#123;xxx&#125;&#125;"</span> ng-<span class="literal">true</span>-<span class="keyword">value</span>=<span class="string">"yes"</span> ng-<span class="literal">false</span>-<span class="keyword">value</span>=<span class="string">"no"</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p><code>ng-true-value</code>这个属性用来标识当该checkbox被选中时的值为多少。<br><code>ng-false-value</code>这个属性用来标识当该checkbox未被选中时的值为多少。<br><code>ng-check</code>这个属性与<code>ng-true-value</code>，<code>ng-false-value</code>配合来控制checkbox的选中状态</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这篇笔记终于不是参考国内的博文了。<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td cla]]>
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[angularjs常用解决技巧]]></title>
+    <link href="http://yoursite.com/2015/03/08/angularjs%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%8A%80%E5%B7%A7/"/>
+    <id>http://yoursite.com/2015/03/08/angularjs常用解决技巧/</id>
+    <published>2015-03-08T08:02:01.000Z</published>
+    <updated>2015-03-08T08:02:27.000Z</updated>
+    <content type="html"><![CDATA[<h4 id="问题一：解决angular-ui中modal_dialog_form_object_is_undefined_in_controller">问题一：解决angular-ui中modal dialog form object is undefined in controller</h4><p>在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据<code>$scope.formName</code>获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverflow里面啥解决办法都有。相关<a href="http://stackoverflow.com/questions/19312936/angularjs-modal-dialog-form-object-is-undefined-in-controller" target="_blank" rel="external">链接</a>。这里面最有效的办法就是在dialog里面的form表单的name属性设置成<code>$parent.formName</code>，不过在创建dialog的时候需要设置scope这个属性，相关的angular-ui见<a href="http://angular-ui.github.io/bootstrap/" target="_blank" rel="external">链接</a>。这样就能在dialog的controller中使用$scope.formName。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h4 id="问题一：解决angular-ui中modal_dialog_form_object_is_undefined_in_controller">问题一：解决angular-ui中modal dialog form object is undefined in cont]]>
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[angularjs笔记（一）]]></title>
+    <link href="http://yoursite.com/2015/03/08/angularjs%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://yoursite.com/2015/03/08/angularjs笔记（一）/</id>
+    <published>2015-03-08T08:01:01.000Z</published>
+    <updated>2015-03-08T09:57:23.000Z</updated>
+    <content type="html"><![CDATA[<p>我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。<br>第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。</p>
+<hr>
+<h2 id="scope对象">scope对象</h2><p>Angular的scope对象是POJO（简单的javascript对象），用构造函数创建的，简单版本如下：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Scope</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="Scope对象的两个属性$watch和$digest">Scope对象的两个属性<code>$watch</code>和<code>$digest</code></h3><p><code>$watch</code>和<code>$digest</code>是相辅相成的。两者一起，构成了Angular作用域的核心：数据变化的响应。<br>使用<code>$watch</code>，可以在scope上添加一个监听器。当Scope发生变化时，监听器会收到提示。给<code>$watch</code>定义两个函数就可以创建一个简体监听器。</p>
+<ul>
+<li>一个监控函数，用户指定所关注的那部分数据。</li>
+<li>一个监听函数，用户数据变更的时候接受提示。</li>
+</ul>
+<blockquote>
+<p>作为一名Angular用户，一般来说，是监控一个表达式，而不是使用监控函数。监控表达式是一个字符串，比如说“user.firstName”，通常在数据绑定，指令的属性，或者JavaScript代码中指定，它被Angular解析和编译成一个监控函数。在这篇文章的后面部分我们会探讨这是如何做的。在这篇文章中，我们将使用稍微低级的方法直接提供监控功能。</p>
+</blockquote>
+<p>为了实现$watch，我们需要存储注册过的所有监听器。我们在Scope构造函数上添加一个数组：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Scope</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.$$watcers = [];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。<br>第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。</p>
+<hr>
+<h2 id="scope对象">scope对象</h2><p>Angular的scope对象是POJO（简单的javascript对象），用构造函数创建的，简单版本如下：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Scope</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]>
+    
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[新手开发angularjs注意事项]]></title>
+    <link href="http://yoursite.com/2015/03/08/%E6%96%B0%E6%89%8B%E5%BC%80%E5%8F%91angularjs%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
+    <id>http://yoursite.com/2015/03/08/新手开发angularjs注意事项/</id>
+    <published>2015-03-08T07:43:31.000Z</published>
+    <updated>2015-03-08T11:06:57.000Z</updated>
+    <content type="html"><![CDATA[<p>作为一个新手本来用一个新技术就比较困难，坑爹的天朝把开发文档都屏蔽了，这简直是不让人活的节奏。出于为人民做贡献的精神，在这里就记录下开发angularjs应用应该注意的事项。</p>
+<hr>
+<h3 id="angularjs适用的地方">angularjs适用的地方</h3><p>angularjs是比较适合用来开发后台管理系统的。</p>
+<h3 id="angularjs项目的结构组织">angularjs项目的结构组织</h3><p>todo：这个比较难讲</p>
+<h3 id="开发中注意事项">开发中注意事项</h3><blockquote>
+<ol>
+<li>能不要用自带的<code>$http</code>来做ajax请求，就不要用。这会让你很蛋疼的，angularjs自带的<code>$http</code>封装的不是很好，如果要处理带中文的参数需要做特殊配置，既然这么麻烦干嘛不用千年神器<code>jquery</code>呢。但是坑爹的是<code>jquery</code>自带的ajax不能够触发<code>$scope.$digest()</code>。所以最好还是全局修改header,先不写了，参考<a href="http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/" target="_blank" rel="external">Make AngularJS $http service behave like jQuery.ajax()</a></li>
+</ol>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>作为一个新手本来用一个新技术就比较困难，坑爹的天朝把开发文档都屏蔽了，这简直是不让人活的节奏。出于为人民做贡献的精神，在这里就记录下开发angularjs应用应该注意的事项。</p>
+<hr>
+<h3 id="angularjs适用的地方">angularjs适用的地方</]]>
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[写ngscrollbar中的学习心得]]></title>
+    <link href="http://yoursite.com/2015/03/08/%E5%86%99ngscrollbar%E4%B8%AD%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/"/>
+    <id>http://yoursite.com/2015/03/08/写ngscrollbar中的学习心得/</id>
+    <published>2015-03-08T07:40:49.000Z</published>
+    <updated>2015-03-08T07:42:33.000Z</updated>
+    <content type="html"><![CDATA[<p>看懂了，跟会写是两个不同的概念。这在写directive中深有体会。下面介绍写这个指令过程中学习到的东西。</p>
+<ol>
+<li>自定义指令的执行顺序service-&gt;compile-&gt;子directive compile-&gt;controller-&gt;link-&gt;子directive link</li>
+<li>service 是单例的，所以在定义service的时候，最好想清楚是不是能共用（有可能会根据不同的需求会为service初始化变量，但是初始化后，别的地方也会看到相同的效果）。</li>
+<li>注意scope值的变化，使用不当会让你代码出各种问题</li>
+<li>link的变量element不能直接使用find方法来找子元素，这是比较坑爹的。</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>看懂了，跟会写是两个不同的概念。这在写directive中深有体会。下面介绍写这个指令过程中学习到的东西。</p>
+<ol>
+<li>自定义指令的执行顺序service-&gt;compile-&gt;子directive compile-&gt;controller-&g]]>
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[相对较实用的angularjs学习资源]]></title>
+    <link href="http://yoursite.com/2015/03/08/%E7%9B%B8%E5%AF%B9%E8%BE%83%E5%AE%9E%E7%94%A8%E7%9A%84angularjs%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/"/>
+    <id>http://yoursite.com/2015/03/08/相对较实用的angularjs学习资源/</id>
+    <published>2015-03-08T07:28:07.000Z</published>
+    <updated>2015-03-08T10:15:32.000Z</updated>
+    <content type="html"><![CDATA[<h4 id="实践总结_-_不可错过的Angular应用技巧">实践总结 - 不可错过的Angular应用技巧</h4><ul>
+<li>很不错的一篇实践记录，<a href="http://my.oschina.net/blogshi/blog/293631" target="_blank" rel="external">链接地址</a></li>
+<li><a href="http://my.oschina.net/ilivebox/blog/290881" target="_blank" rel="external">Angularjs Interceptors(拦截器)</a></li>
+<li><a href="http://www.oschina.net/translate/angularjs-factory-vs-service-vs-provider" target="_blank" rel="external">AngularJS之Factory vs Service vs Provider</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h4 id="实践总结_-_不可错过的Angular应用技巧">实践总结 - 不可错过的Angular应用技巧</h4><ul>
+<li>很不错的一篇实践记录，<a href="http://my.oschina.net/blogshi/blog/293631" target=]]>
+    </summary>
+    
+      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+    
+      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[国行LG G2 4.4.2 root方法]]></title>
+    <link href="http://yoursite.com/2015/03/08/%E5%9B%BD%E8%A1%8CLG-G2-4-4-2-root%E6%96%B9%E6%B3%95/"/>
+    <id>http://yoursite.com/2015/03/08/国行LG-G2-4-4-2-root方法/</id>
+    <published>2015-03-08T07:20:39.000Z</published>
+    <updated>2015-03-08T07:21:46.000Z</updated>
+    <content type="html"><![CDATA[<p>如果android手机没有谷歌服务，那还用毛android啊。其他型号手机还好说，很容易root，可是这LG G2 一升级到4.4.2之后就不能root了，直到最近国外那个越狱大神George Francis Hotz （神奇小子）近日发布了一款神奇 Android ROOT 应用，号称可 ROOT 几乎所有 Android 设备。官网<a href="http://towelroot.com/" target="_blank" rel="external">http://towelroot.com/</a>可以下载，当然在豌豆荚或者其他第三方应用平台里面也有提供，豌豆荚里面叫做<strong>神奇root</strong>。</p>
+<hr>
+<h2 id="root并安装谷歌服务步骤">root并安装谷歌服务步骤</h2><ol>
+<li>下载安装<strong>神奇root</strong></li>
+<li>根据提示操作</li>
+<li>手机连接电脑，打开开发者选项</li>
+<li>安装刷机精灵，用刷机精灵的恢复谷歌服务选项</li>
+</ol>
+<p>这样就能够使用谷歌服务了，而且已经是root了，我们可以愉快的刷rom或者玩其他东西。<br>有任何疑问可以留言。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>如果android手机没有谷歌服务，那还用毛android啊。其他型号手机还好说，很容易root，可是这LG G2 一升级到4.4.2之后就不能root了，直到最近国外那个越狱大神George Francis Hotz （神奇小子）近日发布了一款神奇 Android ROO]]>
+    </summary>
+    
+      <category term="手机" scheme="http://yoursite.com/tags/%E6%89%8B%E6%9C%BA/"/>
+    
+      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+</feed>
