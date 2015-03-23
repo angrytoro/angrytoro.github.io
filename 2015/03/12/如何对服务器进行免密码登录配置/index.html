@@ -7,22 +7,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName
 
-用户操作12useradd xxx //新增用户xxxpasswd xxx //为xxx用户设置密码">
+用户操作12useradd xxx -g groupName//新增用户xxx并把它划分到groupNam">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何对服务器进行免密码登录配置">
-<meta property="og:url" content="http://yoursite.com/2015/03/12/如何对服务器进行免密码登录配置/index.html">
+<meta property="og:url" content="http://blog.angrytoro.com/2015/03/12/如何对服务器进行免密码登录配置/index.html">
 <meta property="og:site_name" content="freefish">
 <meta property="og:description" content="用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName
 
-用户操作12useradd xxx //新增用户xxxpasswd xxx //为xxx用户设置密码">
+用户操作12useradd xxx -g groupName//新增用户xxx并把它划分到groupNam">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何对服务器进行免密码登录配置">
 <meta name="twitter:description" content="用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName
 
-用户操作12useradd xxx //新增用户xxxpasswd xxx //为xxx用户设置密码">
+用户操作12useradd xxx -g groupName//新增用户xxx并把它划分到groupNam">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/img/favicon.ico">
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
@@ -228,9 +228,9 @@
       
         <h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
 <hr>
-<h1 id="用户操作">用户操作</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx <span class="comment">//新增用户<span class="label">xxx</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="用户操作">用户操作</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx -<span class="keyword">g</span> groupName<span class="comment">//新增用户<span class="label">xxx并把它划分到groupName这个组</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="新增用户并赋予某个组的脚本">新增用户并赋予某个组的脚本</h1><p>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line">useradd <span class="variable">$1</span></span><br><span class="line">passwd <span class="variable">$1</span></span><br><span class="line">gpasswd <span class="operator">-a</span> <span class="variable">$1</span> fontend</span><br></pre></td></tr></table></figure></p>
+<h1 id="新增用户并赋予某个组的脚本">新增用户并赋予某个组的脚本</h1><p>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line">useradd <span class="variable">$1</span> -g fontend</span><br><span class="line">passwd <span class="variable">$1</span></span><br></pre></td></tr></table></figure></p>
 <p>我们可以这么执行<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sh</span> useradd.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
 <p>也可以取一个别名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> addFontendUser = <span class="string">'sh useradd.sh'</span></span><br></pre></td></tr></table></figure></p>
 <p>那么之后我们就可以直接在系统执行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addFontendUser</span><br></pre></td></tr></table></figure></p>
@@ -293,7 +293,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="如何对服务器进行免密码登录配置" data-title="如何对服务器进行免密码登录配置" data-url="http://yoursite.com/2015/03/12/如何对服务器进行免密码登录配置/"></div>
+	<div class="ds-thread" data-thread-key="如何对服务器进行免密码登录配置" data-title="如何对服务器进行免密码登录配置" data-url="http://blog.angrytoro.com/2015/03/12/如何对服务器进行免密码登录配置/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

@@ -8,7 +8,7 @@
   <meta name="description" content="this blog is just to record my learning">
 <meta property="og:type" content="website">
 <meta property="og:title" content="freefish">
-<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+<meta property="og:url" content="http://blog.angrytoro.com/page/4/index.html">
 <meta property="og:site_name" content="freefish">
 <meta property="og:description" content="this blog is just to record my learning">
 <meta name="twitter:card" content="summary">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="this blog is just to record my learning">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/img/favicon.ico">
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
@@ -184,6 +184,69 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-angularjs常用解决技巧" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/08/angularjs常用解决技巧/" class="article-date">
+  	<time datetime="2015-03-08T08:02:01.000Z" itemprop="datePublished">2015-03-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/08/angularjs常用解决技巧/">angularjs常用解决技巧</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="问题一：解决angular-ui中modal_dialog_form_object_is_undefined_in_controller">问题一：解决angular-ui中modal dialog form object is undefined in controller</h4><p>在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据<code>$scope.formName</code>获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverflow里面啥解决办法都有。相关<a href="http://stackoverflow.com/questions/19312936/angularjs-modal-dialog-form-object-is-undefined-in-controller" target="_blank" rel="external">链接</a>。这里面最有效的办法就是在dialog里面的form表单的name属性设置成<code>$parent.formName</code>，不过在创建dialog的时候需要设置scope这个属性，相关的angular-ui见<a href="http://angular-ui.github.io/bootstrap/" target="_blank" rel="external">链接</a>。这样就能在dialog的controller中使用$scope.formName。</p>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-angularjs笔记（一）" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -438,77 +501,6 @@
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-国行LG-G2-4-4-2-root方法" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/08/国行LG-G2-4-4-2-root方法/" class="article-date">
-  	<time datetime="2015-03-08T07:20:39.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/国行LG-G2-4-4-2-root方法/">国行LG G2 4.4.2 root方法</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如果android手机没有谷歌服务，那还用毛android啊。其他型号手机还好说，很容易root，可是这LG G2 一升级到4.4.2之后就不能root了，直到最近国外那个越狱大神George Francis Hotz （神奇小子）近日发布了一款神奇 Android ROOT 应用，号称可 ROOT 几乎所有 Android 设备。官网<a href="http://towelroot.com/" target="_blank" rel="external">http://towelroot.com/</a>可以下载，当然在豌豆荚或者其他第三方应用平台里面也有提供，豌豆荚里面叫做<strong>神奇root</strong>。</p>
-<hr>
-<h2 id="root并安装谷歌服务步骤">root并安装谷歌服务步骤</h2><ol>
-<li>下载安装<strong>神奇root</strong></li>
-<li>根据提示操作</li>
-<li>手机连接电脑，打开开发者选项</li>
-<li>安装刷机精灵，用刷机精灵的恢复谷歌服务选项</li>
-</ol>
-<p>这样就能够使用谷歌服务了，而且已经是root了，我们可以愉快的刷rom或者玩其他东西。<br>有任何疑问可以留言。</p>
-
-        
-          <!-- show an end symbol if the article is fully displayed -->
-          <hr/>
-          <p class="article-more-link">
-            <a>end</a>
-          </p>
-        
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/手机/">手机</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/工具/">工具</a>
 	</div>
 
 

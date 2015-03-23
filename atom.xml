@@ -3,9 +3,9 @@
   <title><![CDATA[freefish]]></title>
   
   <link href="/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
-  <updated>2015-03-12T14:48:46.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <link href="http://blog.angrytoro.com/"/>
+  <updated>2015-03-23T16:26:50.000Z</updated>
+  <id>http://blog.angrytoro.com/</id>
   
   <author>
     <name><![CDATA[freefish]]></name>
@@ -15,9 +15,25 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[对于JavaScript中继承的思考]]></title>
+    <link href="http://blog.angrytoro.com/2015/03/24/%E5%AF%B9%E4%BA%8EJavaScript%E4%B8%AD%E7%BB%A7%E6%89%BF%E7%9A%84%E6%80%9D%E8%80%83/"/>
+    <id>http://blog.angrytoro.com/2015/03/24/对于JavaScript中继承的思考/</id>
+    <published>2015-03-23T16:25:26.000Z</published>
+    <updated>2015-03-23T16:26:50.000Z</updated>
+    <content type="html"><![CDATA[<p>先附上一份代码让大家思考，直接看代码，猜猜最终执行的结果会是什么<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">($)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> super_ = <span class="function"><span class="keyword">function</span><span class="params">(methodName, args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">var</span> method = <span class="keyword">this</span>.superClass_.prototype[methodName];</span><br><span class="line">		<span class="keyword">if</span>(method &amp;&amp; <span class="keyword">typeof</span> method === <span class="string">'function'</span>) &#123;</span><br><span class="line">			method.call(<span class="keyword">this</span>, args);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">  	$.inherit = <span class="function"><span class="keyword">function</span><span class="params">(subClass, superClass)</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">var</span> temp = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">	    temp.prototype = superClass.prototype;</span><br><span class="line">	    <span class="keyword">var</span> subPro = <span class="keyword">new</span> temp();</span><br><span class="line">	    subPro.constructor = subClass;</span><br><span class="line">	    subPro.super_ = super_;</span><br><span class="line">	    subPro.superClass_ = superClass;</span><br><span class="line">	    subClass.prototype = subPro;</span><br><span class="line">  	&#125;;</span><br><span class="line">&#125;)(jQuery);</span><br><span class="line"><span class="keyword">var</span> Super = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Super'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.extend(Super.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Super'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> Sub1 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Sub1'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.inherit(Sub1, Super);</span><br><span class="line">$.extend(Sub1.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.super_(<span class="string">'say'</span>, <span class="built_in">arguments</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Sub1'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Sub1().say();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'========'</span>);</span><br><span class="line"><span class="keyword">var</span> Sub2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Sub2'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.inherit(Sub2, Sub1);</span><br><span class="line">$.extend(Sub2.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.super_(<span class="string">'say'</span>, <span class="built_in">arguments</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Sub2'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Sub2().say();</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>先附上一份代码让大家思考，直接看代码，猜猜最终执行的结果会是什么<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><b]]>
+    </summary>
+    
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[为了运行fekit sync，在服务器配置rsync的时候遇到的问题]]></title>
-    <link href="http://yoursite.com/2015/03/12/%E4%B8%BA%E4%BA%86%E8%BF%90%E8%A1%8Cfekit-sync%EF%BC%8C%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AErsync%E7%9A%84%E6%97%B6%E5%80%99%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/</id>
+    <link href="http://blog.angrytoro.com/2015/03/12/%E4%B8%BA%E4%BA%86%E8%BF%90%E8%A1%8Cfekit-sync%EF%BC%8C%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AErsync%E7%9A%84%E6%97%B6%E5%80%99%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://blog.angrytoro.com/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/</id>
     <published>2015-03-12T14:40:48.000Z</published>
     <updated>2015-03-12T14:48:46.000Z</updated>
     <content type="html"><![CDATA[<h2 id="问题一、sudo：抱歉，您必须拥有一个终端来执行_sudo">问题一、<code>sudo：抱歉，您必须拥有一个终端来执行 sudo</code></h2><p>在执行<code>fekit sync</code>的时候遇到这个问题。解决办法</p>
@@ -50,21 +66,21 @@
 <block]]>
     </summary>
     
-      <category term="linux" scheme="http://yoursite.com/categories/linux/"/>
+      <category term="linux" scheme="http://blog.angrytoro.com/categories/linux/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[如何对服务器进行免密码登录配置]]></title>
-    <link href="http://yoursite.com/2015/03/12/%E5%A6%82%E4%BD%95%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/"/>
-    <id>http://yoursite.com/2015/03/12/如何对服务器进行免密码登录配置/</id>
+    <link href="http://blog.angrytoro.com/2015/03/12/%E5%A6%82%E4%BD%95%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/"/>
+    <id>http://blog.angrytoro.com/2015/03/12/如何对服务器进行免密码登录配置/</id>
     <published>2015-03-12T04:32:33.000Z</published>
-    <updated>2015-03-12T04:36:26.000Z</updated>
+    <updated>2015-03-18T13:42:08.000Z</updated>
     <content type="html"><![CDATA[<h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
 <hr>
-<h1 id="用户操作">用户操作</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx <span class="comment">//新增用户<span class="label">xxx</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="用户操作">用户操作</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx -<span class="keyword">g</span> groupName<span class="comment">//新增用户<span class="label">xxx并把它划分到groupName这个组</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="新增用户并赋予某个组的脚本">新增用户并赋予某个组的脚本</h1><p>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line">useradd <span class="variable">$1</span></span><br><span class="line">passwd <span class="variable">$1</span></span><br><span class="line">gpasswd <span class="operator">-a</span> <span class="variable">$1</span> fontend</span><br></pre></td></tr></table></figure></p>
+<h1 id="新增用户并赋予某个组的脚本">新增用户并赋予某个组的脚本</h1><p>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line">useradd <span class="variable">$1</span> -g fontend</span><br><span class="line">passwd <span class="variable">$1</span></span><br></pre></td></tr></table></figure></p>
 <p>我们可以这么执行<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sh</span> useradd.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
 <p>也可以取一个别名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> addFontendUser = <span class="string">'sh useradd.sh'</span></span><br></pre></td></tr></table></figure></p>
 <p>那么之后我们就可以直接在系统执行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addFontendUser</span><br></pre></td></tr></table></figure></p>
@@ -81,18 +97,18 @@
     <summary type="html">
     <![CDATA[<h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
 <hr>
-<h1 id="用户操作">用户操作</h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx <span class="comment">//新增用户<span class="label">xxx</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>]]>
+<h1 id="用户操作">用户操作</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx -<span class="keyword">g</span> groupName<span class="comment">//新增用户<span class="label">xxx并把它划分到groupName这个组</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>]]>
     
     </summary>
     
-      <category term="linux" scheme="http://yoursite.com/categories/linux/"/>
+      <category term="linux" scheme="http://blog.angrytoro.com/categories/linux/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[chrome重度用户必备插件]]></title>
-    <link href="http://yoursite.com/2015/03/09/chrome%E9%87%8D%E5%BA%A6%E7%94%A8%E6%88%B7%E5%BF%85%E8%A3%85%E6%8F%92%E4%BB%B6/"/>
-    <id>http://yoursite.com/2015/03/09/chrome重度用户必装插件/</id>
+    <link href="http://blog.angrytoro.com/2015/03/09/chrome%E9%87%8D%E5%BA%A6%E7%94%A8%E6%88%B7%E5%BF%85%E8%A3%85%E6%8F%92%E4%BB%B6/"/>
+    <id>http://blog.angrytoro.com/2015/03/09/chrome重度用户必装插件/</id>
     <published>2015-03-09T12:48:05.000Z</published>
     <updated>2015-03-09T13:49:48.000Z</updated>
     <content type="html"><![CDATA[<h1 id="此文原创，转载请标明出处。谢谢。">此文原创，转载请标明出处。谢谢。</h1><p>博主使用chrome将近5年，这些插件是博主在使用chrome时精心收藏下来的，大家定会喜欢。事先说明，这篇博文适合那些懂翻墙的人看。对于每个插件，相信大家会使用的，不会使用的在下面被博主留言，必仔细教你怎么使用。</p>
@@ -133,16 +149,16 @@
     
     </summary>
     
-      <category term="chrome" scheme="http://yoursite.com/tags/chrome/"/>
+      <category term="chrome" scheme="http://blog.angrytoro.com/tags/chrome/"/>
     
-      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="工具" scheme="http://blog.angrytoro.com/categories/%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[解决form.submit()无法触发onsubmit事件问]]></title>
-    <link href="http://yoursite.com/2015/03/08/%E8%A7%A3%E5%86%B3form-submit-%E6%97%A0%E6%B3%95%E8%A7%A6%E5%8F%91onsubmit%E4%BA%8B%E4%BB%B6%E9%97%AE/"/>
-    <id>http://yoursite.com/2015/03/08/解决form-submit-无法触发onsubmit事件问/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/%E8%A7%A3%E5%86%B3form-submit-%E6%97%A0%E6%B3%95%E8%A7%A6%E5%8F%91onsubmit%E4%BA%8B%E4%BB%B6%E9%97%AE/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/解决form-submit-无法触发onsubmit事件问/</id>
     <published>2015-03-08T11:04:04.000Z</published>
     <updated>2015-03-08T11:04:40.000Z</updated>
     <content type="html"><![CDATA[<p>有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:</p>
@@ -158,14 +174,14 @@
 <p>The submit method does not invoke the onsubmit event handler]]>
     </summary>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[不同浏览器求滚动距离的办法]]></title>
-    <link href="http://yoursite.com/2015/03/08/%E4%B8%8D%E5%90%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B1%82%E6%BB%9A%E5%8A%A8%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%8A%9E%E6%B3%95/"/>
-    <id>http://yoursite.com/2015/03/08/不同浏览器求滚动距离的办法/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/%E4%B8%8D%E5%90%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B1%82%E6%BB%9A%E5%8A%A8%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%8A%9E%E6%B3%95/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/不同浏览器求滚动距离的办法/</id>
     <published>2015-03-08T11:02:26.000Z</published>
     <updated>2015-03-08T11:03:15.000Z</updated>
     <content type="html"><![CDATA[<h1 id="chrome">chrome</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</span><br><span class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</span><br><span class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</span><br></pre></td></tr></table></figure>
@@ -179,14 +195,14 @@
     <![CDATA[<h1 id="chrome">chrome</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span clas]]>
     </summary>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[IE9 BUG overflow :auto 底部空白解决方案]]></title>
-    <link href="http://yoursite.com/2015/03/08/IE9-BUG-overflow-auto-%E5%BA%95%E9%83%A8%E7%A9%BA%E7%99%BD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    <id>http://yoursite.com/2015/03/08/IE9-BUG-overflow-auto-底部空白解决方案/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/IE9-BUG-overflow-auto-%E5%BA%95%E9%83%A8%E7%A9%BA%E7%99%BD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/IE9-BUG-overflow-auto-底部空白解决方案/</id>
     <published>2015-03-08T11:00:17.000Z</published>
     <updated>2015-03-08T11:01:09.000Z</updated>
     <content type="html"><![CDATA[<p>如果容器设置了max-height，overflow:auto。那么当js动态加载内容，或者鼠标点击容器的时候，容器底部会自动被撑大，留着空白。<br>解决办法是为容器添加min-height:0%。不过用grunt压缩的时候，会变成min-height:0;IE直接把这个当成min-height:0px。所以如果要压缩，那么我们应该把min-height设置成0.1%或者0.01%或者其他适合的数字。</p>
@@ -196,16 +212,16 @@
     <![CDATA[<p>如果容器设置了max-height，overflow:auto。那么当js动态加载内容，或者鼠标点击容器的时候，容器底部会自动被撑大，留着空白。<br>解决办法是为容器添加min-height:0%。不过用grunt压缩的时候，会变成min-height:0;IE直接把这个]]>
     </summary>
     
-      <category term="hack" scheme="http://yoursite.com/tags/hack/"/>
+      <category term="hack" scheme="http://blog.angrytoro.com/tags/hack/"/>
     
-      <category term="CSS" scheme="http://yoursite.com/categories/CSS/"/>
+      <category term="CSS" scheme="http://blog.angrytoro.com/categories/CSS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[HTML中用到的data类型的url]]></title>
-    <link href="http://yoursite.com/2015/03/08/HTML%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84data%E7%B1%BB%E5%9E%8B%E7%9A%84url/"/>
-    <id>http://yoursite.com/2015/03/08/HTML中用到的data类型的url/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/HTML%E4%B8%AD%E7%94%A8%E5%88%B0%E7%9A%84data%E7%B1%BB%E5%9E%8B%E7%9A%84url/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/HTML中用到的data类型的url/</id>
     <published>2015-03-08T10:17:31.000Z</published>
     <updated>2015-03-08T10:17:46.000Z</updated>
     <content type="html"><![CDATA[<p>针对一些小的数据，我们可以直接在网页中嵌入，而不是引用外部文件，例如一些小的loading图片等。这样的好处是可以减少一次网络请求，缺点是页面内容变大。</p>
@@ -219,16 +235,16 @@
 <p>data的url类型有以下几种：<br><figure class="highlight has]]>
     </summary>
     
-      <category term="img" scheme="http://yoursite.com/tags/img/"/>
+      <category term="img" scheme="http://blog.angrytoro.com/tags/img/"/>
     
-      <category term="HTML" scheme="http://yoursite.com/categories/HTML/"/>
+      <category term="HTML" scheme="http://blog.angrytoro.com/categories/HTML/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[git常用命令]]></title>
-    <link href="http://yoursite.com/2015/03/08/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2015/03/08/git常用命令/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/git常用命令/</id>
     <published>2015-03-08T10:15:55.000Z</published>
     <updated>2015-03-08T10:16:49.000Z</updated>
     <content type="html"><![CDATA[<ol>
@@ -250,16 +266,16 @@
 <figure class="highlight"><table><tr><td class="gu]]>
     </summary>
     
-      <category term="git" scheme="http://yoursite.com/tags/git/"/>
+      <category term="git" scheme="http://blog.angrytoro.com/tags/git/"/>
     
-      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="工具" scheme="http://blog.angrytoro.com/categories/%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Angularjs之Directive(指令)]]></title>
-    <link href="http://yoursite.com/2015/03/08/Angularjs%E4%B9%8BDirective-%E6%8C%87%E4%BB%A4/"/>
-    <id>http://yoursite.com/2015/03/08/Angularjs之Directive-指令/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/Angularjs%E4%B9%8BDirective-%E6%8C%87%E4%BB%A4/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/Angularjs之Directive-指令/</id>
     <published>2015-03-08T10:13:49.000Z</published>
     <updated>2015-03-08T10:14:28.000Z</updated>
     <content type="html"><![CDATA[<p>简要的讲讲配置及要点，如果看不懂就看下面的参考lian</p>
@@ -296,16 +312,16 @@
     
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Angularjs实践（一）]]></title>
-    <link href="http://yoursite.com/2015/03/08/Angularjs%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://yoursite.com/2015/03/08/Angularjs实践（一）/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/Angularjs%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/Angularjs实践（一）/</id>
     <published>2015-03-08T10:12:24.000Z</published>
     <updated>2015-03-08T10:13:17.000Z</updated>
     <content type="html"><![CDATA[<h3 id="简单迭代器">简单迭代器</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span>&gt;</span><span class="tag">&lt;<span class="title">tr</span>&gt;</span><span class="tag">&lt;<span class="title">th</span>&gt;</span>row number<span class="tag">&lt;/<span class="title">th</span>&gt;</span><span class="tag">&lt;/<span class="title">tr</span>&gt;</span><span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span> <span class="attribute">ng-repeat</span>=<span class="value">"i in [0, 1, 2, 3, 4, 5, 6, 7]"</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>&#123; &#123;i+1&#125; &#125;<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -338,16 +354,16 @@
     
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Angularjs实践（二）]]></title>
-    <link href="http://yoursite.com/2015/03/08/Angularjs%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
-    <id>http://yoursite.com/2015/03/08/Angularjs实践（二）/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/Angularjs%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/Angularjs实践（二）/</id>
     <published>2015-03-08T10:08:54.000Z</published>
     <updated>2015-03-08T10:11:34.000Z</updated>
     <content type="html"><![CDATA[<h3 id="图片模板">图片模板</h3><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">img</span> <span class="attribute">ng-src</span>=<span class="value">"</span></span></span><span class="expression">&#123;&#123;<span class="variable">phone.imageUrl</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
@@ -383,16 +399,16 @@
     
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[AngularJS 从1.2迁移到1.3的变动记录]]></title>
-    <link href="http://yoursite.com/2015/03/08/AngularJS-%E4%BB%8E1-2%E8%BF%81%E7%A7%BB%E5%88%B01-3%E7%9A%84%E5%8F%98%E5%8A%A8%E8%AE%B0%E5%BD%95/"/>
-    <id>http://yoursite.com/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/AngularJS-%E4%BB%8E1-2%E8%BF%81%E7%A7%BB%E5%88%B01-3%E7%9A%84%E5%8F%98%E5%8A%A8%E8%AE%B0%E5%BD%95/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/</id>
     <published>2015-03-08T09:29:40.000Z</published>
     <updated>2015-03-08T09:51:40.000Z</updated>
     <content type="html"><![CDATA[<p>公司前端升级了<code>AngularJS</code>，那就顺便记录下1.2到1.3的变化吧。主要是记录一些可能大多数人会遇到的改变，以及1.3的新特性。</p>
@@ -493,16 +509,16 @@
     
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[angularjs开发笔记之ng-class]]></title>
-    <link href="http://yoursite.com/2015/03/08/angularjs%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0%E4%B9%8Bng-class/"/>
-    <id>http://yoursite.com/2015/03/08/angularjs开发笔记之ng-class/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/angularjs%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0%E4%B9%8Bng-class/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/angularjs开发笔记之ng-class/</id>
     <published>2015-03-08T08:07:52.000Z</published>
     <updated>2015-03-08T10:06:13.000Z</updated>
     <content type="html"><![CDATA[<h4 id="参考AngularJS_ng-class用法">参考<a href="http://my.oschina.net/gejiawen0913/blog/188547" target="_blank" rel="external">AngularJS ng-class用法</a></h4><p><code>ng-class</code>有三种用法，最简单的就是<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.className = <span class="string">'abc'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div class=<span class="string">"&#123;&#123;className&#125;&#125;"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
@@ -522,16 +538,16 @@
     
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[angularjs开发笔记之checkbox]]></title>
-    <link href="http://yoursite.com/2015/03/08/angularjs%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0%E4%B9%8Bcheckbox/"/>
-    <id>http://yoursite.com/2015/03/08/angularjs开发笔记之checkbox/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/angularjs%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0%E4%B9%8Bcheckbox/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/angularjs开发笔记之checkbox/</id>
     <published>2015-03-08T08:06:45.000Z</published>
     <updated>2015-03-08T08:07:30.000Z</updated>
     <content type="html"><![CDATA[<p>这篇笔记终于不是参考国内的博文了。<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="keyword">type</span>=<span class="string">"checkbox"</span> ng-check=<span class="string">"&#123;&#123;xxx&#125;&#125;"</span> ng-<span class="literal">true</span>-<span class="keyword">value</span>=<span class="string">"yes"</span> ng-<span class="literal">false</span>-<span class="keyword">value</span>=<span class="string">"no"</span>&gt;</span><br></pre></td></tr></table></figure></p>
@@ -541,16 +557,16 @@
     <![CDATA[<p>这篇笔记终于不是参考国内的博文了。<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td cla]]>
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[angularjs常用解决技巧]]></title>
-    <link href="http://yoursite.com/2015/03/08/angularjs%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%8A%80%E5%B7%A7/"/>
-    <id>http://yoursite.com/2015/03/08/angularjs常用解决技巧/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/angularjs%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%8A%80%E5%B7%A7/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/angularjs常用解决技巧/</id>
     <published>2015-03-08T08:02:01.000Z</published>
     <updated>2015-03-08T08:02:27.000Z</updated>
     <content type="html"><![CDATA[<h4 id="问题一：解决angular-ui中modal_dialog_form_object_is_undefined_in_controller">问题一：解决angular-ui中modal dialog form object is undefined in controller</h4><p>在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据<code>$scope.formName</code>获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverflow里面啥解决办法都有。相关<a href="http://stackoverflow.com/questions/19312936/angularjs-modal-dialog-form-object-is-undefined-in-controller" target="_blank" rel="external">链接</a>。这里面最有效的办法就是在dialog里面的form表单的name属性设置成<code>$parent.formName</code>，不过在创建dialog的时候需要设置scope这个属性，相关的angular-ui见<a href="http://angular-ui.github.io/bootstrap/" target="_blank" rel="external">链接</a>。这样就能在dialog的controller中使用$scope.formName。</p>
@@ -559,16 +575,16 @@
     <![CDATA[<h4 id="问题一：解决angular-ui中modal_dialog_form_object_is_undefined_in_controller">问题一：解决angular-ui中modal dialog form object is undefined in cont]]>
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[angularjs笔记（一）]]></title>
-    <link href="http://yoursite.com/2015/03/08/angularjs%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://yoursite.com/2015/03/08/angularjs笔记（一）/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/angularjs%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/angularjs笔记（一）/</id>
     <published>2015-03-08T08:01:01.000Z</published>
     <updated>2015-03-08T09:57:23.000Z</updated>
     <content type="html"><![CDATA[<p>我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。<br>第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。</p>
@@ -594,16 +610,16 @@
     
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[新手开发angularjs注意事项]]></title>
-    <link href="http://yoursite.com/2015/03/08/%E6%96%B0%E6%89%8B%E5%BC%80%E5%8F%91angularjs%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
-    <id>http://yoursite.com/2015/03/08/新手开发angularjs注意事项/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/%E6%96%B0%E6%89%8B%E5%BC%80%E5%8F%91angularjs%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/新手开发angularjs注意事项/</id>
     <published>2015-03-08T07:43:31.000Z</published>
     <updated>2015-03-08T11:06:57.000Z</updated>
     <content type="html"><![CDATA[<p>作为一个新手本来用一个新技术就比较困难，坑爹的天朝把开发文档都屏蔽了，这简直是不让人活的节奏。出于为人民做贡献的精神，在这里就记录下开发angularjs应用应该注意的事项。</p>
@@ -622,16 +638,16 @@
 <h3 id="angularjs适用的地方">angularjs适用的地方</]]>
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[写ngscrollbar中的学习心得]]></title>
-    <link href="http://yoursite.com/2015/03/08/%E5%86%99ngscrollbar%E4%B8%AD%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/"/>
-    <id>http://yoursite.com/2015/03/08/写ngscrollbar中的学习心得/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/%E5%86%99ngscrollbar%E4%B8%AD%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/写ngscrollbar中的学习心得/</id>
     <published>2015-03-08T07:40:49.000Z</published>
     <updated>2015-03-08T07:42:33.000Z</updated>
     <content type="html"><![CDATA[<p>看懂了，跟会写是两个不同的概念。这在写directive中深有体会。下面介绍写这个指令过程中学习到的东西。</p>
@@ -648,16 +664,16 @@
 <li>自定义指令的执行顺序service-&gt;compile-&gt;子directive compile-&gt;controller-&g]]>
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[相对较实用的angularjs学习资源]]></title>
-    <link href="http://yoursite.com/2015/03/08/%E7%9B%B8%E5%AF%B9%E8%BE%83%E5%AE%9E%E7%94%A8%E7%9A%84angularjs%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/"/>
-    <id>http://yoursite.com/2015/03/08/相对较实用的angularjs学习资源/</id>
+    <link href="http://blog.angrytoro.com/2015/03/08/%E7%9B%B8%E5%AF%B9%E8%BE%83%E5%AE%9E%E7%94%A8%E7%9A%84angularjs%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/"/>
+    <id>http://blog.angrytoro.com/2015/03/08/相对较实用的angularjs学习资源/</id>
     <published>2015-03-08T07:28:07.000Z</published>
     <updated>2015-03-08T10:15:32.000Z</updated>
     <content type="html"><![CDATA[<h4 id="实践总结_-_不可错过的Angular应用技巧">实践总结 - 不可错过的Angular应用技巧</h4><ul>
@@ -671,35 +687,9 @@
 <li>很不错的一篇实践记录，<a href="http://my.oschina.net/blogshi/blog/293631" target=]]>
     </summary>
     
-      <category term="AngularJS" scheme="http://yoursite.com/tags/AngularJS/"/>
+      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
     
-      <category term="JavaScript" scheme="http://yoursite.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[国行LG G2 4.4.2 root方法]]></title>
-    <link href="http://yoursite.com/2015/03/08/%E5%9B%BD%E8%A1%8CLG-G2-4-4-2-root%E6%96%B9%E6%B3%95/"/>
-    <id>http://yoursite.com/2015/03/08/国行LG-G2-4-4-2-root方法/</id>
-    <published>2015-03-08T07:20:39.000Z</published>
-    <updated>2015-03-08T07:21:46.000Z</updated>
-    <content type="html"><![CDATA[<p>如果android手机没有谷歌服务，那还用毛android啊。其他型号手机还好说，很容易root，可是这LG G2 一升级到4.4.2之后就不能root了，直到最近国外那个越狱大神George Francis Hotz （神奇小子）近日发布了一款神奇 Android ROOT 应用，号称可 ROOT 几乎所有 Android 设备。官网<a href="http://towelroot.com/" target="_blank" rel="external">http://towelroot.com/</a>可以下载，当然在豌豆荚或者其他第三方应用平台里面也有提供，豌豆荚里面叫做<strong>神奇root</strong>。</p>
-<hr>
-<h2 id="root并安装谷歌服务步骤">root并安装谷歌服务步骤</h2><ol>
-<li>下载安装<strong>神奇root</strong></li>
-<li>根据提示操作</li>
-<li>手机连接电脑，打开开发者选项</li>
-<li>安装刷机精灵，用刷机精灵的恢复谷歌服务选项</li>
-</ol>
-<p>这样就能够使用谷歌服务了，而且已经是root了，我们可以愉快的刷rom或者玩其他东西。<br>有任何疑问可以留言。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>如果android手机没有谷歌服务，那还用毛android啊。其他型号手机还好说，很容易root，可是这LG G2 一升级到4.4.2之后就不能root了，直到最近国外那个越狱大神George Francis Hotz （神奇小子）近日发布了一款神奇 Android ROO]]>
-    </summary>
-    
-      <category term="手机" scheme="http://yoursite.com/tags/%E6%89%8B%E6%9C%BA/"/>
-    
-      <category term="工具" scheme="http://yoursite.com/categories/%E5%B7%A5%E5%85%B7/"/>
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
