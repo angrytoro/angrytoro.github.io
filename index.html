@@ -111,7 +111,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/chrome/" style="font-size: 10px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -184,6 +184,66 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Chrome浏览器Network面板" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/30/Chrome浏览器Network面板/" class="article-date">
+  	<time datetime="2015-03-30T15:12:18.000Z" itemprop="datePublished">2015-03-30</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/30/Chrome浏览器Network面板/">Chrome浏览器Network面板</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？</p>
+<h1 id="Resource_Timing_API">Resource Timing API</h1><p>这个面板使用<a href="http://www.w3.org/TR/resource-timing/">Resource Timing API</a>来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考<a href="http://www.w3cfuns.com/article-5598442-1-1.html">Navigation Timing 测试网页加载速度</a>，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。<br><img src="/img/resource-timing-overview.png" alt="network timing data points"><br>咋们看看每个请求，都包含有哪些数据。在控制台输入<code>performance.getEntries()[0]</code><br>
+        <hr/>
+        <p class="article-more-link">
+          <a  href="/2015/03/30/Chrome浏览器Network面板/#more">more >></a>
+        </p>
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chrome/">chrome</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/工具/">工具</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-对于JavaScript中继承的思考" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -457,70 +517,6 @@
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/工具/">工具</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-解决form-submit-无法触发onsubmit事件问" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/08/解决form-submit-无法触发onsubmit事件问/" class="article-date">
-  	<time datetime="2015-03-08T11:04:04.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/解决form-submit-无法触发onsubmit事件问/">解决form.submit()无法触发onsubmit事件问</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:</p>
-<blockquote>
-<p>The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explorer 5.5 and later, you can call the fireEvent method with a value of onsubmit in the sEvent parameter. </p>
-</blockquote>
-<p>大家知道啥回事了吧。原生js在执行<code>form.submit()</code>的时候根本不会去触发onsubmit事件。<br>所以在<code>submit</code>之前，先手动绑定一个<strong>submit</strong>事件（叫其他名字也行，如<strong>gaga</strong>）:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> form = <span class="built_in">document</span>.getElementById(<span class="string">'xxx'</span>);</span><br><span class="line">$(form).bind(<span class="string">'submit'</span>,<span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123; <span class="comment">//绑定事件</span></span><br><span class="line">    <span class="built_in">console</span>.log(e);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(form.fireEvent) &#123; <span class="comment">// if IE Browser</span></span><br><span class="line">    form.fireEvent(<span class="string">'onsubmit'</span>); <span class="comment">//激活submit事件</span></span><br><span class="line">    form.submit(); <span class="comment">//促发sbumit事件</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">'HTMLEvents'</span>);</span><br><span class="line">    event.initEvent(<span class="string">'submit'</span>, <span class="literal">false</span>, <span class="literal">true</span>); <span class="comment">//初始化submit事件</span></span><br><span class="line">    event.dispatchEvent(event); <span class="comment">//触发submit事件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>也就是我们不能简单的<code>form.submit()</code>。得在之前构造相应的函数，太费劲了。尽量绕过这种需求吧，实在是没办法的时候再用这种解决方案。</p>
-
-        
-          <!-- show an end symbol if the article is fully displayed -->
-          <hr/>
-          <p class="article-more-link">
-            <a>end</a>
-          </p>
-        
-      
-    </div>
-    
-    <div class="article-info">
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
 	</div>
 
 

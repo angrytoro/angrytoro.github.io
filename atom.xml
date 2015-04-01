@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2015-03-24T15:04:06.000Z</updated>
+  <updated>2015-04-01T15:10:24.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Chrome浏览器Network面板]]></title>
+    <link href="http://blog.angrytoro.com/2015/03/30/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8Network%E9%9D%A2%E6%9D%BF/"/>
+    <id>http://blog.angrytoro.com/2015/03/30/Chrome浏览器Network面板/</id>
+    <published>2015-03-30T15:12:18.000Z</published>
+    <updated>2015-04-01T15:10:24.000Z</updated>
+    <content type="html"><![CDATA[<p>前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？</p>
+<h1 id="Resource_Timing_API">Resource Timing API</h1><p>这个面板使用<a href="http://www.w3.org/TR/resource-timing/" target="_blank" rel="external">Resource Timing API</a>来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考<a href="http://www.w3cfuns.com/article-5598442-1-1.html" target="_blank" rel="external">Navigation Timing 测试网页加载速度</a>，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。<br><img src="/img/resource-timing-overview.png" alt="network timing data points"><br>咋们看看每个请求，都包含有哪些数据。在控制台输入<code>performance.getEntries()[0]</code><br><a id="more"></a><br><img src="/img/performance.getEntries.png" alt="这个api记录的第一个请求的数据"><br>有这些数据，我们可以做详细的网站性能统计。<br>这里只记录了每个请求的每个节点所花的时间，那么有没有接口记录整个网页的加载详情呢。有的，<code>performance.timing</code>这个接口记录了整个网页加载的详细时间数据。<br><img src="/img/performance.timing.png" alt="performance.timing"></p>
+<h1 id="Timing_details_tab">Timing details tab</h1><p>当我们在测试某个接口，或者某个资源的加载速度时，我们最常用的就是<strong>Timing details tab</strong>这个东东了，先看下，它到底是什么，然后咋们在来解释每个字段的意思。<br><img src="/img/Timing details tab.png" alt="Timing details tab"><br>这个截图没有包含<strong>Timing details tab</strong>的所有字段。</p>
+<h2 id="字段解释">字段解释</h2><ul>
+<li><strong>Stalled/Blocking:</strong>是浏览器得到发出请求指令，到请求可以发出所等待的时间.包括等待代理协商等待的时间，除此之外还有浏览器等待可复用的连接的时间（Chrome下，同一个域名下最多可同时并行6个请求，不同浏览器的可同时并发请求连接数量不一样，详情请参考<a href="http://www.zhihu.com/question/20474326" target="_blank" rel="external">浏览器允许的并发请求资源数是什么意思</a>）</li>
+<li><strong>Proxy Negotiation:</strong>链接代理服务器所花的协商时间</li>
+<li><strong>DNS Lookup:</strong>dns查询所花的时间(像刚才的截图，我们可以发现这个网站花在dns查找的时间太多了)</li>
+<li><strong>Initial Connection / Connecting:</strong>TCP握手所花的时间</li>
+<li><strong>SSL:</strong>如果是https请求，那么浏览器还要话费SSL握手时间。</li>
+<li><strong>Request Sent / Sending:</strong>请求发送完成所花的时间</li>
+<li><strong>Waiting (TTFB):</strong>请求发出后，到接收第一个字节所花的时间（在网速稳定的情况下，如果花的时间很长，那么就要检查下是程序写得有问题还是服务器出问题了）</li>
+<li><strong>Content Download / Downloading:</strong>接收服务器传来的数据所花的时间<br>以上所有时间加起来就是这个请求所花的时间。如果网页加载慢，从这里我们大概可以检查哪个请求有异常。<h1 id="如何查看我们网页首屏加载时间">如何查看我们网页首屏加载时间</h1>先看一张图片<br><img src="/img/页面加载时间.png" alt="页面加载时间"><br>这里有两个参数<strong>DOMContentLoaded</strong>和<strong>load</strong><br><strong>DOMContentLoaded:</strong>表示 DOM 与 CSSOM 皆已准备就绪(很多 JavaScript 框架会在执行它们自己的逻辑前等待这个事件的触发)。这个所花时间越长，证明这个页面越复杂，或者你的代码有问题。首屏对用户很重要，所以这个时间不要太长。<br><strong>load:</strong>表示页面所需的资源已经都加载了，如果这个花很长时间，该看看哪个坑爹的资源出问题了。<br>目前看过对首屏优化做得最好的之一是亚马逊，那速度简直是变态的快。<h1 id="总结">总结</h1>当我们网站加载速度慢的时候，看看这个tab，检查下哪些地方可以优化。</li>
+</ul>
+<h1 id="参考">参考</h1><blockquote>
+<p><a href="https://developer.chrome.com/devtools/docs/network" target="_blank" rel="external">Evaluating network performance</a><br><a href="http://www.w3.org/TR/resource-timing/" target="_blank" rel="external">Resource Timing</a><br><a href="http://www.w3cfuns.com/article-5598442-1-1.html" target="_blank" rel="external">Navigation Timing 测试网页加载速度</a><br><a href="http://www.th7.cn/web/html-css/201311/14802.shtml" target="_blank" rel="external">初探performance.timing API</a><br><a href="http://segmentfault.com/q/1010000002399481/a-1020000002399855" target="_blank" rel="external">chrome的timeline的问题？</a><br><a href="http://www.zhihu.com/question/20474326" target="_blank" rel="external">浏览器允许的并发请求资源数是什么意思？</a></p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？</p>
+<h1 id="Resource_Timing_API">Resource Timing API</h1><p>这个面板使用<a href="http://www.w3.org/TR/resource-timing/">Resource Timing API</a>来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考<a href="http://www.w3cfuns.com/article-5598442-1-1.html">Navigation Timing 测试网页加载速度</a>，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。<br><img src="/img/resource-timing-overview.png" alt="network timing data points"><br>咋们看看每个请求，都包含有哪些数据。在控制台输入<code>performance.getEntries()[0]</code><br>]]>
+    
+    </summary>
+    
+      <category term="chrome" scheme="http://blog.angrytoro.com/tags/chrome/"/>
+    
+      <category term="工具" scheme="http://blog.angrytoro.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[对于JavaScript中继承的思考]]></title>
@@ -672,29 +707,6 @@
     <![CDATA[<p>看懂了，跟会写是两个不同的概念。这在写directive中深有体会。下面介绍写这个指令过程中学习到的东西。</p>
 <ol>
 <li>自定义指令的执行顺序service-&gt;compile-&gt;子directive compile-&gt;controller-&g]]>
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[相对较实用的angularjs学习资源]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/%E7%9B%B8%E5%AF%B9%E8%BE%83%E5%AE%9E%E7%94%A8%E7%9A%84angularjs%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/相对较实用的angularjs学习资源/</id>
-    <published>2015-03-08T07:28:07.000Z</published>
-    <updated>2015-03-08T10:15:32.000Z</updated>
-    <content type="html"><![CDATA[<h4 id="实践总结_-_不可错过的Angular应用技巧">实践总结 - 不可错过的Angular应用技巧</h4><ul>
-<li>很不错的一篇实践记录，<a href="http://my.oschina.net/blogshi/blog/293631" target="_blank" rel="external">链接地址</a></li>
-<li><a href="http://my.oschina.net/ilivebox/blog/290881" target="_blank" rel="external">Angularjs Interceptors(拦截器)</a></li>
-<li><a href="http://www.oschina.net/translate/angularjs-factory-vs-service-vs-provider" target="_blank" rel="external">AngularJS之Factory vs Service vs Provider</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h4 id="实践总结_-_不可错过的Angular应用技巧">实践总结 - 不可错过的Angular应用技巧</h4><ul>
-<li>很不错的一篇实践记录，<a href="http://my.oschina.net/blogshi/blog/293631" target=]]>
     </summary>
     
       <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
