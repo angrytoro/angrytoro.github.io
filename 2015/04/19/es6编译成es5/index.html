@@ -3,17 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>freefish</title>
+  <title>es6编译成es5 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="this blog is just to record my learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="freefish">
-<meta property="og:url" content="http://blog.angrytoro.com/archives/2015/page/4/index.html">
+  <meta name="description" content="这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具traceur和比较多人用的babel。发现两个编译工具都有各自的缺点。
+traceur和babel编译器的优缺点
+traceur: 这货编译成的代码的可读性还是挺好的。不过比较坑爹的是，traceur需要引入traceur-runtime.j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6编译成es5">
+<meta property="og:url" content="http://blog.angrytoro.com/2015/04/19/es6编译成es5/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="this blog is just to record my learning">
+<meta property="og:description" content="这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具traceur和比较多人用的babel。发现两个编译工具都有各自的缺点。
+traceur和babel编译器的优缺点
+traceur: 这货编译成的代码的可读性还是挺好的。不过比较坑爹的是，traceur需要引入traceur-runtime.j">
+<meta property="og:image" content="/img/traceur编译.jpg">
+<meta property="og:image" content="/img/babel编译.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="freefish">
-<meta name="twitter:description" content="this blog is just to record my learning">
+<meta name="twitter:title" content="es6编译成es5">
+<meta name="twitter:description" content="这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具traceur和比较多人用的babel。发现两个编译工具都有各自的缺点。
+traceur和babel编译器的优缺点
+traceur: 这货编译成的代码的可读性还是挺好的。不过比较坑爹的是，traceur需要引入traceur-runtime.j">
   
   
     <link rel="icon" href="/img/favicon.ico">
@@ -183,200 +191,114 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-es6编译成es5" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <a href="/2015/04/19/es6编译成es5/" class="article-date">
+  	<time datetime="2015-04-19T02:03:39.000Z" itemprop="datePublished">2015-04-19</time>
+</a>
+    </div>
   
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      es6编译成es5
+    </h1>
+  
+
+      </header>
       
+      <div class="article-info">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/angularjs开发笔记之ng-class/" class="archive-article-date">
-  	<time datetime="2015-03-08T08:07:52.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/angularjs开发笔记之ng-class/">angularjs开发笔记之ng-class</a>
-    </h1>
-  
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具<a href="https://github.com/google/traceur-compiler" target="_blank" rel="external">traceur</a>和比较多人用的<a href="https://babeljs.io/" target="_blank" rel="external">babel</a>。发现两个编译工具都有各自的缺点。</p>
+<h1 id="traceur和babel编译器的优缺点">traceur和babel编译器的优缺点</h1><ul>
+<li>traceur: 这货编译成的代码的<strong>可读性还是挺好的</strong>。不过比较坑爹的是，traceur需要引入<code>traceur-runtime.js</code>这个运行时脚本，并且在运行时会出现一些莫名的错误。估计是还不成熟。<br><img src="/img/traceur编译.jpg" alt="traceur编译"><a id="more"></a></li>
+<li>babel: 看了<a href="https://babeljs.io/" target="_blank" rel="external">官网</a>，使用这货的牛逼公司还挺多。编译后运行没有什么大问题,就是编译后代码可读性比较欠缺，它有个牛逼的功能是支持commonjs。如果我们用browserify,那就更欢乐了。<br><img src="/img/babel编译.jpg" alt="babel编译"></li>
+</ul>
+<h1 id="compjs编译器">compjs编译器</h1><p>折腾了一阵子，写了个node工具<a href="https://github.com/angrytoro/6to5" target="_blank" rel="external">compjs</a>，整合了traceur和babel，让compjs支持traceur和babel编译，目前的命令还比较简单，只支持最基本的编译（将源文件夹下的文件，编译到输出文件夹中）。<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ compjs --<span class="keyword">help</span> <span class="comment">//查看帮助</span></span><br></pre></td></tr></table></figure></p>
+<p>进入到相应项目文件夹下，输入<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>compjs</span><br></pre></td></tr></table></figure></p>
+<p>就会把相应的es6文件，编译到gsrc文件夹下，当然也可以自己指定编译后的位置。<br>有兴趣的朋友可以安装下试试。也可以贡献<a href="https://github.com/angrytoro/6to5" target="_blank" rel="external">compjs</a>源码。</p>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+        
+      
+    </div>
+    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/03/30/Chrome浏览器Network面板/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Chrome浏览器Network面板</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/angularjs开发笔记之checkbox/" class="archive-article-date">
-  	<time datetime="2015-03-08T08:06:45.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/angularjs开发笔记之checkbox/">angularjs开发笔记之checkbox</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/angularjs常用解决技巧/" class="archive-article-date">
-  	<time datetime="2015-03-08T08:02:01.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/angularjs常用解决技巧/">angularjs常用解决技巧</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="es6编译成es5" data-title="es6编译成es5" data-url="http://blog.angrytoro.com/2015/04/19/es6编译成es5/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/angularjs笔记（一）/" class="archive-article-date">
-  	<time datetime="2015-03-08T08:01:01.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/angularjs笔记（一）/">angularjs笔记（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/新手开发angularjs注意事项/" class="archive-article-date">
-  	<time datetime="2015-03-08T07:43:31.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/新手开发angularjs注意事项/">新手开发angularjs注意事项</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-    
-      <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2015/page/3/">&laquo; Prev</a><a class="page-number" href="/archives/2015/">1</a><a class="page-number" href="/archives/2015/page/2/">2</a><a class="page-number" href="/archives/2015/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/2015/page/5/">5</a><a class="extend next" rel="next" href="/archives/2015/page/5/">Next &raquo;</a>
-      </nav>
-    
-  
 
 </div>
       <footer id="footer">

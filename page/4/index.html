@@ -111,7 +111,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/NodeJS/" style="font-size: 10px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -184,6 +184,67 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-angularjs开发笔记之ng-class" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/08/angularjs开发笔记之ng-class/" class="article-date">
+  	<time datetime="2015-03-08T08:07:52.000Z" itemprop="datePublished">2015-03-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/08/angularjs开发笔记之ng-class/">angularjs开发笔记之ng-class</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="参考AngularJS_ng-class用法">参考<a href="http://my.oschina.net/gejiawen0913/blog/188547">AngularJS ng-class用法</a></h4><p><code>ng-class</code>有三种用法，最简单的就是<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.className = <span class="string">'abc'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div class=<span class="string">"&#123;&#123;className&#125;&#125;"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>第二种：<br>
+        <hr/>
+        <p class="article-more-link">
+          <a  href="/2015/03/08/angularjs开发笔记之ng-class/#more">more >></a>
+        </p>
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-angularjs开发笔记之checkbox" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -409,75 +470,6 @@
 <li>能不要用自带的<code>$http</code>来做ajax请求，就不要用。这会让你很蛋疼的，angularjs自带的<code>$http</code>封装的不是很好，如果要处理带中文的参数需要做特殊配置，既然这么麻烦干嘛不用千年神器<code>jquery</code>呢。但是坑爹的是<code>jquery</code>自带的ajax不能够触发<code>$scope.$digest()</code>。所以最好还是全局修改header,先不写了，参考<a href="http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/" target="_blank" rel="external">Make AngularJS $http service behave like jQuery.ajax()</a></li>
 </ol>
 </blockquote>
-
-        
-          <!-- show an end symbol if the article is fully displayed -->
-          <hr/>
-          <p class="article-more-link">
-            <a>end</a>
-          </p>
-        
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-写ngscrollbar中的学习心得" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/08/写ngscrollbar中的学习心得/" class="article-date">
-  	<time datetime="2015-03-08T07:40:49.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/写ngscrollbar中的学习心得/">写ngscrollbar中的学习心得</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>看懂了，跟会写是两个不同的概念。这在写directive中深有体会。下面介绍写这个指令过程中学习到的东西。</p>
-<ol>
-<li>自定义指令的执行顺序service-&gt;compile-&gt;子directive compile-&gt;controller-&gt;link-&gt;子directive link</li>
-<li>service 是单例的，所以在定义service的时候，最好想清楚是不是能共用（有可能会根据不同的需求会为service初始化变量，但是初始化后，别的地方也会看到相同的效果）。</li>
-<li>注意scope值的变化，使用不当会让你代码出各种问题</li>
-<li>link的变量element不能直接使用find方法来找子元素，这是比较坑爹的。</li>
-</ol>
 
         
           <!-- show an end symbol if the article is fully displayed -->

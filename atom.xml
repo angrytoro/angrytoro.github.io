@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2015-04-01T15:10:24.000Z</updated>
+  <updated>2015-04-19T07:28:31.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[es6编译成es5]]></title>
+    <link href="http://blog.angrytoro.com/2015/04/19/es6%E7%BC%96%E8%AF%91%E6%88%90es5/"/>
+    <id>http://blog.angrytoro.com/2015/04/19/es6编译成es5/</id>
+    <published>2015-04-19T02:03:39.000Z</published>
+    <updated>2015-04-19T07:28:31.000Z</updated>
+    <content type="html"><![CDATA[<p>这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具<a href="https://github.com/google/traceur-compiler" target="_blank" rel="external">traceur</a>和比较多人用的<a href="https://babeljs.io/" target="_blank" rel="external">babel</a>。发现两个编译工具都有各自的缺点。</p>
+<h1 id="traceur和babel编译器的优缺点">traceur和babel编译器的优缺点</h1><ul>
+<li>traceur: 这货编译成的代码的<strong>可读性还是挺好的</strong>。不过比较坑爹的是，traceur需要引入<code>traceur-runtime.js</code>这个运行时脚本，并且在运行时会出现一些莫名的错误。估计是还不成熟。<br><img src="/img/traceur编译.jpg" alt="traceur编译"><a id="more"></a></li>
+<li>babel: 看了<a href="https://babeljs.io/" target="_blank" rel="external">官网</a>，使用这货的牛逼公司还挺多。编译后运行没有什么大问题,就是编译后代码可读性比较欠缺，它有个牛逼的功能是支持commonjs。如果我们用browserify,那就更欢乐了。<br><img src="/img/babel编译.jpg" alt="babel编译"></li>
+</ul>
+<h1 id="compjs编译器">compjs编译器</h1><p>折腾了一阵子，写了个node工具<a href="https://github.com/angrytoro/6to5" target="_blank" rel="external">compjs</a>，整合了traceur和babel，让compjs支持traceur和babel编译，目前的命令还比较简单，只支持最基本的编译（将源文件夹下的文件，编译到输出文件夹中）。<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ compjs --<span class="keyword">help</span> <span class="comment">//查看帮助</span></span><br></pre></td></tr></table></figure></p>
+<p>进入到相应项目文件夹下，输入<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>compjs</span><br></pre></td></tr></table></figure></p>
+<p>就会把相应的es6文件，编译到gsrc文件夹下，当然也可以自己指定编译后的位置。<br>有兴趣的朋友可以安装下试试。也可以贡献<a href="https://github.com/angrytoro/6to5" target="_blank" rel="external">compjs</a>源码。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具<a href="https://github.com/google/traceur-compiler">traceur</a>和比较多人用的<a href="https://babeljs.io/">babel</a>。发现两个编译工具都有各自的缺点。</p>
+<h1 id="traceur和babel编译器的优缺点">traceur和babel编译器的优缺点</h1><ul>
+<li>traceur: 这货编译成的代码的<strong>可读性还是挺好的</strong>。不过比较坑爹的是，traceur需要引入<code>traceur-runtime.js</code>这个运行时脚本，并且在运行时会出现一些莫名的错误。估计是还不成熟。<br><img src="/img/traceur编译.jpg" alt="traceur编译">]]>
+    
+    </summary>
+    
+      <category term="NodeJS" scheme="http://blog.angrytoro.com/tags/NodeJS/"/>
+    
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Chrome浏览器Network面板]]></title>
@@ -681,32 +709,6 @@
     <![CDATA[<p>作为一个新手本来用一个新技术就比较困难，坑爹的天朝把开发文档都屏蔽了，这简直是不让人活的节奏。出于为人民做贡献的精神，在这里就记录下开发angularjs应用应该注意的事项。</p>
 <hr>
 <h3 id="angularjs适用的地方">angularjs适用的地方</]]>
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[写ngscrollbar中的学习心得]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/%E5%86%99ngscrollbar%E4%B8%AD%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/写ngscrollbar中的学习心得/</id>
-    <published>2015-03-08T07:40:49.000Z</published>
-    <updated>2015-03-08T07:42:33.000Z</updated>
-    <content type="html"><![CDATA[<p>看懂了，跟会写是两个不同的概念。这在写directive中深有体会。下面介绍写这个指令过程中学习到的东西。</p>
-<ol>
-<li>自定义指令的执行顺序service-&gt;compile-&gt;子directive compile-&gt;controller-&gt;link-&gt;子directive link</li>
-<li>service 是单例的，所以在定义service的时候，最好想清楚是不是能共用（有可能会根据不同的需求会为service初始化变量，但是初始化后，别的地方也会看到相同的效果）。</li>
-<li>注意scope值的变化，使用不当会让你代码出各种问题</li>
-<li>link的变量element不能直接使用find方法来找子元素，这是比较坑爹的。</li>
-</ol>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>看懂了，跟会写是两个不同的概念。这在写directive中深有体会。下面介绍写这个指令过程中学习到的东西。</p>
-<ol>
-<li>自定义指令的执行顺序service-&gt;compile-&gt;子directive compile-&gt;controller-&g]]>
     </summary>
     
       <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
