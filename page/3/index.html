@@ -111,7 +111,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/NodeJS/" style="font-size: 10px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -184,6 +184,72 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-HTML中用到的data类型的url" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/08/HTML中用到的data类型的url/" class="article-date">
+  	<time datetime="2015-03-08T10:17:31.000Z" itemprop="datePublished">2015-03-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/08/HTML中用到的data类型的url/">HTML中用到的data类型的url</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>针对一些小的数据，我们可以直接在网页中嵌入，而不是引用外部文件，例如一些小的loading图片等。这样的好处是可以减少一次网络请求，缺点是页面内容变大。</p>
+<hr>
+<p>data的url类型有以下几种：<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span>:,&lt;文本数据&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/plain,&lt;文本数据&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/html,&lt;<span class="type">HTML</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/html;base64,&lt;base64编码的<span class="type">HTML</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/css,&lt;<span class="type">CSS</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/css;base64,&lt;base64编码的<span class="type">CSS</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/javascript,&lt;<span class="type">Javascript</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:text/javascript;base64,&lt;base64编码的<span class="type">Javascript</span>代码&gt;</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:image/gif;base64,base64编码的gif图片数据</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:image/png;base64,base64编码的png图片数据</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:image/jpeg;base64,base64编码的jpeg图片数据</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span>:image/x-icon;base64,base64编码的icon图片数据</span></span><br></pre></td></tr></table></figure></p>
+<p>一般我们经常用到的就是最下面跟图片有关的几种，当然黑客会经常用到<code>data:text/javascript,&lt;Javascript代码&gt;</code></p>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/img/">img</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/HTML/">HTML</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-git常用命令" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -449,85 +515,9 @@
 
 
   
-    <article id="post-AngularJS-从1-2迁移到1-3的变动记录" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/" class="article-date">
-  	<time datetime="2015-03-08T09:29:40.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/">AngularJS 从1.2迁移到1.3的变动记录</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>公司前端升级了<code>AngularJS</code>，那就顺便记录下1.2到1.3的变化吧。主要是记录一些可能大多数人会遇到的改变，以及1.3的新特性。</p>
-<hr>
-<h1 id="表达式解析">表达式解析</h1><ol>
-<li>我们不能在表达式中使用以<code>.bind,.call,.apply</code>这些关键字命名的函数。例如<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;&#123; &#123;user.sendInfo.call(&#123; &#125;, <span class="constant">true</span>)&#125; &#125;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这绝对会抛出异常</p>
-<ol>
-<li>在表达式中不能使用Object。例如<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scope.foo = &#123; <span class="string">"bar"</span>: <span class="built_in">Object</span> &#125;;</span><br><span class="line">scope.$<span class="built_in">eval</span>(<span class="string">'foo["bar"]'</span>);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这绝对会抛出解析异常</p>
-<ol>
-<li>字符串<code>&#39;f&#39;, &#39;0&#39;, &#39;false&#39;, &#39;no&#39;, &#39;n&#39;, &#39;[]&#39;</code>不在被当做false来处理。只有<code>false,null, undefined,NaN,0,&quot;&quot;</code>被当做false来处理。</li>
-</ol>
-<blockquote>
-<p>参考<a href="https://github.com/angular/angular.js/commit/528be29d1662122a34e204dd607e1c0bd9c16bbc">528be29d</a></p>
-</blockquote>
-        <hr/>
-        <p class="article-more-link">
-          <a  href="/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/#more">more >></a>
-        </p>
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 </div>

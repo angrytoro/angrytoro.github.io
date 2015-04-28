@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2015-04-19T07:28:31.000Z</updated>
+  <updated>2015-04-28T14:30:14.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何编写node命令]]></title>
+    <link href="http://blog.angrytoro.com/2015/04/28/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99node%E5%91%BD%E4%BB%A4/"/>
+    <id>http://blog.angrytoro.com/2015/04/28/如何编写node命令/</id>
+    <published>2015-04-28T12:57:28.000Z</published>
+    <updated>2015-04-28T14:30:14.000Z</updated>
+    <content type="html"><![CDATA[<p>平时我们都是用别人编写好的nodejs命令，某些时候，我们也想写个命令玩下，咋整。好了，接下去这边流水账就是从头告诉你怎么写一个node命令的。<br>要写一个nodejs命令，首先要储备4个知识点。</p>
+<ol>
+<li>Commander模块</li>
+<li>怎么告诉nodejs，这是一条命令</li>
+<li>如何调试node</li>
+<li>如何发布node插件<h1 id="Commander">Commander</h1>TJ大神写的<a href="https://github.com/tj/commander.js" target="_blank" rel="external">commander</a>（也有Ruby版本），很方便大伙儿写命令，本人就不在这儿翻译commander的说明文档了，大家自己去查看。这里给个官方例子，看看有多方便。<figure class="highlight rsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var program = require(<span class="string">'commander'</span>);</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .version(<span class="string">'0.0.1'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-p, --peppers'</span>, <span class="string">'Add peppers'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-P, --pineapple'</span>, <span class="string">'Add pineapple'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-b, --bbq-sauce'</span>, <span class="string">'Add bbq sauce'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-c, --cheese [type]'</span>, <span class="string">'Add the specified type of cheese [marble]'</span>, <span class="string">'marble'</span>)</span><br><span class="line">  .parse(process.argv);</span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'you ordered a pizza with:'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.peppers) console.<span class="built_in">log</span>(<span class="string">'  - peppers'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.pineapple) console.<span class="built_in">log</span>(<span class="string">'  - pineapple'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.bbqSauce) console.<span class="built_in">log</span>(<span class="string">'  - bbq'</span>);</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'  - %s cheese'</span>, program.cheese);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="如何配置package-json">如何配置package.json</h1><p>我们要在package.json中添加一个字段<code>bin</code><br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="string">"name"</span>: <span class="string">"xxx"</span>, //命令的名字（一定是npm里面没有的）</span><br><span class="line">  	<span class="string">"version"</span>: <span class="string">"0.0.1"</span>, //版本号</span><br><span class="line">  	<span class="string">"bin"</span>: <span class="string">"./bin/yourCommander"</span>, //命令存放的位置</span><br><span class="line">  	<span class="keyword">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>yourCommander文件中需要添加一行<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/usr/bin/env node</span></span><br></pre></td></tr></table></figure></p>
+<p>例如我写的命令<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">require</span>(<span class="string">'../index.js'</span>); <span class="regexp">//</span>程序的入口</span><br></pre></td></tr></table></figure></p>
+<p>假设我们采用全局安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> xxx -g</span><br></pre></td></tr></table></figure></p>
+<p>那么我们就能够直接在终端里面输入<code>xxx -oo</code>（只是举例）来调用我们的命令。</p>
+<h1 id="如何调试node">如何调试node</h1><p>好吧，我只认<code>node-inspector</code>。先全局安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> node-inspector -g</span><br></pre></td></tr></table></figure></p>
+<p>然后直接运行<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node-<span class="keyword">debug</span> xxx/xxx</span><br></pre></td></tr></table></figure></p>
+<p>xxx/xxx是bin文件的路径，这样我们就能在chrome浏览器的控制面板上看到相应的断点了。</p>
+<h1 id="如何发布node插件">如何发布node插件</h1><p>OK，当我们写好了命令，那要怎么发布呢？<br>最好是先本地安装一下，实验看看能不能正确运行<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install <span class="tag">&lt;<span class="title">本地路径</span>&gt;</span> -g</span><br></pre></td></tr></table></figure></p>
+<p>然后就能测试自己边写的命令。如果正确执行，那么我们就能够发布到npm上<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">npm</span> adduser <span class="regexp">//</span>创建<span class="built_in">npm</span>账户</span><br></pre></td></tr></table></figure></p>
+<p>执行此命令后，会依次出现输入用户名、Email、密码的提示，输入好之后等待一会儿就可以了。<br>接下去就是发布了<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm publish <span class="tag">&lt;<span class="title">本地路径</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果要更新程序包，只要修改一下package.json中的版本号，再重新执行发布命令就可以了。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>平时我们都是用别人编写好的nodejs命令，某些时候，我们也想写个命令玩下，咋整。好了，接下去这边流水账就是从头告诉你怎么写一个node命令的。<br>要写一个nodejs命令，首先要储备4个知识点。</p>
+<ol>
+<li>Commander模块</li>
+<li>怎么]]>
+    </summary>
+    
+      <category term="NodeJS" scheme="http://blog.angrytoro.com/tags/NodeJS/"/>
+    
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[es6编译成es5]]></title>
@@ -681,34 +721,6 @@
 <h2 id="scope对象">scope对象</h2><p>Angular的scope对象是POJO（简单的javascript对象），用构造函数创建的，简单版本如下：</p>
 <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Scope</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]>
     
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[新手开发angularjs注意事项]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/%E6%96%B0%E6%89%8B%E5%BC%80%E5%8F%91angularjs%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/新手开发angularjs注意事项/</id>
-    <published>2015-03-08T07:43:31.000Z</published>
-    <updated>2015-03-08T11:06:57.000Z</updated>
-    <content type="html"><![CDATA[<p>作为一个新手本来用一个新技术就比较困难，坑爹的天朝把开发文档都屏蔽了，这简直是不让人活的节奏。出于为人民做贡献的精神，在这里就记录下开发angularjs应用应该注意的事项。</p>
-<hr>
-<h3 id="angularjs适用的地方">angularjs适用的地方</h3><p>angularjs是比较适合用来开发后台管理系统的。</p>
-<h3 id="angularjs项目的结构组织">angularjs项目的结构组织</h3><p>todo：这个比较难讲</p>
-<h3 id="开发中注意事项">开发中注意事项</h3><blockquote>
-<ol>
-<li>能不要用自带的<code>$http</code>来做ajax请求，就不要用。这会让你很蛋疼的，angularjs自带的<code>$http</code>封装的不是很好，如果要处理带中文的参数需要做特殊配置，既然这么麻烦干嘛不用千年神器<code>jquery</code>呢。但是坑爹的是<code>jquery</code>自带的ajax不能够触发<code>$scope.$digest()</code>。所以最好还是全局修改header,先不写了，参考<a href="http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/" target="_blank" rel="external">Make AngularJS $http service behave like jQuery.ajax()</a></li>
-</ol>
-</blockquote>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>作为一个新手本来用一个新技术就比较困难，坑爹的天朝把开发文档都屏蔽了，这简直是不让人活的节奏。出于为人民做贡献的精神，在这里就记录下开发angularjs应用应该注意的事项。</p>
-<hr>
-<h3 id="angularjs适用的地方">angularjs适用的地方</]]>
     </summary>
     
       <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>

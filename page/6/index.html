@@ -3,25 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>es6编译成es5 | freefish</title>
+  <title>freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具traceur和比较多人用的babel。发现两个编译工具都有各自的缺点。
-traceur和babel编译器的优缺点
-traceur: 这货编译成的代码的可读性还是挺好的。不过比较坑爹的是，traceur需要引入traceur-runtime.j">
-<meta property="og:type" content="article">
-<meta property="og:title" content="es6编译成es5">
-<meta property="og:url" content="http://blog.angrytoro.com/2015/04/19/es6编译成es5/index.html">
+  <meta name="description" content="this blog is just to record my learning">
+<meta property="og:type" content="website">
+<meta property="og:title" content="freefish">
+<meta property="og:url" content="http://blog.angrytoro.com/page/6/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具traceur和比较多人用的babel。发现两个编译工具都有各自的缺点。
-traceur和babel编译器的优缺点
-traceur: 这货编译成的代码的可读性还是挺好的。不过比较坑爹的是，traceur需要引入traceur-runtime.j">
-<meta property="og:image" content="/img/traceur编译.jpg">
-<meta property="og:image" content="/img/babel编译.jpg">
+<meta property="og:description" content="this blog is just to record my learning">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="es6编译成es5">
-<meta name="twitter:description" content="这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具traceur和比较多人用的babel。发现两个编译工具都有各自的缺点。
-traceur和babel编译器的优缺点
-traceur: 这货编译成的代码的可读性还是挺好的。不过比较坑爹的是，traceur需要引入traceur-runtime.j">
+<meta name="twitter:title" content="freefish">
+<meta name="twitter:description" content="this blog is just to record my learning">
   
   
     <link rel="icon" href="/img/favicon.ico">
@@ -191,11 +183,13 @@ traceur: 这货编译成的代码的可读性还是挺好的。不过比较坑�
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-es6编译成es5" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
+  
+    <article id="post-请谨慎升级Angular" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/04/19/es6编译成es5/" class="article-date">
-  	<time datetime="2015-04-19T02:03:39.000Z" itemprop="datePublished">2015-04-19</time>
+      <a href="/2015/03/08/请谨慎升级Angular/" class="article-date">
+  	<time datetime="2015-03-08T05:59:15.000Z" itemprop="datePublished">2015-03-08</time>
 </a>
     </div>
   
@@ -207,108 +201,56 @@ traceur: 这货编译成的代码的可读性还是挺好的。不过比较坑�
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      es6编译成es5
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/08/请谨慎升级Angular/">请谨慎升级Angular</a>
     </h1>
   
 
       </header>
       
-      <div class="article-info">
-        
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这次Angular的升级带有挺多严重的bug。建议等到1.3稳定下来之后再进行升级，估计1.3.15左右才能把大bug解决掉。说一下升级1.3以后，遇到的两个大bug。</p>
+<hr>
+<h1 id="select">select</h1><p>相应的<a href="https://github.com/angular/angular.js/issues/9714">issue</a>。这个bug导致的后果就是我们在设置默认值的时候，会没法正常显示。出现这一错误的angular源码是<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ngModelCtrl.$viewValue == <span class="keyword">value</span>) &#123;</span><br><span class="line">    $element.<span class="keyword">val</span>(<span class="keyword">value</span>);</span><br><span class="line">    <span class="keyword">if</span> (unknownOption.parent<span class="literal">()</span>) unknownOption.remove<span class="literal">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <hr/>
+        <p class="article-more-link">
+          <a  href="/2015/03/08/请谨慎升级Angular/#more">more >></a>
+        </p>
+      
+    </div>
+    
+    <div class="article-info">
+      
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
 	</div>
 
-        
+      
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
 	</div>
 
 
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具<a href="https://github.com/google/traceur-compiler" target="_blank" rel="external">traceur</a>和比较多人用的<a href="https://babeljs.io/" target="_blank" rel="external">babel</a>。发现两个编译工具都有各自的缺点。</p>
-<h1 id="traceur和babel编译器的优缺点">traceur和babel编译器的优缺点</h1><ul>
-<li>traceur: 这货编译成的代码的<strong>可读性还是挺好的</strong>。不过比较坑爹的是，traceur需要引入<code>traceur-runtime.js</code>这个运行时脚本，并且在运行时会出现一些莫名的错误。估计是还不成熟。<br><img src="/img/traceur编译.jpg" alt="traceur编译"><a id="more"></a></li>
-<li>babel: 看了<a href="https://babeljs.io/" target="_blank" rel="external">官网</a>，使用这货的牛逼公司还挺多。编译后运行没有什么大问题,就是编译后代码可读性比较欠缺，它有个牛逼的功能是支持commonjs。如果我们用browserify,那就更欢乐了。<br><img src="/img/babel编译.jpg" alt="babel编译"></li>
-</ul>
-<h1 id="compjs编译器">compjs编译器</h1><p>折腾了一阵子，写了个node工具<a href="https://github.com/angrytoro/6to5" target="_blank" rel="external">compjs</a>，整合了traceur和babel，让compjs支持traceur和babel编译，目前的命令还比较简单，只支持最基本的编译（将源文件夹下的文件，编译到输出文件夹中）。<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ compjs --<span class="keyword">help</span> <span class="comment">//查看帮助</span></span><br></pre></td></tr></table></figure></p>
-<p>进入到相应项目文件夹下，输入<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>compjs</span><br></pre></td></tr></table></figure></p>
-<p>就会把相应的es6文件，编译到gsrc文件夹下，当然也可以自己指定编译后的位置。<br>有兴趣的朋友可以安装下试试。也可以贡献<a href="https://github.com/angrytoro/6to5" target="_blank" rel="external">compjs</a>源码。</p>
-
-        
-      
+      <div class="clearfix"></div>
     </div>
     
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2015/04/28/如何编写node命令/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          如何编写node命令
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2015/03/30/Chrome浏览器Network面板/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Chrome浏览器Network面板</div>
-      <strong class="article-nav-caption">></strong>
-    </a>
-  
-</nav>
-
-  
 </article>
 
 
-<div class="share">
-	<!-- JiaThis Button BEGIN -->
-	<div class="jiathis_style">
-		<span class="jiathis_txt">分享到：</span>
-		<a class="jiathis_button_tsina"></a>
-		<a class="jiathis_button_cqq"></a>
-		<a class="jiathis_button_douban"></a>
-		<a class="jiathis_button_weixin"></a>
-		<a class="jiathis_button_tumblr"></a>
-		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
-	</div>
-	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
-	<!-- JiaThis Button END -->
-</div>
 
 
 
-<div class="duoshuo">
-	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="es6编译成es5" data-title="es6编译成es5" data-url="http://blog.angrytoro.com/2015/04/19/es6编译成es5/"></div>
-	<!-- 多说评论框 end -->
-	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"true"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-	<!-- 多说公共JS代码 end -->
-</div>
 
-
-
+  
+  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+    </nav>
+  
 </div>
       <footer id="footer">
   <div class="outer">

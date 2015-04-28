@@ -111,7 +111,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/NodeJS/" style="font-size: 10px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -184,6 +184,88 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-如何编写node命令" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/04/28/如何编写node命令/" class="article-date">
+  	<time datetime="2015-04-28T12:57:28.000Z" itemprop="datePublished">2015-04-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/04/28/如何编写node命令/">如何编写node命令</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>平时我们都是用别人编写好的nodejs命令，某些时候，我们也想写个命令玩下，咋整。好了，接下去这边流水账就是从头告诉你怎么写一个node命令的。<br>要写一个nodejs命令，首先要储备4个知识点。</p>
+<ol>
+<li>Commander模块</li>
+<li>怎么告诉nodejs，这是一条命令</li>
+<li>如何调试node</li>
+<li>如何发布node插件<h1 id="Commander">Commander</h1>TJ大神写的<a href="https://github.com/tj/commander.js" target="_blank" rel="external">commander</a>（也有Ruby版本），很方便大伙儿写命令，本人就不在这儿翻译commander的说明文档了，大家自己去查看。这里给个官方例子，看看有多方便。<figure class="highlight rsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var program = require(<span class="string">'commander'</span>);</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .version(<span class="string">'0.0.1'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-p, --peppers'</span>, <span class="string">'Add peppers'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-P, --pineapple'</span>, <span class="string">'Add pineapple'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-b, --bbq-sauce'</span>, <span class="string">'Add bbq sauce'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-c, --cheese [type]'</span>, <span class="string">'Add the specified type of cheese [marble]'</span>, <span class="string">'marble'</span>)</span><br><span class="line">  .parse(process.argv);</span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'you ordered a pizza with:'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.peppers) console.<span class="built_in">log</span>(<span class="string">'  - peppers'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.pineapple) console.<span class="built_in">log</span>(<span class="string">'  - pineapple'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.bbqSauce) console.<span class="built_in">log</span>(<span class="string">'  - bbq'</span>);</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'  - %s cheese'</span>, program.cheese);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="如何配置package-json">如何配置package.json</h1><p>我们要在package.json中添加一个字段<code>bin</code><br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="string">"name"</span>: <span class="string">"xxx"</span>, //命令的名字（一定是npm里面没有的）</span><br><span class="line">  	<span class="string">"version"</span>: <span class="string">"0.0.1"</span>, //版本号</span><br><span class="line">  	<span class="string">"bin"</span>: <span class="string">"./bin/yourCommander"</span>, //命令存放的位置</span><br><span class="line">  	<span class="keyword">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>yourCommander文件中需要添加一行<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/usr/bin/env node</span></span><br></pre></td></tr></table></figure></p>
+<p>例如我写的命令<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">require</span>(<span class="string">'../index.js'</span>); <span class="regexp">//</span>程序的入口</span><br></pre></td></tr></table></figure></p>
+<p>假设我们采用全局安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> xxx -g</span><br></pre></td></tr></table></figure></p>
+<p>那么我们就能够直接在终端里面输入<code>xxx -oo</code>（只是举例）来调用我们的命令。</p>
+<h1 id="如何调试node">如何调试node</h1><p>好吧，我只认<code>node-inspector</code>。先全局安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> node-inspector -g</span><br></pre></td></tr></table></figure></p>
+<p>然后直接运行<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node-<span class="keyword">debug</span> xxx/xxx</span><br></pre></td></tr></table></figure></p>
+<p>xxx/xxx是bin文件的路径，这样我们就能在chrome浏览器的控制面板上看到相应的断点了。</p>
+<h1 id="如何发布node插件">如何发布node插件</h1><p>OK，当我们写好了命令，那要怎么发布呢？<br>最好是先本地安装一下，实验看看能不能正确运行<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install <span class="tag">&lt;<span class="title">本地路径</span>&gt;</span> -g</span><br></pre></td></tr></table></figure></p>
+<p>然后就能测试自己边写的命令。如果正确执行，那么我们就能够发布到npm上<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">npm</span> adduser <span class="regexp">//</span>创建<span class="built_in">npm</span>账户</span><br></pre></td></tr></table></figure></p>
+<p>执行此命令后，会依次出现输入用户名、Email、密码的提示，输入好之后等待一会儿就可以了。<br>接下去就是发布了<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm publish <span class="tag">&lt;<span class="title">本地路径</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果要更新程序包，只要修改一下package.json中的版本号，再重新执行发布命令就可以了。</p>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-es6编译成es5" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -443,66 +525,9 @@
 
 
   
-    <article id="post-如何对服务器进行免密码登录配置" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/12/如何对服务器进行免密码登录配置/" class="article-date">
-  	<time datetime="2015-03-12T04:32:33.000Z" itemprop="datePublished">2015-03-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/12/如何对服务器进行免密码登录配置/">如何对服务器进行免密码登录配置</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="用户操作">用户操作</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx -<span class="keyword">g</span> groupName<span class="comment">//新增用户<span class="label">xxx并把它划分到groupName这个组</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>
-        <hr/>
-        <p class="article-more-link">
-          <a  href="/2015/03/12/如何对服务器进行免密码登录配置/#more">more >></a>
-        </p>
-      
-    </div>
-    
-    <div class="article-info">
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/linux/">linux</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>
