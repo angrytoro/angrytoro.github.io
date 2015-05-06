@@ -15,6 +15,7 @@
 <meta property="og:description" content="Create a new repository on the command line
 
 1touch README.md&amp;#10;git init&amp;#10;git add README.md&amp;#10;git commit -m &amp;#34;first commit&amp;#34;&amp;#10;git remote add origin git@github.com:angrytoro/zepto.plug.">
+<meta property="og:image" content="/img/git-fork-merge.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git常用命令">
 <meta name="twitter:description" content="Create a new repository on the command line
@@ -238,9 +239,17 @@
 </li>
 <li><p><strong>Push an existing repository from the command line</strong></p>
 <blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:angrytoro/zepto.plug.git&#10;git push -u origin master</span><br></pre></td></tr></table></figure></blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:angrytoro/zepto.plug.git&#10;git push -u origin master</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p><strong>merge我们fork出来的源码</strong></p>
+<blockquote>
+<p>有一种情况，我们fork了项目A的源码，然后过段时间发现A有更新，这时咋整。这里举个博主fork的例子。<br>博主因为工作需要fork了去哪儿的开源项目<a href="https://github.com/rinh/fekit" target="_blank" rel="external">fekit</a>，名字叫<a href="https://github.com/angrytoro/fekit-plus" target="_blank" rel="external">fekit-plus</a>，过了几个月，发现fekit更新了好多，这是博主就需要merge了。OK，看下面步骤</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git remote add rinh git<span class="variable">@github</span>.<span class="symbol">com:</span>rinh/fekit.git</span><br><span class="line"><span class="variable">$ </span>git fetch rinh</span><br><span class="line"><span class="variable">$ </span>git merge rinh/master</span><br></pre></td></tr></table></figure>
+</blockquote>
 </li>
 </ol>
+<p>OK，搞定，就这么几步，不过merge的时候可能会出现冲突的情况.<br>本地的repository看上去是这样的：<br><img src="/img/git-fork-merge.png" alt="本地的repository"></p>
 
         
       
