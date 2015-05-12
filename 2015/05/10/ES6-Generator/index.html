@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ES6 Generator | freefish</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。我们先看下阮一峰《es6入门》的一段解释
+
+可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6 Generator">
+<meta property="og:url" content="http://blog.angrytoro.com/2015/05/10/ES6-Generator/index.html">
+<meta property="og:site_name" content="freefish">
+<meta property="og:description" content="最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。我们先看下阮一峰《es6入门》的一段解释
+
+可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6 Generator">
+<meta name="twitter:description" content="最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。我们先看下阮一峰《es6入门》的一段解释
+
+可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/avatar.jpg">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">freefish</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/categories/JavaScript">JavaScript</a></li>
+				        
+							<li><a href="/categories/HTML">HTML</a></li>
+				        
+							<li><a href="/categories/CSS">CSS</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/angrytoro" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.doyoe.com/">杜瑶的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://css.doyoe.com/">杜瑶CSS参考手册</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我很爱傻鸭</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">freefish</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/img/avatar.jpg">
+				<hgroup>
+				  <h1 class="header-author">freefish</h1>
+				</hgroup>
+			</div>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/categories/JavaScript">JavaScript</a></li>
+		        
+					<li><a href="/categories/HTML">HTML</a></li>
+		        
+					<li><a href="/categories/CSS">CSS</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/angrytoro" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-ES6-Generator" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/05/10/ES6-Generator/" class="article-date">
+  	<time datetime="2015-05-10T14:42:49.000Z" itemprop="datePublished">2015-05-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ES6 Generator
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。<br>我们先看下阮一峰《es6入门》的一段解释</p>
+<blockquote>
+<p>可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以理解成发生某些事件）。ES6引入Generator函数，作用就是可以完全控制函数的内部状态的变化，依次遍历这些状态。<br>在形式上，Generator是一个普通函数，但是有两个特征。一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态（yield语句在英语里的意思就是“产出”）。</p>
+</blockquote>
+<h1 id="Generator">Generator</h1><p>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">gen</span> = function* (x) &#123;</span><br><span class="line">	<span class="keyword">var</span> a = yield x+1;</span><br><span class="line">	<span class="keyword">var</span> b = yield a+2;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(2);</span><br><span class="line"><span class="keyword">g</span>.next();<span class="comment">//返回&#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next(4); <span class="comment">//返回&#123;value: 6, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next();  <span class="comment">//返回 &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>咋们来解释下上面的代码：</p>
+<ol>
+<li>先运行gen(2),得到一个迭代器g</li>
+<li>运行g.next(),系统执行x+1(x=2),返回{value: 3, done: false}</li>
+<li>运行g.next(4),把4赋值给a，然后返回{value: 6, done: false}，不要问为什么a不是等于3，反正语法就是这样。</li>
+<li>运行g.next(),返回{value: undefined, done: true}，因为我们没有为b赋值，所以就是undefined</li>
+</ol>
+<p>我们可以发现上面是我们手动一步步执行的。也就是上面说的，Generator遇到yield的时候会挂起，暂停执行。<br>这里不讨论Generator当做普通迭代器的用法，这里讨论的是如何使用Generator来让异步编程看起来更优美。所以这里，我们必须先解释下<strong>Thunk</strong>这东西。<br><a id="more"></a></p>
+<h1 id="Thunk">Thunk</h1><p>先看一段代码<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(fileName, <span class="keyword">callback</span>); <span class="comment">//正常版本的readFile</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> readFileThunk = (<span class="function"><span class="keyword">function</span><span class="params">(fileName)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>&#123; <span class="comment">//返回Thunk函数</span></span><br><span class="line">		<span class="keyword">return</span> fs.readFile(fileName, <span class="keyword">callback</span>);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;)(fileName);</span><br></pre></td></tr></table></figure></p>
+<p>上面那段代码中的匿名函数就是<strong>Thunk</strong>函数。现在就能解释Thunk函数的意思了。</p>
+<blockquote>
+<p>任何函数，只要参数中包含有回调，我们就能转化成单参数的函数，这个函数只接受回调函数作为参数，例如上面的<code>readFileThunk</code>,这个单参数的函数就叫做Thunk函数。</p>
+</blockquote>
+<p>OK，解释完这个之后，可以真正进入Generator的异步编程了。</p>
+<h1 id="Generator异步编程">Generator异步编程</h1><p>直接看代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> readFile = <span class="function"><span class="keyword">function</span><span class="params">(fileName)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> fs.readFile(fileName, callback);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gen = <span class="function"><span class="keyword">function</span>*<span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> r1 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/hosts'</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(r1.toString());</span><br><span class="line">	<span class="keyword">var</span> r2 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/shells'</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(r2.toString());</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//手动执行文件读取，更加直观的看Generator是怎么执行的</span></span><br><span class="line"><span class="keyword">var</span> g = gen();</span><br><span class="line"><span class="keyword">var</span> r1 = g.next();</span><br><span class="line">r1.value(<span class="function"><span class="keyword">function</span><span class="params">(err, data)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">	<span class="keyword">var</span> r2 = g.next(data); <span class="comment">//把data值赋值给gen中的r1</span></span><br><span class="line">	r2.value(<span class="function"><span class="keyword">function</span><span class="params">(err, data)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">		g.next(data); <span class="comment">//把data值赋值给gen中的r2</span></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>我们先不管是不是异步编程，上面gen这个Generator函数的函数体看起来是不是非常的像在做同步编程<br>但实际上做的是异步编程，我们看下面的手动执行解析就能很清楚的知道执行机智是什么。</p>
+<p>好了，今天先讲到这里，接下去有时间引入co这个东东。</p>
+
+        
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/04/28/如何编写node命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">如何编写node命令</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="ES6-Generator" data-title="ES6 Generator" data-url="http://blog.angrytoro.com/2015/05/10/ES6-Generator/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 freefish
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/angrytoro/hexo-them-fish" target="_blank">fish</a> by fish
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-60687326-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>

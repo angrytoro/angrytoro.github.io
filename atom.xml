@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2015-04-28T14:30:14.000Z</updated>
+  <updated>2015-05-12T14:48:21.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[ES6 Generator]]></title>
+    <link href="http://blog.angrytoro.com/2015/05/10/ES6-Generator/"/>
+    <id>http://blog.angrytoro.com/2015/05/10/ES6-Generator/</id>
+    <published>2015-05-10T14:42:49.000Z</published>
+    <updated>2015-05-12T14:48:21.000Z</updated>
+    <content type="html"><![CDATA[<p>最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。<br>我们先看下阮一峰《es6入门》的一段解释</p>
+<blockquote>
+<p>可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以理解成发生某些事件）。ES6引入Generator函数，作用就是可以完全控制函数的内部状态的变化，依次遍历这些状态。<br>在形式上，Generator是一个普通函数，但是有两个特征。一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态（yield语句在英语里的意思就是“产出”）。</p>
+</blockquote>
+<h1 id="Generator">Generator</h1><p>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">gen</span> = function* (x) &#123;</span><br><span class="line">	<span class="keyword">var</span> a = yield x+1;</span><br><span class="line">	<span class="keyword">var</span> b = yield a+2;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(2);</span><br><span class="line"><span class="keyword">g</span>.next();<span class="comment">//返回&#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next(4); <span class="comment">//返回&#123;value: 6, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next();  <span class="comment">//返回 &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>咋们来解释下上面的代码：</p>
+<ol>
+<li>先运行gen(2),得到一个迭代器g</li>
+<li>运行g.next(),系统执行x+1(x=2),返回{value: 3, done: false}</li>
+<li>运行g.next(4),把4赋值给a，然后返回{value: 6, done: false}，不要问为什么a不是等于3，反正语法就是这样。</li>
+<li>运行g.next(),返回{value: undefined, done: true}，因为我们没有为b赋值，所以就是undefined</li>
+</ol>
+<p>我们可以发现上面是我们手动一步步执行的。也就是上面说的，Generator遇到yield的时候会挂起，暂停执行。<br>这里不讨论Generator当做普通迭代器的用法，这里讨论的是如何使用Generator来让异步编程看起来更优美。所以这里，我们必须先解释下<strong>Thunk</strong>这东西。<br><a id="more"></a></p>
+<h1 id="Thunk">Thunk</h1><p>先看一段代码<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(fileName, <span class="keyword">callback</span>); <span class="comment">//正常版本的readFile</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> readFileThunk = (<span class="function"><span class="keyword">function</span><span class="params">(fileName)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>&#123; <span class="comment">//返回Thunk函数</span></span><br><span class="line">		<span class="keyword">return</span> fs.readFile(fileName, <span class="keyword">callback</span>);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;)(fileName);</span><br></pre></td></tr></table></figure></p>
+<p>上面那段代码中的匿名函数就是<strong>Thunk</strong>函数。现在就能解释Thunk函数的意思了。</p>
+<blockquote>
+<p>任何函数，只要参数中包含有回调，我们就能转化成单参数的函数，这个函数只接受回调函数作为参数，例如上面的<code>readFileThunk</code>,这个单参数的函数就叫做Thunk函数。</p>
+</blockquote>
+<p>OK，解释完这个之后，可以真正进入Generator的异步编程了。</p>
+<h1 id="Generator异步编程">Generator异步编程</h1><p>直接看代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> readFile = <span class="function"><span class="keyword">function</span><span class="params">(fileName)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> fs.readFile(fileName, callback);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gen = <span class="function"><span class="keyword">function</span>*<span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> r1 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/hosts'</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(r1.toString());</span><br><span class="line">	<span class="keyword">var</span> r2 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/shells'</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(r2.toString());</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//手动执行文件读取，更加直观的看Generator是怎么执行的</span></span><br><span class="line"><span class="keyword">var</span> g = gen();</span><br><span class="line"><span class="keyword">var</span> r1 = g.next();</span><br><span class="line">r1.value(<span class="function"><span class="keyword">function</span><span class="params">(err, data)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">	<span class="keyword">var</span> r2 = g.next(data); <span class="comment">//把data值赋值给gen中的r1</span></span><br><span class="line">	r2.value(<span class="function"><span class="keyword">function</span><span class="params">(err, data)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(err) <span class="keyword">throw</span> err;</span><br><span class="line">		g.next(data); <span class="comment">//把data值赋值给gen中的r2</span></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>我们先不管是不是异步编程，上面gen这个Generator函数的函数体看起来是不是非常的像在做同步编程<br>但实际上做的是异步编程，我们看下面的手动执行解析就能很清楚的知道执行机智是什么。</p>
+<p>好了，今天先讲到这里，接下去有时间引入co这个东东。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。<br>我们先看下阮一峰《es6入门》的一段解释</p>
+<blockquote>
+<p>可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以理解成发生某些事件）。ES6引入Generator函数，作用就是可以完全控制函数的内部状态的变化，依次遍历这些状态。<br>在形式上，Generator是一个普通函数，但是有两个特征。一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态（yield语句在英语里的意思就是“产出”）。</p>
+</blockquote>
+<h1 id="Generator">Generator</h1><p>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">gen</span> = function* (x) &#123;</span><br><span class="line">	<span class="keyword">var</span> a = yield x+1;</span><br><span class="line">	<span class="keyword">var</span> b = yield a+2;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(2);</span><br><span class="line"><span class="keyword">g</span>.next();<span class="comment">//返回&#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next(4); <span class="comment">//返回&#123;value: 6, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next();  <span class="comment">//返回 &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>咋们来解释下上面的代码：</p>
+<ol>
+<li>先运行gen(2),得到一个迭代器g</li>
+<li>运行g.next(),系统执行x+1(x=2),返回{value: 3, done: false}</li>
+<li>运行g.next(4),把4赋值给a，然后返回{value: 6, done: false}，不要问为什么a不是等于3，反正语法就是这样。</li>
+<li>运行g.next(),返回{value: undefined, done: true}，因为我们没有为b赋值，所以就是undefined</li>
+</ol>
+<p>我们可以发现上面是我们手动一步步执行的。也就是上面说的，Generator遇到yield的时候会挂起，暂停执行。<br>这里不讨论Generator当做普通迭代器的用法，这里讨论的是如何使用Generator来让异步编程看起来更优美。所以这里，我们必须先解释下<strong>Thunk</strong>这东西。<br>]]>
+    
+    </summary>
+    
+      <category term="ES6" scheme="http://blog.angrytoro.com/tags/ES6/"/>
+    
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何编写node命令]]></title>
@@ -694,41 +746,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<h4 id="问题一：解决angular-ui中modal_dialog_form_object_is_undefined_in_controller">问题一：解决angular-ui中modal dialog form object is undefined in cont]]>
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[angularjs笔记（一）]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/angularjs%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/angularjs笔记（一）/</id>
-    <published>2015-03-08T08:01:01.000Z</published>
-    <updated>2015-03-08T09:57:23.000Z</updated>
-    <content type="html"><![CDATA[<p>我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。<br>第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。</p>
-<hr>
-<h2 id="scope对象">scope对象</h2><p>Angular的scope对象是POJO（简单的javascript对象），用构造函数创建的，简单版本如下：</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Scope</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="Scope对象的两个属性$watch和$digest">Scope对象的两个属性<code>$watch</code>和<code>$digest</code></h3><p><code>$watch</code>和<code>$digest</code>是相辅相成的。两者一起，构成了Angular作用域的核心：数据变化的响应。<br>使用<code>$watch</code>，可以在scope上添加一个监听器。当Scope发生变化时，监听器会收到提示。给<code>$watch</code>定义两个函数就可以创建一个简体监听器。</p>
-<ul>
-<li>一个监控函数，用户指定所关注的那部分数据。</li>
-<li>一个监听函数，用户数据变更的时候接受提示。</li>
-</ul>
-<blockquote>
-<p>作为一名Angular用户，一般来说，是监控一个表达式，而不是使用监控函数。监控表达式是一个字符串，比如说“user.firstName”，通常在数据绑定，指令的属性，或者JavaScript代码中指定，它被Angular解析和编译成一个监控函数。在这篇文章的后面部分我们会探讨这是如何做的。在这篇文章中，我们将使用稍微低级的方法直接提供监控功能。</p>
-</blockquote>
-<p>为了实现$watch，我们需要存储注册过的所有监听器。我们在Scope构造函数上添加一个数组：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Scope</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.$$watcers = [];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。<br>第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。</p>
-<hr>
-<h2 id="scope对象">scope对象</h2><p>Angular的scope对象是POJO（简单的javascript对象），用构造函数创建的，简单版本如下：</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Scope</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]>
-    
     </summary>
     
       <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
