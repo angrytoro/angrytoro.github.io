@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2015-05-14T13:10:05.000Z</updated>
+  <updated>2015-06-22T15:22:09.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[然而大部分期权并没有什么用]]></title>
+    <link href="http://blog.angrytoro.com/2015/06/22/%E7%84%B6%E8%80%8C%E5%A4%A7%E9%83%A8%E5%88%86%E6%9C%9F%E6%9D%83%E5%B9%B6%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8/"/>
+    <id>http://blog.angrytoro.com/2015/06/22/然而大部分期权并没有什么用/</id>
+    <published>2015-06-22T14:47:20.000Z</published>
+    <updated>2015-06-22T15:22:09.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>首先声明下，这篇博文是引用自<strong>100offer</strong>的订阅号，献给非常单纯的程序员。由于最近实在是没有什么长进，一直在做业务，吃老本，陪妹子，所以没有自己的内容可以写（大哭）。不过可能接下去鄙人要在ghost上下点功夫，到时候就会有一些干货可以分享给大家啦。好了，废（zhen）话（luo）不（说）多说。</p>
+</blockquote>
+<p>最近有个用户拿到了Uber的offer，其中包含期权，他看不懂便向我咨询期权的细节和意义。我的观点是：大部分的期权并没有什么卵用。</p>
+<h1 id="期权激励的初心">期权激励的初心</h1><p>其实期权是有正向作用的，让我们从目标谈起：<br><img src="/img/无股权激励下的公司与员工.jpg" alt="无股权激励下的公司与员工"><br>假设一家公司的目标是1，团队会形成分工来拆解目标，比如研发团队的目标可能是1.1，而一个普通程序员被分配到的目标可能是1.1.1。如果只有基本薪资，程序员认为出色完成1.1.1就完成了工作，因为这是全部目标。<br><a id="more"></a><br><img src="/img/股权或期权激励下的公司与员工.jpg" alt="股权或期权激励下的公司与员工"><br>但如果采用高薪资结合期权的激励方式，大家会分享到公司的成长。员工会向上寻找目标，完成整个部门的目标，甚至整个公司的目标也义不容辞。在这个过程中，员工不仅与公司一起快速成长，自身能力还得到了提升，良好的激励方式会形成一个双赢的局面。<br>就像 Fenng（冯大辉）虽然是技术负责人，但是看看他的社交媒体，满屏尽是「丁香园产品推广」——这或许也是Fenng大大给自己设定的目标吧！</p>
+<h1 id="过去的互联网公司在处理「期权」这件事上，常出现这几种现象：">过去的互联网公司在处理「期权」这件事上，常出现这几种现象：</h1><p><strong>A、初创公司画饼忽悠</strong></p>
+<p>A创业公司，招人时老板总谈降薪拿期权，爱招BAT背景的员工，口头禅是「员工要靠伴随公司成长来实现自我价值」。某员工降薪拿期权进入A公司，实际能力远高于offer岗位需求。工作了1年多后，他发现公司的成长完全不及预期，自己一直在做一些技术能力无法成长的事。失望之下，他试探了下外面的机会，发现世界变化很快，同类型的职位收到的薪资竟然是现公司的2~3倍。</p>
+<p><strong>B、成长型公司打土豪易、分田地难</strong></p>
+<p>B公司，国内风光一时的互联网上市公司，曾经期权是他们offer中重要的一环，某年12月IPO之夜，全公司员工们举杯、狂欢。然而现实很骨感，随着原先许诺好的期权变成了18：1换股，早期员工也失去了憧憬。</p>
+<p><strong>C、上市公司的成熟分配机制</strong></p>
+<p>阿里、百度、奇虎，为典型。期权被视为一种长期激励，而非利益捆绑。对优秀员工的激励方式是高薪资+部分期权。拿百度举例，T5工程师Package一般为30万/年，其中12-20%为期权；T9工程师Package一般为100~300万/年，40%左右为期权；由于已上市，兑现相对容易。<br><img src="/img/百度期权占比.jpg" alt="百度期权占比"></p>
+<h1 id="那么，为何会出现AB式「反人性」的激励方式？">那么，为何会出现AB式「反人性」的激励方式？</h1><p>我想，A公司的老板是这么想的：<br><img src="/img/A公司老板的想法.jpg" alt="A公司老板的想法"></p>
+<p>然并卵，员工的真实心理是这样的：<br><img src="/img/A公司员工想法.jpg" alt="A公司员工想法"></p>
+<p>我太理解这种态度了，这种想法也是很合理的：期权到最后套现，是一个漫长不确定的路，如果我失去该得的薪资和奖金，时间成本和机会成本的损失是划不来的。</p>
+<p>对于B公司，老板的心理活动也许是这样的：<br><img src="/img/B公司老板的想法.jpg" alt="B公司老板的想法"></p>
+<p>B类公司过去也有成功者，分布在传统行业居多，他们的行业竞争并没有互联网领域激烈，让老板误认为「我就是那么牛逼」。对于「老二非死不可」的互联网行业，公司出现此类现象，更要警惕。</p>
+<h1 id="So，普通员工/程序员如何辨别靠谱的互联网公司？">So，普通员工/程序员如何辨别靠谱的互联网公司？</h1><p>在期权这件事上，不同公司激励的方法、时间点均不相同，但靠谱的还是有几点共性：</p>
+<p><strong>1、成功并长久的企业都会提供期权激励</strong><br>星巴克作为行业内绝对的利润垄断企业，期权激励应该也是星巴克成功的秘诀之一。<br><img src="/img/星巴克期权激励.jpg" alt="星巴克期权激励"></p>
+<p><strong>2、对于普通员工，期权建立在合理薪资的基础上</strong><br>对于创业团队，期权+低工资的组合是很难招来靠谱的Team Leader的，用期权压低薪资的公司不太靠谱。</p>
+<p><strong>3、期权激励后置且大方</strong><br>对比魅族和小米，我们可以发现与魅族不同的是，小米从第一天就很重视股权激励。留出足够的期权池，找到靠谱的团队，慷慨地配以股权或期权，是小米的特点。</p>
+<p>最后，我想说，<br>如果能够获得必要的信息，同时自上而下地看问题，选择其实可以相对理性。但大部分情况下，你选择的不过是运气。若你斟酌了很久还在纠结，不如跟着第一感觉走。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>首先声明下，这篇博文是引用自<strong>100offer</strong>的订阅号，献给非常单纯的程序员。由于最近实在是没有什么长进，一直在做业务，吃老本，陪妹子，所以没有自己的内容可以写（大哭）。不过可能接下去鄙人要在ghost上下点功夫，到时候就会有一些干货可以分享给大家啦。好了，废（zhen）话（luo）不（说）多说。</p>
+</blockquote>
+<p>最近有个用户拿到了Uber的offer，其中包含期权，他看不懂便向我咨询期权的细节和意义。我的观点是：大部分的期权并没有什么卵用。</p>
+<h1 id="期权激励的初心">期权激励的初心</h1><p>其实期权是有正向作用的，让我们从目标谈起：<br><img src="/img/无股权激励下的公司与员工.jpg" alt="无股权激励下的公司与员工"><br>假设一家公司的目标是1，团队会形成分工来拆解目标，比如研发团队的目标可能是1.1，而一个普通程序员被分配到的目标可能是1.1.1。如果只有基本薪资，程序员认为出色完成1.1.1就完成了工作，因为这是全部目标。<br>]]>
+    
+    </summary>
+    
+      <category term="杂文" scheme="http://blog.angrytoro.com/categories/%E6%9D%82%E6%96%87/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[ES6 Generator]]></title>
@@ -731,24 +772,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<p>这篇笔记终于不是参考国内的博文了。<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td cla]]>
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[angularjs常用解决技巧]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/angularjs%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%8A%80%E5%B7%A7/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/angularjs常用解决技巧/</id>
-    <published>2015-03-08T08:02:01.000Z</published>
-    <updated>2015-03-08T08:02:27.000Z</updated>
-    <content type="html"><![CDATA[<h4 id="问题一：解决angular-ui中modal_dialog_form_object_is_undefined_in_controller">问题一：解决angular-ui中modal dialog form object is undefined in controller</h4><p>在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据<code>$scope.formName</code>获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverflow里面啥解决办法都有。相关<a href="http://stackoverflow.com/questions/19312936/angularjs-modal-dialog-form-object-is-undefined-in-controller" target="_blank" rel="external">链接</a>。这里面最有效的办法就是在dialog里面的form表单的name属性设置成<code>$parent.formName</code>，不过在创建dialog的时候需要设置scope这个属性，相关的angular-ui见<a href="http://angular-ui.github.io/bootstrap/" target="_blank" rel="external">链接</a>。这样就能在dialog的controller中使用$scope.formName。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h4 id="问题一：解决angular-ui中modal_dialog_form_object_is_undefined_in_controller">问题一：解决angular-ui中modal dialog form object is undefined in cont]]>
     </summary>
     
       <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>

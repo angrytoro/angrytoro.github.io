@@ -185,6 +185,70 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-不同浏览器求滚动距离的办法" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/08/不同浏览器求滚动距离的办法/" class="article-date">
+  	<time datetime="2015-03-08T11:02:26.000Z" itemprop="datePublished">2015-03-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/08/不同浏览器求滚动距离的办法/">不同浏览器求滚动距离的办法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="chrome">chrome</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</span><br><span class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</span><br><span class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</span><br></pre></td></tr></table></figure>
+<h1 id="firefox">firefox</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.documentElement.scrollTop</span><br><span class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</span><br><span class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</span><br></pre></td></tr></table></figure>
+<h1 id="IE">IE</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</span><br></pre></td></tr></table></figure>
+<h1 id="注释">注释</h1><blockquote>
+<p>还没有测试safari,估计跟chrome的差不多。同理可以求X轴的偏移量。</p>
+</blockquote>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
     <article id="post-IE9-BUG-overflow-auto-底部空白解决方案" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -431,70 +495,6 @@
         <hr/>
         <p class="article-more-link">
           <a  href="/2015/03/08/Angularjs之Directive-指令/#more">more >></a>
-        </p>
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-Angularjs实践（一）" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/08/Angularjs实践（一）/" class="article-date">
-  	<time datetime="2015-03-08T10:12:24.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/Angularjs实践（一）/">Angularjs实践（一）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="简单迭代器">简单迭代器</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">table</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span>&gt;</span><span class="tag">&lt;<span class="title">tr</span>&gt;</span><span class="tag">&lt;<span class="title">th</span>&gt;</span>row number<span class="tag">&lt;/<span class="title">th</span>&gt;</span><span class="tag">&lt;/<span class="title">tr</span>&gt;</span><span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span> <span class="attribute">ng-repeat</span>=<span class="value">"i in [0, 1, 2, 3, 4, 5, 6, 7]"</span>&gt;</span><span class="tag">&lt;<span class="title">td</span>&gt;</span>&#123; &#123;i+1&#125; &#125;<span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>Angularjs会运行<code>{ { } }</code>中的表达式<br>for循环用in这个关键字来遍历</p>
-<hr>
-<h3 id="ngBind和ngBindTemplate">ngBind和ngBindTemplate</h3><p>这两个指令让页面在有相应model的时候才显示真正的内容，例如：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;title ng-<span class="keyword">bind</span>-<span class="keyword">template</span>=<span class="string">"Google Phone Gallery: &#123;&#123;query&#125;&#125;"</span>&gt;<span class="type">Google</span> <span class="type">Phone</span> <span class="type">Gallery</span>&lt;/title&gt;</span><br></pre></td></tr></table></figure></p>
-<p>在没有query的时候，title显示的是Google Phone Gallery，当query有值得时候，会显示Google Phone Gallery:xxx。</p>
-<hr>
-        <hr/>
-        <p class="article-more-link">
-          <a  href="/2015/03/08/Angularjs实践（一）/#more">more >></a>
         </p>
       
     </div>
