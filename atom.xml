@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2015-06-22T15:22:09.000Z</updated>
+  <updated>2015-08-30T15:13:25.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[wepack学习]]></title>
+    <link href="http://blog.angrytoro.com/2015/08/06/wepack%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://blog.angrytoro.com/2015/08/06/wepack学习/</id>
+    <published>2015-08-06T14:29:59.000Z</published>
+    <updated>2015-08-30T15:13:25.000Z</updated>
+    <content type="html"><![CDATA[<p>回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这智商看不懂，没办法，只能自己硬着头皮满满啃英文，慢慢尝试了。(又唠叨了。)</p>
+<h1 id="配置说明">配置说明</h1><p><em>target:</em>用来指定这些代码是为什么平台准备的，有多种选择’web\webworker\node\async-node\node-webkit\atom’，大家根据需要自行选择。<br><em>cache:</em>还没搞懂，等搞懂了告诉大家<br><em>entry:</em>用来告诉webpack，我们要编译那些文件，如果大家有很页面需要编译，那不好意思，大家只能一条一条写上去了，不能像gulp或者grunt那样直接正则匹配了<br><em>resolve:</em>这货底下有多个配置，其中有一个很特殊很高效值得推荐，<em>modulesDirectories</em>这个配置告诉webpack到哪里找资源，省得webpack到处找，提高编译效率<br><em>output:</em>这货告诉webpack，编译后的资源要放在那里<br><em>output.filename:</em>编译后的文件怎么取名，看大家的喜好和需求了，跟entry是有映射关系的<br><em>output.publicPath:</em>应该是用来告诉web-dev-server请求资源的时候应该去哪个文件夹请求，等实验后再跟大家汇报<br><em>output.library:</em>这货也不知道怎么用<br><em>output.chunkFilename:</em>这货在我使用require.ensure的时候，有用到，其余的不知道咋用了。<br><em>module.loaders</em>这东西其实就是用来放预编译插件的，很重要的一点是，loader这个配置可以加参数，大家别傻傻的不知道。<br><em>plugins</em>一些webpack插件，我暂时之用到了CommonsChunkPlugin，这是用来提取公用代码的。</p>
+<h1 id="TODO">TODO</h1><p>边写个react简单应用，然后搞清楚webpack的大部分特性。</p>
+<blockquote>
+<p><a href="https://underthehood.myob.com/changing-of-the-guard-in-web-technologies/" target="_blank" rel="external">A CHANGING OF THE GUARD IN WEB TECHNOLOGY </a><br><a href="http://segmentfault.com/a/1190000002552008#articleHeader10" target="_blank" rel="external">Webpack 怎么用</a><br><a href="http://segmentfault.com/a/1190000002551952" target="_blank" rel="external">Webpack 入门指迷</a><br><a href="http://www.w2bc.com/Article/50764" target="_blank" rel="external">webpack 入门指南</a><br><a href="https://fakefish.github.io/react-webpack-cookbook/index.html" target="_blank" rel="external">React Webpack cookbook</a><br><a href="http://www.infoq.com/cn/articles/react-and-webpack?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" target="_blank" rel="external">React开发神器Webpack</a><br><a href="http://www.jianshu.com/p/8adf4c2bfa51" target="_blank" rel="external">Webpack-dev-server结合后端服务器的热替换配置</a></p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Ghost源码学习之一（ORM）]]></title>
+    <link href="http://blog.angrytoro.com/2015/06/28/Ghost%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B9%8B%E4%B8%80%EF%BC%88ORM%EF%BC%89/"/>
+    <id>http://blog.angrytoro.com/2015/06/28/Ghost源码学习之一（ORM）/</id>
+    <published>2015-06-28T01:26:43.000Z</published>
+    <updated>2015-06-28T01:26:43.000Z</updated>
+    <content type="html"></content>
+    <summary type="html">
+    
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[然而大部分期权并没有什么用]]></title>
@@ -724,54 +756,6 @@
 <p>参考<a href="https://github.com/angular/angular.js/commit/528be29d1662122a34e204dd607e1c0bd9c16bbc">528be29d</a></p>
 </blockquote>]]>
     
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[angularjs开发笔记之ng-class]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/angularjs%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0%E4%B9%8Bng-class/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/angularjs开发笔记之ng-class/</id>
-    <published>2015-03-08T08:07:52.000Z</published>
-    <updated>2015-03-08T10:06:13.000Z</updated>
-    <content type="html"><![CDATA[<h4 id="参考AngularJS_ng-class用法">参考<a href="http://my.oschina.net/gejiawen0913/blog/188547" target="_blank" rel="external">AngularJS ng-class用法</a></h4><p><code>ng-class</code>有三种用法，最简单的就是<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.className = <span class="string">'abc'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div class=<span class="string">"&#123;&#123;className&#125;&#125;"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>第二种：<br><a id="more"></a><br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.isActive = true;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div ng-class=<span class="string">"&#123;true: 'active', false: 'inactive'&#125;[isActive]"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
-<p>这里的isActive也可以是简单的判断表达式，比如!!isActive.</p>
-<hr>
-<p>第三种：<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    <span class="keyword">...</span></span><br><span class="line">&#125;;</span><br><span class="line">&lt;div ng-class=<span class="string">"&#123;'selected': isSelected, 'car': isCar&#125;"</span>&gt;&lt;/div&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
-<p>当 isSelected = true 则增加selected class，当isCar=true,则增加car class。以此类推。</p>
-<hr>
-<p>上面几种用法，大家应该看一眼就懂，在这就不再shuo</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h4 id="参考AngularJS_ng-class用法">参考<a href="http://my.oschina.net/gejiawen0913/blog/188547">AngularJS ng-class用法</a></h4><p><code>ng-class</code>有三种用法，最简单的就是<br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> contrller($scope) &#123;</span><br><span class="line">    $scope.className = <span class="string">'abc'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;div class=<span class="string">"&#123;&#123;className&#125;&#125;"</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>第二种：<br>]]>
-    
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[angularjs开发笔记之checkbox]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/angularjs%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0%E4%B9%8Bcheckbox/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/angularjs开发笔记之checkbox/</id>
-    <published>2015-03-08T08:06:45.000Z</published>
-    <updated>2015-03-08T08:07:30.000Z</updated>
-    <content type="html"><![CDATA[<p>这篇笔记终于不是参考国内的博文了。<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input <span class="keyword">type</span>=<span class="string">"checkbox"</span> ng-check=<span class="string">"&#123;&#123;xxx&#125;&#125;"</span> ng-<span class="literal">true</span>-<span class="keyword">value</span>=<span class="string">"yes"</span> ng-<span class="literal">false</span>-<span class="keyword">value</span>=<span class="string">"no"</span>&gt;</span><br></pre></td></tr></table></figure></p>
-<p><code>ng-true-value</code>这个属性用来标识当该checkbox被选中时的值为多少。<br><code>ng-false-value</code>这个属性用来标识当该checkbox未被选中时的值为多少。<br><code>ng-check</code>这个属性与<code>ng-true-value</code>，<code>ng-false-value</code>配合来控制checkbox的选中状态</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>这篇笔记终于不是参考国内的博文了。<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td cla]]>
     </summary>
     
       <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>

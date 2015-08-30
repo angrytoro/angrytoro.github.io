@@ -185,6 +185,120 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-wepack学习" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/06/wepack学习/" class="article-date">
+  	<time datetime="2015-08-06T14:29:59.000Z" itemprop="datePublished">2015-08-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/06/wepack学习/">wepack学习</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这智商看不懂，没办法，只能自己硬着头皮满满啃英文，慢慢尝试了。(又唠叨了。)</p>
+<h1 id="配置说明">配置说明</h1><p><em>target:</em>用来指定这些代码是为什么平台准备的，有多种选择’web\webworker\node\async-node\node-webkit\atom’，大家根据需要自行选择。<br><em>cache:</em>还没搞懂，等搞懂了告诉大家<br><em>entry:</em>用来告诉webpack，我们要编译那些文件，如果大家有很页面需要编译，那不好意思，大家只能一条一条写上去了，不能像gulp或者grunt那样直接正则匹配了<br><em>resolve:</em>这货底下有多个配置，其中有一个很特殊很高效值得推荐，<em>modulesDirectories</em>这个配置告诉webpack到哪里找资源，省得webpack到处找，提高编译效率<br><em>output:</em>这货告诉webpack，编译后的资源要放在那里<br><em>output.filename:</em>编译后的文件怎么取名，看大家的喜好和需求了，跟entry是有映射关系的<br><em>output.publicPath:</em>应该是用来告诉web-dev-server请求资源的时候应该去哪个文件夹请求，等实验后再跟大家汇报<br><em>output.library:</em>这货也不知道怎么用<br><em>output.chunkFilename:</em>这货在我使用require.ensure的时候，有用到，其余的不知道咋用了。<br><em>module.loaders</em>这东西其实就是用来放预编译插件的，很重要的一点是，loader这个配置可以加参数，大家别傻傻的不知道。<br><em>plugins</em>一些webpack插件，我暂时之用到了CommonsChunkPlugin，这是用来提取公用代码的。</p>
+<h1 id="TODO">TODO</h1><p>边写个react简单应用，然后搞清楚webpack的大部分特性。</p>
+<blockquote>
+<p><a href="https://underthehood.myob.com/changing-of-the-guard-in-web-technologies/" target="_blank" rel="external">A CHANGING OF THE GUARD IN WEB TECHNOLOGY </a><br><a href="http://segmentfault.com/a/1190000002552008#articleHeader10" target="_blank" rel="external">Webpack 怎么用</a><br><a href="http://segmentfault.com/a/1190000002551952" target="_blank" rel="external">Webpack 入门指迷</a><br><a href="http://www.w2bc.com/Article/50764" target="_blank" rel="external">webpack 入门指南</a><br><a href="https://fakefish.github.io/react-webpack-cookbook/index.html" target="_blank" rel="external">React Webpack cookbook</a><br><a href="http://www.infoq.com/cn/articles/react-and-webpack?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" target="_blank" rel="external">React开发神器Webpack</a><br><a href="http://www.jianshu.com/p/8adf4c2bfa51" target="_blank" rel="external">Webpack-dev-server结合后端服务器的热替换配置</a></p>
+</blockquote>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
+    <article id="post-Ghost源码学习之一（ORM）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/28/Ghost源码学习之一（ORM）/" class="article-date">
+  	<time datetime="2015-06-28T01:26:43.000Z" itemprop="datePublished">2015-06-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/28/Ghost源码学习之一（ORM）/">Ghost源码学习之一（ORM）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+      
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
     <article id="post-然而大部分期权并没有什么用" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -381,127 +495,6 @@
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-es6编译成es5" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/04/19/es6编译成es5/" class="article-date">
-  	<time datetime="2015-04-19T02:03:39.000Z" itemprop="datePublished">2015-04-19</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/19/es6编译成es5/">es6编译成es5</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具<a href="https://github.com/google/traceur-compiler">traceur</a>和比较多人用的<a href="https://babeljs.io/">babel</a>。发现两个编译工具都有各自的缺点。</p>
-<h1 id="traceur和babel编译器的优缺点">traceur和babel编译器的优缺点</h1><ul>
-<li>traceur: 这货编译成的代码的<strong>可读性还是挺好的</strong>。不过比较坑爹的是，traceur需要引入<code>traceur-runtime.js</code>这个运行时脚本，并且在运行时会出现一些莫名的错误。估计是还不成熟。<br><img src="/img/traceur编译.jpg" alt="traceur编译">
-        <hr/>
-        <p class="article-more-link">
-          <a  href="/2015/04/19/es6编译成es5/#more">more >></a>
-        </p>
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-Chrome浏览器Network面板" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/30/Chrome浏览器Network面板/" class="article-date">
-  	<time datetime="2015-03-30T15:12:18.000Z" itemprop="datePublished">2015-03-30</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/30/Chrome浏览器Network面板/">Chrome浏览器Network面板</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？</p>
-<h1 id="Resource_Timing_API">Resource Timing API</h1><p>这个面板使用<a href="http://www.w3.org/TR/resource-timing/">Resource Timing API</a>来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考<a href="http://www.w3cfuns.com/article-5598442-1-1.html">Navigation Timing 测试网页加载速度</a>，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。<br><img src="/img/resource-timing-overview.png" alt="network timing data points"><br>咋们看看每个请求，都包含有哪些数据。在控制台输入<code>performance.getEntries()[0]</code><br>
-        <hr/>
-        <p class="article-more-link">
-          <a  href="/2015/03/30/Chrome浏览器Network面板/#more">more >></a>
-        </p>
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chrome/">chrome</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/工具/">工具</a>
 	</div>
 
 
