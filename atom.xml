@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2015-08-30T15:13:25.000Z</updated>
+  <updated>2015-10-26T13:14:34.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[如何让worker支持不加外链]]></title>
+    <link href="http://blog.angrytoro.com/2015/10/26/%E5%A6%82%E4%BD%95%E8%AE%A9worker%E6%94%AF%E6%8C%81%E4%B8%8D%E5%8A%A0%E5%A4%96%E9%93%BE/"/>
+    <id>http://blog.angrytoro.com/2015/10/26/如何让worker支持不加外链/</id>
+    <published>2015-10-26T12:39:48.000Z</published>
+    <updated>2015-10-26T13:14:34.000Z</updated>
+    <content type="html"><![CDATA[<p>相信很多人很少用到worker，主要是因为先对比较少有业务需要用到这个。看了下网上的博客，几乎100%的例子都是从外部引入js文件，这其实很烦，能不能直接我们传入一个函数，worker就帮我们创建一个线程。<br>参考了神人的博客<a href="http://ucren.com/blog/" target="_blank" rel="external">将 webworker 改造成无外链文件模式</a>,突然恍然大悟，尼玛神器，膜拜下。<br>先看下大神的代码（命名有点改变）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> FnWorker = <span class="function"><span class="keyword">function</span><span class="params">(fn)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> functionBodyRegx, URL, contentType, code, url;</span><br><span class="line"></span><br><span class="line">	functionBodyRegx = <span class="regexp">/^[^&#123;]+\&#123;([\s\S]*)\&#125;$/</span>;</span><br><span class="line">	URL = <span class="built_in">window</span>.URL || <span class="built_in">window</span>.webkitURL;</span><br><span class="line">	contentType = &#123; type: <span class="string">"text/javascript; charset=utf-8"</span> &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(fn)</span> </span>&#123;</span><br><span class="line">		code = fn.toString().match(functionBodyRegx)[<span class="number">1</span>];</span><br><span class="line">		url = <span class="built_in">window</span>.opera ? <span class="string">"data:application/javascript,"</span> + <span class="built_in">encodeURIComponent</span>( code ) : URL.createObjectURL( <span class="keyword">new</span> Blob( [ code ], contentType ) );</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Worker(url);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;();</span><br></pre></td></tr></table></figure></p>
+<p>用法如下：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> worker = <span class="keyword">new</span> FnWorker( <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    postMessage(&#123; message: <span class="string">"hello myWorker!"</span> &#125;);</span><br><span class="line">&#125; );</span><br><span class="line"></span><br><span class="line">worker.onmessage = <span class="function"><span class="keyword">function</span><span class="params">( event )</span></span>&#123;</span><br><span class="line">    alert( event.data.message );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>大神利用URL和Blob这两个牛逼的东西，然后创建出url。碉堡了有没有？代码大家自己去想研究。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>相信很多人很少用到worker，主要是因为先对比较少有业务需要用到这个。看了下网上的博客，几乎100%的例子都是从外部引入js文件，这其实很烦，能不能直接我们传入一个函数，worker就帮我们创建一个线程。<br>参考了神人的博客<a href="http://ucren.]]>
+    </summary>
+    
+      <category term="worker" scheme="http://blog.angrytoro.com/tags/worker/"/>
+    
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[wepack学习]]></title>
@@ -645,116 +665,6 @@
 <h2 id="路由与多视图">路由与多视图</h2><p>这个章节挺复杂的，需要花点时间理解，参考<a href="http://angularjs.cn/A00a">AngularJS入门教程07：路由与多视图</a></p>
 <hr>
 <p>这个章节有几个注意点<br>]]>
-    
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[AngularJS 从1.2迁移到1.3的变动记录]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/AngularJS-%E4%BB%8E1-2%E8%BF%81%E7%A7%BB%E5%88%B01-3%E7%9A%84%E5%8F%98%E5%8A%A8%E8%AE%B0%E5%BD%95/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/</id>
-    <published>2015-03-08T09:29:40.000Z</published>
-    <updated>2015-03-08T09:51:40.000Z</updated>
-    <content type="html"><![CDATA[<p>公司前端升级了<code>AngularJS</code>，那就顺便记录下1.2到1.3的变化吧。主要是记录一些可能大多数人会遇到的改变，以及1.3的新特性。</p>
-<hr>
-<h1 id="表达式解析">表达式解析</h1><ol>
-<li>我们不能在表达式中使用以<code>.bind,.call,.apply</code>这些关键字命名的函数。例如<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;&#123; &#123;user.sendInfo.call(&#123; &#125;, <span class="constant">true</span>)&#125; &#125;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这绝对会抛出异常</p>
-<ol>
-<li>在表达式中不能使用Object。例如<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scope.foo = &#123; <span class="string">"bar"</span>: <span class="built_in">Object</span> &#125;;</span><br><span class="line">scope.$<span class="built_in">eval</span>(<span class="string">'foo["bar"]'</span>);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这绝对会抛出解析异常</p>
-<ol>
-<li>字符串<code>&#39;f&#39;, &#39;0&#39;, &#39;false&#39;, &#39;no&#39;, &#39;n&#39;, &#39;[]&#39;</code>不在被当做false来处理。只有<code>false,null, undefined,NaN,0,&quot;&quot;</code>被当做false来处理。</li>
-</ol>
-<blockquote>
-<p>参考<a href="https://github.com/angular/angular.js/commit/528be29d1662122a34e204dd607e1c0bd9c16bbc" target="_blank" rel="external">528be29d</a></p>
-</blockquote>
-<a id="more"></a>
-<h1 id="Angular工具函数">Angular工具函数</h1><ol>
-<li><code>angylar.copy</code>：以前copy的时候原型链没有被真正的copy过去，只是用指针引用。现在全部都copy过去了。</li>
-<li><code>angular.tojson</code>：双美元符号<code>$$</code>开头的字段直接被忽略。</li>
-</ol>
-<blockquote>
-<p>参考<a href="https://github.com/angular/angular.js/commit/c054288c9722875e3595e6e6162193e0fb67a251" target="_blank" rel="external">c054288c</a></p>
-</blockquote>
-<h1 id="Angular_HTML编译器">Angular HTML编译器</h1><ol>
-<li><code>replace</code>：指令里面的这个配置项将会在下个大发布中删除掉，所以大家从现在开始尽量不要用这个关键字。</li>
-<li><code>attr.$observe</code>：不再返回一个observer函数（ps：用过的人都懂的）。</li>
-</ol>
-<blockquote>
-<p>参考<a href="https://github.com/angular/angular.js/commit/299b220f5e05e1d4e26bfd58d0b2fd7329ca76b1" target="_blank" rel="external">299b220f</a></p>
-</blockquote>
-<h1 id="Forms,_Inputs_And_NgModel">Forms, Inputs And NgModel</h1><ol>
-<li><p><code>ng-pattern</code>：给个升级前后的代码对比，大家就知道了</p>
- <figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//before</span></span><br><span class="line"><span class="variable">$scope</span>.<span class="keyword">exp</span> = <span class="string">'/abc/i'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//After</span></span><br><span class="line"><span class="variable">$scope</span>.<span class="keyword">exp</span> = /abc/i;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>$cancelUpdate()</code>：现在被改名成<code>$rollbackViewValue()</code></p>
-</li>
-<li><code>checkbox</code>: <code>ng-true-value,ng-false-value</code>里面只能放常量，比如数字或者字符<code>&#39;Y&#39;,&#39;N&#39;</code>记得字符常量一定要用引号包裹。</li>
-<li><code>ngModelOptions</code>：新的牛逼指令，等下单独讲</li>
-</ol>
-<h1 id="Scopes_And_Digests">Scopes And Digests</h1><p><code>$broadcast</code>和<code>$emit</code>在事件结束后，会把<code>event.currentScope</code>设置为<code>null</code>，如果要获得相应的<code>scope</code>，那么我们使用<code>event.targetScope</code>来获取。</p>
-<blockquote>
-<p>参考<a href="https://github.com/angular/angular.js/commit/82f45aee5bd84d1cc53fb2e8f645d2263cdaacbc" target="_blank" rel="external">82f45aee</a></p>
-</blockquote>
-<h1 id="Server_Requests_($http,_$resource)">Server Requests ($http, $resource)</h1><p>主要的变化是删除了<code>$httpProvider</code>的属性<code>responseInterceptors</code>。现在这个拦截器已经不用了，所以我们还是老老实实使用<code>interceptors</code>吧。大家在迁移这个的时候，一定要注意逻辑，因为<code>responseInterceptors</code>返回的东西，在逻辑上很让人捉急，一不小心就会错误，然后让你排查到哭（偶就是干了这种事）。</p>
-<blockquote>
-<p>参考<a href="https://github.com/angular/angular.js/commit/ad4336f9359a073e272930f8f9bcd36587a8648f" target="_blank" rel="external">ad4336f9</a></p>
-</blockquote>
-<h1 id="新特性">新特性</h1><p>好了这是<code>AngularJS</code>给的一些大家最想要的功能。</p>
-<h2 id="One-time_binding">One-time binding</h2><p>顾名思义就是只绑定一次，无论最后那个值在scope上怎么变化，那么在界面上永远只呈现第一次的赋值。用法<code>{ {::xxx} }</code>(xxx是scope上的一个值)。大家还是看例子<a href="https://docs.angularjs.org/guide/expression#one-time-binding" target="_blank" rel="external">one-time-binding</a><br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//html 代码</span></span><br><span class="line">&lt;div ng-controller=<span class="string">"EventController"</span>&gt;</span><br><span class="line">  &lt;button ng-click=<span class="string">"clickMe($event)"</span>&gt;Click Me&lt;/button&gt;</span><br><span class="line">  &lt;p id=<span class="string">"one-time-binding-example"</span>&gt;One time binding: &#123; &#123;::name&#125;&#125;&lt;/p&gt;</span><br><span class="line">  &lt;p id=<span class="string">"normal-binding-example"</span>&gt;Normal binding: &#123; &#123;name&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//javascript 代码</span></span><br><span class="line">angular.module(<span class="string">'oneTimeBidingExampleApp'</span>, []).</span><br><span class="line">controller(<span class="string">'EventController'</span>, [<span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$scope</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> counter = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> names = [<span class="string">'Igor'</span>, <span class="string">'Misko'</span>, <span class="string">'Chirayu'</span>, <span class="string">'Lucas'</span>];</span><br><span class="line">  <span class="comment">/*</span><br><span class="line">   * expose the event object to the scope</span><br><span class="line">   */</span></span><br><span class="line">  <span class="variable">$scope</span>.clickMe = <span class="function"><span class="keyword">function</span><span class="params">(clickEvent)</span> </span>&#123;</span><br><span class="line">    <span class="variable">$scope</span>.name = names[counter % names.length];</span><br><span class="line">    counter++;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure></p>
-<h2 id="ngMessages">ngMessages</h2><p>这个指令用来展示form填写错误时的提示信息。使用方式也是比较简单，看个例子就很容易明白。<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;form <span class="property">name</span>=<span class="string">"myForm"</span>&gt;</span><br><span class="line">  &lt;label&gt;Enter your <span class="property">name</span>:&lt;/label&gt;</span><br><span class="line">  &lt;input type=<span class="string">"text"</span></span><br><span class="line">         <span class="property">name</span>=<span class="string">"myName"</span></span><br><span class="line">         ng-model=<span class="string">"name"</span></span><br><span class="line">         ng-minlength=<span class="string">"5"</span></span><br><span class="line">         ng-maxlength=<span class="string">"20"</span></span><br><span class="line">         required /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;pre&gt;myForm.myName.$<span class="keyword">error</span> = &#123; &#123; myForm.myName.$<span class="keyword">error</span> | json &#125;&#125;&lt;/pre&gt;</span><br><span class="line"></span><br><span class="line">  &lt;<span class="keyword">div</span> ng-messages=<span class="string">"myForm.myName.$error"</span> style=<span class="string">"color:maroon"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span> ng-message=<span class="string">"required"</span>&gt;You did <span class="keyword">not</span> enter a field&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span> ng-message=<span class="string">"minlength"</span>&gt;Your field <span class="keyword">is</span> too short&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span> ng-message=<span class="string">"maxlength"</span>&gt;Your field <span class="keyword">is</span> too long&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">  &lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure></p>
-<h2 id="ngModelOptions">ngModelOptions</h2><p>这东西如果详细讲起来，又是一篇博客。这里就简要的说一下吧，不明白的直接看<a href="https://docs.angularjs.org/api/ng/directive/ngModelOptions" target="_blank" rel="external">文档</a>，文档还是说得很详细的。<br>这个指令的主要功能，是可以让我们定义一系列事件来触发model更新或者延迟model更新，这个指令的一个经典用例是：当我们输入关键字来进行搜索的时候，我们不想让<code>AngularJS</code>马上响应输入框的值的变化，我们希望等到用户输入完成的时候再触发搜索。这个时候我们就可以用到<code>ngModelOptions</code>了。</p>
-<h3 id="配置项说明">配置项说明</h3><p>就讲本人用到的，剩下的几个配置项，没有用过，就不好在这里说。希望有高人把它给补齐了。</p>
-<ol>
-<li><code>updateOn</code>：为input绑定model更新事件，有个<code>default</code>的默认事件。可以同时绑定多个事件，用空格隔开。这个属性可以跟<code>debounce</code>配合使用。<blockquote>
-<p>备注：由于文档上没有说可以绑定哪些事件，在查看源码的时候发现了一段代码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; element.on(modelCtrl.<span class="variable">$options</span>.updateOn, <span class="function"><span class="keyword">function</span><span class="params">(ev)</span> </span>&#123;</span><br><span class="line">&gt;   modelCtrl.<span class="variable">$$debounceViewValueCommit</span>(ev &amp;&amp; ev.type);</span><br><span class="line">&gt; &#125;);</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-</ol>
-<blockquote>
-<p>因此可以90%肯定，可以绑定任何跟该元素有关的原生事件。</p>
-</blockquote>
-<ol>
-<li><code>debounce</code>：没有包含这个属性的input,model会根据<code>updateOn</code>来更新值。如果包含这个属性，那么model就会根据<code>debounce</code>设置的参数来决定什么时候更新model。例如:<code>ng-model-options=&quot;{ updateOn: &#39;default blur&#39;, debounce: {&#39;default&#39;: 500, &#39;blur&#39;: 0} }&quot;</code>，default事件在input值变化后延迟500毫秒更新model，blur事件会马上触发model的更新。这个属性也可以单独使用，例如：<code>ng-model-options=&quot;{debounce: 1000}&quot;</code>。这表示在input值改变1秒之后改变model的值。</li>
-</ol>
-<blockquote>
-<p>注意事项：</p>
-<ol>
-<li>我们可以用<code>$rollbackViewValue</code>来阻止model的变化。它的作用就是input显示的值回滚到上一次的记录。要使用这个东西，必须要为form表单和相应的input设置name属性。</li>
-<li>还有一些特性请大家补充了。</li>
-</ol>
-</blockquote>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>公司前端升级了<code>AngularJS</code>，那就顺便记录下1.2到1.3的变化吧。主要是记录一些可能大多数人会遇到的改变，以及1.3的新特性。</p>
-<hr>
-<h1 id="表达式解析">表达式解析</h1><ol>
-<li>我们不能在表达式中使用以<code>.bind,.call,.apply</code>这些关键字命名的函数。例如<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span>&gt;&#123; &#123;user.sendInfo.call(&#123; &#125;, <span class="constant">true</span>)&#125; &#125;&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这绝对会抛出异常</p>
-<ol>
-<li>在表达式中不能使用Object。例如<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scope.foo = &#123; <span class="string">"bar"</span>: <span class="built_in">Object</span> &#125;;</span><br><span class="line">scope.$<span class="built_in">eval</span>(<span class="string">'foo["bar"]'</span>);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这绝对会抛出解析异常</p>
-<ol>
-<li>字符串<code>&#39;f&#39;, &#39;0&#39;, &#39;false&#39;, &#39;no&#39;, &#39;n&#39;, &#39;[]&#39;</code>不在被当做false来处理。只有<code>false,null, undefined,NaN,0,&quot;&quot;</code>被当做false来处理。</li>
-</ol>
-<blockquote>
-<p>参考<a href="https://github.com/angular/angular.js/commit/528be29d1662122a34e204dd607e1c0bd9c16bbc">528be29d</a></p>
-</blockquote>]]>
     
     </summary>
     
