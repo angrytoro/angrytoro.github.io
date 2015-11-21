@@ -111,7 +111,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -184,6 +184,88 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Mac下面WebStorm10没法调试nodejs的解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/" class="article-date">
+  	<time datetime="2015-11-21T12:51:26.000Z" itemprop="datePublished">2015-11-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/">Mac下面WebStorm10没法调试nodejs的解决方案</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Bug场景">Bug场景</h1><blockquote>
+<p>Cannot stop on breakpoint due to internal error: org.jetbrains.v8.V8CommandProcessor$1: TypeError: f is not a function at Function.t.getScopes (eval at undefined, :217:15) at t.describeFrame (eval at undefined, :213:33) at t.getFrames (eval at undefined, :114:89) at DebugCommandProcessor.r.processDebugJSONRequest (eval at undefined, :348:15) …</p>
+</blockquote>
+<p>在升级nodejs到最新版本之后就曝出了上面这种问题，谷歌上说是webstorm的问题，然后webstorm官网给出了响应的解决方案。在webstorm.vmoptions里面加上下面一句<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dnodejs<span class="class">.debugger</span><span class="class">.use</span><span class="class">.jb</span><span class="class">.support</span>=false</span><br></pre></td></tr></table></figure></p>
+<p>最后重启下webstorm，搞定。</p>
+<p>由于Mac下查找和修改webstorm.vmoptions比较繁琐，下面给出相应的步骤：</p>
+<ol>
+<li>进入<strong>/Applications/WebStorm.app/Contents/bin</strong>文件夹下面</li>
+<li>把<strong>webstorm.vmoptions</strong>拷贝到<strong>~/Library/Preferences/WebStorm10/</strong></li>
+<li>编辑<strong>~/Library/Preferences/WebStorm10/</strong>下面的<strong>webstorm.vmoptions</strong></li>
+<li>在最后面加上<code>-Dnodejs.debugger.use.jb.support=false</code></li>
+<li>保存退出</li>
+</ol>
+<h1 id="备注">备注</h1><p>因为权限问题所以不能够直接编辑<strong>/Applications/WebStorm.app/Contents/bin</strong>下的<strong>webstorm.vmoptions</strong>，因此需要把它拷贝到<strong>~/Library/Preferences/WebStorm10/</strong>再进行编辑</p>
+<h1 id="参考">参考</h1><ol>
+<li><a href="http://stackoverflow.com/questions/33515777/node-v5-breaks-webstorms-debugger" target="_blank" rel="external">Node v5 breaks Webstorm’s debugger</a></li>
+<li><a href="https://youtrack.jetbrains.com/issue/IDEA-139990" target="_blank" rel="external">Debugging is broken with io.js v2.0.0</a></li>
+<li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827537-Configuring-JVM-options-and-platform-properties" target="_blank" rel="external">Configuring JVM options and platform properties</a></li>
+<li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827437-Directories-used-by-the-IDE-to-store-settings-caches-plugins-and-logs" target="_blank" rel="external">Directories used by the IDE to store settings, caches, plugins and logs</a></li>
+</ol>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/工具/">工具</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-如何让worker支持不加外链" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -407,77 +489,6 @@
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/杂文/">杂文</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-ES6-Generator" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/05/10/ES6-Generator/" class="article-date">
-  	<time datetime="2015-05-10T14:42:49.000Z" itemprop="datePublished">2015-05-10</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/10/ES6-Generator/">ES6 Generator</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。<br>我们先看下阮一峰《es6入门》的一段解释</p>
-<blockquote>
-<p>可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以理解成发生某些事件）。ES6引入Generator函数，作用就是可以完全控制函数的内部状态的变化，依次遍历这些状态。<br>在形式上，Generator是一个普通函数，但是有两个特征。一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态（yield语句在英语里的意思就是“产出”）。</p>
-</blockquote>
-<h1 id="Generator">Generator</h1><p>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">gen</span> = function* (x) &#123;</span><br><span class="line">	<span class="keyword">var</span> a = yield x+1;</span><br><span class="line">	<span class="keyword">var</span> b = yield a+2;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(2);</span><br><span class="line"><span class="keyword">g</span>.next();<span class="comment">//返回&#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next(4); <span class="comment">//返回&#123;value: 6, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next();  <span class="comment">//返回 &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>咋们来解释下上面的代码：</p>
-<ol>
-<li>先运行gen(2),得到一个迭代器g</li>
-<li>运行g.next(),系统执行x+1(x=2),返回{value: 3, done: false}</li>
-<li>运行g.next(4),把4赋值给a，然后返回{value: 6, done: false}，不要问为什么a不是等于3，反正语法就是这样。</li>
-<li>运行g.next(),返回{value: undefined, done: true}，因为我们没有为b赋值，所以就是undefined</li>
-</ol>
-<p>我们可以发现上面是我们手动一步步执行的。也就是上面说的，Generator遇到yield的时候会挂起，暂停执行。<br>这里不讨论Generator当做普通迭代器的用法，这里讨论的是如何使用Generator来让异步编程看起来更优美。所以这里，我们必须先解释下<strong>Thunk</strong>这东西。<br>
-        <hr/>
-        <p class="article-more-link">
-          <a  href="/2015/05/10/ES6-Generator/#more">more >></a>
-        </p>
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
 	</div>
 
 

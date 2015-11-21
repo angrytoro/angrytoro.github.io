@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2015-10-26T13:14:34.000Z</updated>
+  <updated>2015-11-21T12:56:00.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Mac下面WebStorm10没法调试nodejs的解决方案]]></title>
+    <link href="http://blog.angrytoro.com/2015/11/21/Mac%E4%B8%8B%E9%9D%A2WebStorm10%E6%B2%A1%E6%B3%95%E8%B0%83%E8%AF%95nodejs%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>http://blog.angrytoro.com/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/</id>
+    <published>2015-11-21T12:51:26.000Z</published>
+    <updated>2015-11-21T12:56:00.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="Bug场景">Bug场景</h1><blockquote>
+<p>Cannot stop on breakpoint due to internal error: org.jetbrains.v8.V8CommandProcessor$1: TypeError: f is not a function at Function.t.getScopes (eval at undefined, :217:15) at t.describeFrame (eval at undefined, :213:33) at t.getFrames (eval at undefined, :114:89) at DebugCommandProcessor.r.processDebugJSONRequest (eval at undefined, :348:15) …</p>
+</blockquote>
+<p>在升级nodejs到最新版本之后就曝出了上面这种问题，谷歌上说是webstorm的问题，然后webstorm官网给出了响应的解决方案。在webstorm.vmoptions里面加上下面一句<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dnodejs<span class="class">.debugger</span><span class="class">.use</span><span class="class">.jb</span><span class="class">.support</span>=false</span><br></pre></td></tr></table></figure></p>
+<p>最后重启下webstorm，搞定。</p>
+<p>由于Mac下查找和修改webstorm.vmoptions比较繁琐，下面给出相应的步骤：</p>
+<ol>
+<li>进入<strong>/Applications/WebStorm.app/Contents/bin</strong>文件夹下面</li>
+<li>把<strong>webstorm.vmoptions</strong>拷贝到<strong>~/Library/Preferences/WebStorm10/</strong></li>
+<li>编辑<strong>~/Library/Preferences/WebStorm10/</strong>下面的<strong>webstorm.vmoptions</strong></li>
+<li>在最后面加上<code>-Dnodejs.debugger.use.jb.support=false</code></li>
+<li>保存退出</li>
+</ol>
+<h1 id="备注">备注</h1><p>因为权限问题所以不能够直接编辑<strong>/Applications/WebStorm.app/Contents/bin</strong>下的<strong>webstorm.vmoptions</strong>，因此需要把它拷贝到<strong>~/Library/Preferences/WebStorm10/</strong>再进行编辑</p>
+<h1 id="参考">参考</h1><ol>
+<li><a href="http://stackoverflow.com/questions/33515777/node-v5-breaks-webstorms-debugger" target="_blank" rel="external">Node v5 breaks Webstorm’s debugger</a></li>
+<li><a href="https://youtrack.jetbrains.com/issue/IDEA-139990" target="_blank" rel="external">Debugging is broken with io.js v2.0.0</a></li>
+<li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827537-Configuring-JVM-options-and-platform-properties" target="_blank" rel="external">Configuring JVM options and platform properties</a></li>
+<li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827437-Directories-used-by-the-IDE-to-store-settings-caches-plugins-and-logs" target="_blank" rel="external">Directories used by the IDE to store settings, caches, plugins and logs</a></li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[估计是因为nodejs升级的问题，导致了webstorm在debug的时候出现问题，nodejs版本是最新的5.0，webstorm版本是10.]]>
+    
+    </summary>
+    
+      <category term="NodeJS" scheme="http://blog.angrytoro.com/tags/NodeJS/"/>
+    
+      <category term="工具" scheme="http://blog.angrytoro.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何让worker支持不加外链]]></title>
@@ -620,51 +658,6 @@
 <h3 id="ngBind和ngBindTemplate">ngBind和ngBindTemplate</h3><p>这两个指令让页面在有相应model的时候才显示真正的内容，例如：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;title ng-<span class="keyword">bind</span>-<span class="keyword">template</span>=<span class="string">"Google Phone Gallery: &#123;&#123;query&#125;&#125;"</span>&gt;<span class="type">Google</span> <span class="type">Phone</span> <span class="type">Gallery</span>&lt;/title&gt;</span><br></pre></td></tr></table></figure></p>
 <p>在没有query的时候，title显示的是Google Phone Gallery，当query有值得时候，会显示Google Phone Gallery:xxx。</p>
 <hr>]]>
-    
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Angularjs实践（二）]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/Angularjs%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/Angularjs实践（二）/</id>
-    <published>2015-03-08T10:08:54.000Z</published>
-    <updated>2015-03-08T10:11:34.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="图片模板">图片模板</h3><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">img</span> <span class="attribute">ng-src</span>=<span class="value">"</span></span></span><span class="expression">&#123;&#123;<span class="variable">phone.imageUrl</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>ng-src就是为了防止浏览器默认请求无效的图片地址，在页面还没初始化完成的时候，浏览器会在js代码执行前请求图片，所以直接设置src会导致浏览器请求无效地址，造成端口占用。</p>
-<h2 id="路由与多视图">路由与多视图</h2><p>这个章节挺复杂的，需要花点时间理解，参考<a href="http://angularjs.cn/A00a" target="_blank" rel="external">AngularJS入门教程07：路由与多视图</a></p>
-<hr>
-<p>这个章节有几个注意点<br><a id="more"></a></p>
-<ul>
-<li><code>ng-view</code>指令的角色是为当前路由把对应的视图模板载入到布局模板中。</li>
-<li><code>$routeProvider</code>:Angularjs中应用的路由通过它来生命，<code>$routeProvider</code>是<code>$route</code>服务的提供者。这项服务使得控制器、试图模板与当前浏览器的URL可以轻易集成。<code>$route</code>服务通常和<code>ng-view</code>指令一起使用。</li>
-<li><strong>依赖注入：</strong>这东西自己根据前面章节，自己理解下</li>
-<li><p><code>app.js</code>中模块定义和<code>controllers.js</code>的代码</p>
-<blockquote>
-<p>app.js中的代码：</p>
-<pre><code><span class="comment"><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="reserved">var</span> phonecatApp = angular.<span class="built_in">module</span>(<span class="string">'phonecatApp'</span>, [</span><br><span class="line">  <span class="string">'ngRoute'</span>,</span><br><span class="line">  <span class="string">'phonecatControllers'</span></span><br><span class="line">]);</span><br></pre></td></tr></table></figure></span>
-</code></pre></blockquote>
-<pre><code>这里定义了phonecateApp模块，然后用到了ngRoute和phoneControllers这两个模块，phoneControllers是我们在`controllers.js`中定义的。
-<span class="comment"><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">phonecatApp.config([<span class="string">'$routeProvider'</span>,</span><br><span class="line">  <span class="function"><span class="keyword">function</span><span class="params">(<span class="variable">$routeProvider</span>)</span> </span>&#123;</span><br><span class="line">    <span class="variable">$routeProvider</span>.</span><br><span class="line">      when(<span class="string">'/phones'</span>, &#123;</span><br><span class="line">        templateUrl: <span class="string">'partials/phone-list.html'</span>,</span><br><span class="line">        controller: <span class="string">'PhoneListCtrl'</span></span><br><span class="line">      &#125;).</span><br><span class="line">      when(<span class="string">'/phones/:phoneId'</span>, &#123;</span><br><span class="line">        templateUrl: <span class="string">'partials/phone-detail.html'</span>,</span><br><span class="line">        controller: <span class="string">'PhoneDetailCtrl'</span></span><br><span class="line">      &#125;).</span><br><span class="line">      otherwise(&#123;</span><br><span class="line">        redirectTo: <span class="string">'/phones'</span></span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;]);</span><br></pre></td></tr></table></figure></span>
-
-这块代码里面的PhoneListCtrl和PhoneDetailCtrl在`controllers.js`中定义，并且挂在phoneControllers模块下面。这快代码的路由映射关系应该很容易理解，每个templateUrl对应一个controller。
-</code></pre></li>
-<li><p><strong>路由声明中参数的使用：</strong>注意到在第二条路由声明中:phoneId参数的使用。<code>$route</code>服务使用路由声明<code>/phones/:phoneId</code>作为一个匹配当前URL的模板。所有以<code>:</code>符号声明的变量（此处变量为phoneId）都会被提取，然后存放在<code>$routeParams</code>对象中。所以在PhoneDetailCtrl中我们就能按<code>$routeParams.phoneId</code>这种方式获取phoneId的值。</p>
-</li>
-<li>注意控制器与视图的对应关系。</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h3 id="图片模板">图片模板</h3><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="title">img</span> <span class="attribute">ng-src</span>=<span class="value">"</span></span></span><span class="expression">&#123;&#123;<span class="variable">phone.imageUrl</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>ng-src就是为了防止浏览器默认请求无效的图片地址，在页面还没初始化完成的时候，浏览器会在js代码执行前请求图片，所以直接设置src会导致浏览器请求无效地址，造成端口占用。</p>
-<h2 id="路由与多视图">路由与多视图</h2><p>这个章节挺复杂的，需要花点时间理解，参考<a href="http://angularjs.cn/A00a">AngularJS入门教程07：路由与多视图</a></p>
-<hr>
-<p>这个章节有几个注意点<br>]]>
     
     </summary>
     

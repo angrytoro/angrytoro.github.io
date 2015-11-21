@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>freefish</title>
+  <title>Mac下面WebStorm10没法调试nodejs的解决方案 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="this blog is just to record my learning">
-<meta property="og:type" content="website">
-<meta property="og:title" content="freefish">
-<meta property="og:url" content="http://blog.angrytoro.com/archives/2015/03/page/3/index.html">
+  <meta name="description" content="估计是因为nodejs升级的问题，导致了webstorm在debug的时候出现问题，nodejs版本是最新的5.0，webstorm版本是10.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac下面WebStorm10没法调试nodejs的解决方案">
+<meta property="og:url" content="http://blog.angrytoro.com/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="this blog is just to record my learning">
+<meta property="og:description" content="估计是因为nodejs升级的问题，导致了webstorm在debug的时候出现问题，nodejs版本是最新的5.0，webstorm版本是10.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="freefish">
-<meta name="twitter:description" content="this blog is just to record my learning">
+<meta name="twitter:title" content="Mac下面WebStorm10没法调试nodejs的解决方案">
+<meta name="twitter:description" content="估计是因为nodejs升级的问题，导致了webstorm在debug的时候出现问题，nodejs版本是最新的5.0，webstorm版本是10.">
   
   
     <link rel="icon" href="/img/favicon.ico">
@@ -183,200 +183,126 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-Mac下面WebStorm10没法调试nodejs的解决方案" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <a href="/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/" class="article-date">
+  	<time datetime="2015-11-21T12:51:26.000Z" itemprop="datePublished">2015-11-21</time>
+</a>
+    </div>
   
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mac下面WebStorm10没法调试nodejs的解决方案
+    </h1>
+  
+
+      </header>
       
+      <div class="article-info">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/工具/">工具</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/Angularjs之Directive-指令/" class="archive-article-date">
-  	<time datetime="2015-03-08T10:13:49.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/Angularjs之Directive-指令/">Angularjs之Directive(指令)</a>
-    </h1>
-  
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Bug场景">Bug场景</h1><blockquote>
+<p>Cannot stop on breakpoint due to internal error: org.jetbrains.v8.V8CommandProcessor$1: TypeError: f is not a function at Function.t.getScopes (eval at undefined, :217:15) at t.describeFrame (eval at undefined, :213:33) at t.getFrames (eval at undefined, :114:89) at DebugCommandProcessor.r.processDebugJSONRequest (eval at undefined, :348:15) …</p>
+</blockquote>
+<p>在升级nodejs到最新版本之后就曝出了上面这种问题，谷歌上说是webstorm的问题，然后webstorm官网给出了响应的解决方案。在webstorm.vmoptions里面加上下面一句<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dnodejs<span class="class">.debugger</span><span class="class">.use</span><span class="class">.jb</span><span class="class">.support</span>=false</span><br></pre></td></tr></table></figure></p>
+<p>最后重启下webstorm，搞定。</p>
+<p>由于Mac下查找和修改webstorm.vmoptions比较繁琐，下面给出相应的步骤：</p>
+<ol>
+<li>进入<strong>/Applications/WebStorm.app/Contents/bin</strong>文件夹下面</li>
+<li>把<strong>webstorm.vmoptions</strong>拷贝到<strong>~/Library/Preferences/WebStorm10/</strong></li>
+<li>编辑<strong>~/Library/Preferences/WebStorm10/</strong>下面的<strong>webstorm.vmoptions</strong></li>
+<li>在最后面加上<code>-Dnodejs.debugger.use.jb.support=false</code></li>
+<li>保存退出</li>
+</ol>
+<h1 id="备注">备注</h1><p>因为权限问题所以不能够直接编辑<strong>/Applications/WebStorm.app/Contents/bin</strong>下的<strong>webstorm.vmoptions</strong>，因此需要把它拷贝到<strong>~/Library/Preferences/WebStorm10/</strong>再进行编辑</p>
+<h1 id="参考">参考</h1><ol>
+<li><a href="http://stackoverflow.com/questions/33515777/node-v5-breaks-webstorms-debugger" target="_blank" rel="external">Node v5 breaks Webstorm’s debugger</a></li>
+<li><a href="https://youtrack.jetbrains.com/issue/IDEA-139990" target="_blank" rel="external">Debugging is broken with io.js v2.0.0</a></li>
+<li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827537-Configuring-JVM-options-and-platform-properties" target="_blank" rel="external">Configuring JVM options and platform properties</a></li>
+<li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827437-Directories-used-by-the-IDE-to-store-settings-caches-plugins-and-logs" target="_blank" rel="external">Directories used by the IDE to store settings, caches, plugins and logs</a></li>
+</ol>
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+        
+      
+    </div>
+    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/10/26/如何让worker支持不加外链/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">如何让worker支持不加外链</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/Angularjs实践（一）/" class="archive-article-date">
-  	<time datetime="2015-03-08T10:12:24.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/Angularjs实践（一）/">Angularjs实践（一）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
 	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/Angularjs实践（二）/" class="archive-article-date">
-  	<time datetime="2015-03-08T10:08:54.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/Angularjs实践（二）/">Angularjs实践（二）</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Mac下面WebStorm10没法调试nodejs的解决方案" data-title="Mac下面WebStorm10没法调试nodejs的解决方案" data-url="http://blog.angrytoro.com/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/" class="archive-article-date">
-  	<time datetime="2015-03-08T09:29:40.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/AngularJS-从1-2迁移到1-3的变动记录/">AngularJS 从1.2迁移到1.3的变动记录</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2015/03/08/angularjs开发笔记之ng-class/" class="archive-article-date">
-  	<time datetime="2015-03-08T08:07:52.000Z" itemprop="datePublished">3月 8</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/03/08/angularjs开发笔记之ng-class/">angularjs开发笔记之ng-class</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AngularJS/">AngularJS</a></li></ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-    
-      <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2015/03/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2015/03/">1</a><a class="page-number" href="/archives/2015/03/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/2015/03/page/4/">4</a><a class="page-number" href="/archives/2015/03/page/5/">5</a><a class="extend next" rel="next" href="/archives/2015/03/page/4/">Next &raquo;</a>
-      </nav>
-    
-  
 
 </div>
       <footer id="footer">

@@ -111,7 +111,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 15px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 15px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -184,6 +184,77 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-ES6-Generator" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/05/10/ES6-Generator/" class="article-date">
+  	<time datetime="2015-05-10T14:42:49.000Z" itemprop="datePublished">2015-05-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/10/ES6-Generator/">ES6 Generator</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。<br>我们先看下阮一峰《es6入门》的一段解释</p>
+<blockquote>
+<p>可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以理解成发生某些事件）。ES6引入Generator函数，作用就是可以完全控制函数的内部状态的变化，依次遍历这些状态。<br>在形式上，Generator是一个普通函数，但是有两个特征。一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态（yield语句在英语里的意思就是“产出”）。</p>
+</blockquote>
+<h1 id="Generator">Generator</h1><p>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">gen</span> = function* (x) &#123;</span><br><span class="line">	<span class="keyword">var</span> a = yield x+1;</span><br><span class="line">	<span class="keyword">var</span> b = yield a+2;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(2);</span><br><span class="line"><span class="keyword">g</span>.next();<span class="comment">//返回&#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next(4); <span class="comment">//返回&#123;value: 6, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next();  <span class="comment">//返回 &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>咋们来解释下上面的代码：</p>
+<ol>
+<li>先运行gen(2),得到一个迭代器g</li>
+<li>运行g.next(),系统执行x+1(x=2),返回{value: 3, done: false}</li>
+<li>运行g.next(4),把4赋值给a，然后返回{value: 6, done: false}，不要问为什么a不是等于3，反正语法就是这样。</li>
+<li>运行g.next(),返回{value: undefined, done: true}，因为我们没有为b赋值，所以就是undefined</li>
+</ol>
+<p>我们可以发现上面是我们手动一步步执行的。也就是上面说的，Generator遇到yield的时候会挂起，暂停执行。<br>这里不讨论Generator当做普通迭代器的用法，这里讨论的是如何使用Generator来让异步编程看起来更优美。所以这里，我们必须先解释下<strong>Thunk</strong>这东西。<br>
+        <hr/>
+        <p class="article-more-link">
+          <a  href="/2015/05/10/ES6-Generator/#more">more >></a>
+        </p>
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-如何编写node命令" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -427,88 +498,6 @@
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-为了运行fekit-sync，在服务器配置rsync的时候遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/" class="article-date">
-  	<time datetime="2015-03-12T14:40:48.000Z" itemprop="datePublished">2015-03-12</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/">为了运行fekit sync，在服务器配置rsync的时候遇到的问题</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="问题一、sudo：抱歉，您必须拥有一个终端来执行_sudo">问题一、<code>sudo：抱歉，您必须拥有一个终端来执行 sudo</code></h2><p>在执行<code>fekit sync</code>的时候遇到这个问题。解决办法</p>
-<blockquote>
-<p>以root权限进入服务器，编辑<code>/etc/sudoers</code>，注释掉 <code>Default requiretty</code>这 一行</p>
-</blockquote>
-<h2 id="问题二、sudo:_no_tty_present_and_no_askpass_program_specified">问题二、<code>sudo: no tty present and no askpass program specified</code></h2><p>第一个问题解决后运行时曝出了这个错误，解决办法</p>
-<blockquote>
-<p>以root权限进入服务器，编辑<code>/etc/sudoers</code>，设置<code>Defaults visiblepw</code></p>
-</blockquote>
-<h2 id="问题三、Error:_Command_failed:_[sudo]_password_for_xxx">问题三、<code>Error: Command failed: [sudo] password for xxx</code></h2><p>上面的解决后，在运行<code>fekit sync</code>还是会爆出这个错误，其中<code>xxx</code>是用户名。那是因为你配置了免密码登录，但是普通用户在运行<code>sudo</code>的时候还是需要输入密码，这导致了这个错误的出现。解决办法</p>
-<blockquote>
-<p>以root权限进入服务器，输入<code>visudo</code>，然后有几种方法</p>
-<ol>
-<li>添加<code>yourname ALL=(ALL) NOPASSWD: ALL</code>——这个意思是<code>yourname</code>这个用户可以免密码<code>sudo</code>.</li>
-<li><code>%groupname ALL=(ALL) NOPASSWD: ALL</code> ——这个意思是<code>groupname</code>这个组的用户都可以免密码<code>sudo</code>，那么多人都可以免密码<code>sudo</code>，这会带来安全问题的。</li>
-<li><code>%groupname ALL= NOPASSWD:/usr/bin/rsync</code>——只为<code>rsync</code>开了sudo的免密码。相对安全。</li>
-</ol>
-</blockquote>
-<h1 id="总结">总结</h1><p>按照上面的解决办法绝对可以成功免密码rsync。谢谢大家。</p>
-<h2 id="配置免密码fekit_sync注意事项">配置免密码fekit sync注意事项</h2><blockquote>
-<ol>
-<li>用户需要配置免密码ssh</li>
-<li>用户需要有sudo权限</li>
-</ol>
-</blockquote>
-
-        
-          <!-- show an end symbol if the article is fully displayed -->
-          <hr/>
-          <p class="article-more-link">
-            <a>end</a>
-          </p>
-        
-      
-    </div>
-    
-    <div class="article-info">
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/linux/">linux</a>
 	</div>
 
 
