@@ -185,6 +185,61 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-对于JavaScript中继承的思考" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/03/24/对于JavaScript中继承的思考/" class="article-date">
+  	<time datetime="2015-03-23T16:25:26.000Z" itemprop="datePublished">2015-03-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/24/对于JavaScript中继承的思考/">对于JavaScript中继承的思考</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先附上一份代码让大家思考，直接看代码，猜猜最终执行的结果会是什么。<br>如果哪位能直接从代码中看出执行结果，那么这人的工资肯定不低于10K。请看全文解释<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">($)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> super_ = <span class="function"><span class="keyword">function</span><span class="params">(methodName, args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">var</span> method = <span class="keyword">this</span>.superClass_.prototype[methodName];</span><br><span class="line">		<span class="keyword">if</span>(method &amp;&amp; <span class="keyword">typeof</span> method === <span class="string">'function'</span>) &#123;</span><br><span class="line">			method.call(<span class="keyword">this</span>, args);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">  	$.inherit = <span class="function"><span class="keyword">function</span><span class="params">(subClass, superClass)</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">var</span> temp = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">	    temp.prototype = superClass.prototype;</span><br><span class="line">	    <span class="keyword">var</span> subPro = <span class="keyword">new</span> temp();</span><br><span class="line">	    subPro.constructor = subClass;</span><br><span class="line">	    subPro.super_ = super_;</span><br><span class="line">	    subPro.superClass_ = superClass;</span><br><span class="line">	    subClass.prototype = subPro;</span><br><span class="line">  	&#125;;</span><br><span class="line">&#125;)(jQuery);</span><br><span class="line"><span class="keyword">var</span> Super = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Super'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.extend(Super.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Super'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> Sub1 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Sub1'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.inherit(Sub1, Super);</span><br><span class="line">$.extend(Sub1.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.super_(<span class="string">'say'</span>, <span class="built_in">arguments</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Sub1'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Sub1().say();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'========'</span>);</span><br><span class="line"><span class="keyword">var</span> Sub2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Sub2'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.inherit(Sub2, Sub1);</span><br><span class="line">$.extend(Sub2.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.super_(<span class="string">'say'</span>, <span class="built_in">arguments</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Sub2'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Sub2().say();</span><br></pre></td></tr></table></figure></p>
+        <hr/>
+        <p class="article-more-link">
+          <a  href="/2015/03/24/对于JavaScript中继承的思考/#more">more >></a>
+        </p>
+      
+    </div>
+    
+    <div class="article-info">
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
     <article id="post-为了运行fekit-sync，在服务器配置rsync的时候遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -482,70 +537,6 @@
 
 
   
-    <article id="post-不同浏览器求滚动距离的办法" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/03/08/不同浏览器求滚动距离的办法/" class="article-date">
-  	<time datetime="2015-03-08T11:02:26.000Z" itemprop="datePublished">2015-03-08</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/08/不同浏览器求滚动距离的办法/">不同浏览器求滚动距离的办法</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="chrome">chrome</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</span><br><span class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</span><br><span class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</span><br></pre></td></tr></table></figure>
-<h1 id="firefox">firefox</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.documentElement.scrollTop</span><br><span class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</span><br><span class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</span><br></pre></td></tr></table></figure>
-<h1 id="IE">IE</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</span><br></pre></td></tr></table></figure>
-<h1 id="注释">注释</h1><blockquote>
-<p>还没有测试safari,估计跟chrome的差不多。同理可以求X轴的偏移量。</p>
-</blockquote>
-
-        
-          <!-- show an end symbol if the article is fully displayed -->
-          <hr/>
-          <p class="article-more-link">
-            <a>end</a>
-          </p>
-        
-      
-    </div>
-    
-    <div class="article-info">
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -556,7 +547,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2015 freefish
+    		&copy; 2016 freefish
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/angrytoro/hexo-them-fish" target="_blank">fish</a> by fish

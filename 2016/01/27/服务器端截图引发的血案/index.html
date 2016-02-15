@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>node截图服务可用性报告 | freefish</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="利用node和phantomjs，在服务器端做网站截图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node截图服务可用性报告">
+<meta property="og:url" content="http://blog.angrytoro.com/2016/01/27/服务器端截图引发的血案/index.html">
+<meta property="og:site_name" content="freefish">
+<meta property="og:description" content="利用node和phantomjs，在服务器端做网站截图">
+<meta property="og:image" content="/img/界面说明.png">
+<meta property="og:image" content="/img/界面说明1.png">
+<meta property="og:image" content="/img/qq官网.jpg">
+<meta property="og:image" content="/img/并发测试效果.png">
+<meta property="og:image" content="/img/并发测试效果1.png">
+<meta property="og:image" content="/img/截图稳定性.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node截图服务可用性报告">
+<meta name="twitter:description" content="利用node和phantomjs，在服务器端做网站截图">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/avatar.jpg">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">freefish</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/categories/JavaScript">JavaScript</a></li>
+				        
+							<li><a href="/categories/HTML">HTML</a></li>
+				        
+							<li><a href="/categories/CSS">CSS</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/angrytoro" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.doyoe.com/">杜瑶的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://css.doyoe.com/">杜瑶CSS参考手册</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我很爱傻鸭</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">freefish</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/img/avatar.jpg">
+				<hgroup>
+				  <h1 class="header-author">freefish</h1>
+				</hgroup>
+			</div>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/categories/JavaScript">JavaScript</a></li>
+		        
+					<li><a href="/categories/HTML">HTML</a></li>
+		        
+					<li><a href="/categories/CSS">CSS</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/angrytoro" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-服务器端截图引发的血案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/27/服务器端截图引发的血案/" class="article-date">
+  	<time datetime="2016-01-27T13:27:39.000Z" itemprop="datePublished">2016-01-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      node截图服务可用性报告
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言">前言</h1><p>服务器端截图可以做什么？<br>个人观点：省去跟报表有关的EDM开发，直接从系统上截图，然后发图片给用户就搞定。剩下的自己脑补。<br>既然这么好，为毛不赶紧弄。需要用到的工具坑太多，没有尝试，不敢拿上去用。</p>
+<h1 id="环境准备">环境准备</h1><p>如果是window环境就更简单了，大家自行处理，这里不做介绍。</p>
+<ol>
+<li>centos6.5（5.x版本来落后了，不要用，会出问题的。其他高级版本，自己掂量着用，公司提供给我的测试机只有6.5版本）</li>
+<li>phantomjs 2.x （1.9.x版本的各种bug，测试的时候并发一起来，进程各种crash，所以大家别脑残用1.9.x的）</li>
+<li>nodejs  0.12以上版本（因为4.x版本的gcc要求比较高，我又不会装，所以没法测4.x版本的。注意，一定要编译安装，不然会出很多问题。）</li>
+<li>安装windows字体（按网上的说明来，安装完成要重启机器。不安装会出现中文字体不显示的问题）</li>
+</ol>
+<a id="more"></a>
+<h1 id="安装步骤">安装步骤</h1><p>我知道很多人比较懒，也有很多人，这也不懂，那也不懂。所以为了不让大家浪费时间，给大家安装环境步骤，由于系统是64位，因此下面的步骤都是按64位来。windows环境下的安装，自己看文档。</p>
+<h2 id="安装phantomjs_2-x">安装phantomjs 2.x</h2><ol>
+<li>到<a href="http://phantomjs.org/download.html" target="_blank" rel="external">http://phantomjs.org/download.html</a>页面下载相应的版本，<a href="https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2" target="_blank" rel="external">https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2</a></li>
+<li>解压 <code>tar -xvfz phantomjs-2.1.1-linux-x86_64.tar.bz2</code></li>
+<li>创建软链，<code>ln -s 相应phantomjs文件夹/phantomjs /usr/bin/phantomjs</code>   <code>ln -s 相应phantomjs文件夹/phantomjs /usr/local/bin/phantomjs</code></li>
+<li>测试phantomjs命令能不能使用（如果不可以，大家自己看着办）</li>
+</ol>
+<h2 id="安装nodejs0-12-x">安装nodejs0.12.x</h2><p>参考：<a href="http://www.laozuo.org/6421.html" target="_blank" rel="external">http://www.laozuo.org/6421.html</a></p>
+<ol>
+<li>到官网下载node-v0.12.9.tar.gz，特别注意，是源码，不是编译后的</li>
+<li>解压node-v0.12.9.tar.gz</li>
+<li>进入解压后的文件夹逐步执行两条命令1 <code>./configure</code> 2 <code>make &amp;&amp; make install</code></li>
+<li>验证<code>node -v</code> 看看版本号是不是跟我们安装的一样</li>
+</ol>
+<h2 id="安装windows下的字体">安装windows下的字体</h2><p>这个直接参考<a href="http://www.tuicool.com/articles/VfiqqiA" target="_blank" rel="external">http://www.tuicool.com/articles/VfiqqiA</a></p>
+<h1 id="启动服务">启动服务</h1><ol>
+<li>拷贝源码<a href="https://github.com/angrytoro/webshot" target="_blank" rel="external">https://github.com/angrytoro/webshot</a></li>
+<li>进到根目录后，执行<code>cnpm install</code>来安装相关的模块（因为npm在国内太慢了，经常慢到让你安装错误）</li>
+<li>安装模块成功后，执行<code>node index.js</code>，端口是3000</li>
+<li>在浏览器上浏览</li>
+</ol>
+<h1 id="界面介绍">界面介绍</h1><p>直接给图说明比较方便<br><img src="/img/界面说明.png" alt="界面说明"><br><img src="/img/界面说明1.png" alt="界面说明"></p>
+<h1 id="截图效果">截图效果</h1><p><img src="/img/qq官网.jpg" alt="qq官网"></p>
+<h2 id="并发请求结果">并发请求结果</h2><p>ps（在另外一台服务器上用wrk测试）<br>介绍下截图服务机器的硬件配置：2核cpu，4g内存<br>由于我在程序中限定了开启3个phantomjs，每个phantomjs最多同时做5个页面的渲染和截图。因此我开启了15个线程，保持15个链接同时请求，持续1分钟的时间，效果如下图：<br><img src="/img/并发测试效果.png" alt="并发测试效果"></p>
+<h2 id="五组测试数据统计">五组测试数据统计</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">序号</th>
+<th style="text-align:center">网址</th>
+<th style="text-align:center">持续时间（s）</th>
+<th style="text-align:center">并发链接</th>
+<th style="text-align:center">请求总数</th>
+<th style="text-align:center">成功</th>
+<th style="text-align:center">失败</th>
+<th style="text-align:center">崩溃</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">qq.com</td>
+<td style="text-align:center">60</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">47</td>
+<td style="text-align:center">47</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">qq.com</td>
+<td style="text-align:center">60</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">54</td>
+<td style="text-align:center">54</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">qq.com</td>
+<td style="text-align:center">60</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">45</td>
+<td style="text-align:center">45</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">qq.com</td>
+<td style="text-align:center">60</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">57</td>
+<td style="text-align:center">57</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">qq.com</td>
+<td style="text-align:center">60</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">49</td>
+<td style="text-align:center">49</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">平均</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">60</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">50.4</td>
+<td style="text-align:center">50.4</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<p>从中可以看出在截取<strong>qq.com</strong>的时候，大概平均每秒处理<strong>0.84</strong>个截图请求。</p>
+<p>当然这是在有条件限制的情况下得出的数据，在测试的时候，查看了下cpu的峰值，大概是<strong>60%</strong>，也就是说这个还有提升的空间。而且我们是用<strong>qq.com</strong>做测试，如果是比较简单的页面，速度肯定还会提升。</p>
+<p>不信请看，我请求<a href="http://alinode.aliyun.com/blog/23" target="_blank" rel="external">http://alinode.aliyun.com/blog/23</a>这个网址的测试<br><img src="/img/并发测试效果1.png" alt="并发测试效果"></p>
+<p>这里数据显示1分钟内总共处理了<strong>150</strong>个请求。平均每秒处理<strong>2.5</strong>个。</p>
+<h1 id="稳定性">稳定性</h1><p>下图是跑了1小时的报告，蛮看看。<br><img src="/img/截图稳定性.png" alt="截图稳定性"></p>
+<p>在一个小时之内连续的对qq.com首页做截图，总共是处理了562个请求，平均每秒0.16个，太忧伤了。大家有没有发现，其实出现了202个读错误，562个超时，平均网速才225.54kb，诶，这也太坑爹了。</p>
+<p>不知道这是什么原因造成的，到底是网速慢了，还是qq官网首页服务器做了安全策略。面对如此惨淡的数据，自信心都没了。</p>
+<p>其实在早些时候，有尝试跑一个晚上的并发，可惜好像是因为断网问题，导致测试没有完成。之后有进行了持续6个小时的并发测试，在跑到2个多小时的时候，出现了内存溢出，导致服务中断的情况。非常的忧伤，</p>
+<p>我都不知道为毛内存溢出（当时跑去吃饭了），好歹也有3G多的内存可以用。在启动服务后，我有观测，内存从3G多，直接降到2G左右，不过一直在这个区间徘徊，不知道为毛会出现内存溢出。</p>
+<p>有两种猜测：</p>
+<ol>
+<li>由于是测试腾讯首页，不知道腾讯会不会出现防御，导致请求页面速度变慢，然后phantomjs一直在等待，各种尝试，导致内存溢出。一般情况下，我们在浏览某个页面的时候，也会出现很卡的情况，浏览器出现假死。</li>
+<li>由于V8的内存限制机制，导致在同时渲染15个页面的时候出现内存溢出。</li>
+</ol>
+<p>其实每次的并发测试都会出现超时的情况，这个问题不知道是什么原因造成的。<br>理论上要渲染一个页面，其实是得花不少时间的，加载页面就大概需要2~3秒的时间，加上渲染大概至少需要5秒左右的时间，有些垃圾网站更长，然后我们还要截图，加起来，这大概得花个6~8秒的时间吧。</p>
+<h1 id="总结">总结</h1><p>按照目前并发测试的结果来说是不适合用于生产环境的。如果要小范围的做生产测试，还需要解决下面几个问题</p>
+<ol>
+<li>将某些计算扔给GPU，毕竟GPU在渲染方面还是比较好的。</li>
+<li>提升v8引擎的内存限制</li>
+<li>查找内存溢出的原因并且解决</li>
+</ol>
+<h1 id="后记">后记</h1><p>服务器端截图还是挺有意思的一件事情，如果稳定性提高了，相信可以用于很多地方。由于代码是写来做测试的，所以写得挺烂的，还有很多可以改进的地方。<br>如果大家觉得这个点子不错，可以继续开发下去，请到github上点个赞，并给点改进意见。</p>
+
+        
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mac下面WebStorm10没法调试nodejs的解决方案</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="服务器端截图引发的血案" data-title="node截图服务可用性报告" data-url="http://blog.angrytoro.com/2016/01/27/服务器端截图引发的血案/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 freefish
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/angrytoro/hexo-them-fish" target="_blank">fish</a> by fish
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-60687326-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>
