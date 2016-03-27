@@ -3,24 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>git常用命令 | freefish</title>
+  <title>reactjs杂谈 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Create a new repository on the command line
-
-1touch README.md&amp;#10;git init&amp;#10;git add README.md&amp;#10;git commit -m &amp;#34;first commit&amp;#34;&amp;#10;git remote add origin git@github.com:angrytoro/zepto.plug.">
+  <meta name="description" content="涉及到框架选型，基本工具学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git常用命令">
-<meta property="og:url" content="http://blog.angrytoro.com/2015/03/08/git常用命令/index.html">
+<meta property="og:title" content="reactjs杂谈">
+<meta property="og:url" content="http://blog.angrytoro.com/2016/03/26/reactjs杂谈/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="Create a new repository on the command line
-
-1touch README.md&amp;#10;git init&amp;#10;git add README.md&amp;#10;git commit -m &amp;#34;first commit&amp;#34;&amp;#10;git remote add origin git@github.com:angrytoro/zepto.plug.">
-<meta property="og:image" content="/img/git-fork-merge.png">
+<meta property="og:description" content="涉及到框架选型，基本工具学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git常用命令">
-<meta name="twitter:description" content="Create a new repository on the command line
-
-1touch README.md&amp;#10;git init&amp;#10;git add README.md&amp;#10;git commit -m &amp;#34;first commit&amp;#34;&amp;#10;git remote add origin git@github.com:angrytoro/zepto.plug.">
+<meta name="twitter:title" content="reactjs杂谈">
+<meta name="twitter:description" content="涉及到框架选型，基本工具学习">
   
   
     <link rel="icon" href="/img/favicon.ico">
@@ -190,11 +183,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-git常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-reactjs杂谈" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/03/08/git常用命令/" class="article-date">
-  	<time datetime="2015-03-08T10:15:55.000Z" itemprop="datePublished">2015-03-08</time>
+      <a href="/2016/03/26/reactjs杂谈/" class="article-date">
+  	<time datetime="2016-03-26T01:33:39.000Z" itemprop="datePublished">2016-03-26</time>
 </a>
     </div>
   
@@ -207,7 +200,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      git常用命令
+      reactjs杂谈
     </h1>
   
 
@@ -216,12 +209,12 @@
       <div class="article-info">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reactjs/">reactjs</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/工具/">工具</a>
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
 	</div>
 
 
@@ -231,25 +224,52 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li><p><strong>Create a new repository on the command line</strong></p>
+        <p>春节后闲得慌，先写了个markdown编辑器。中途想用reactjs，实现公司目前做的一款app，然后又只想先实现webapp，再封装成混合app。所以，有了这篇杂文。</p>
+<h1 id="技术选型">技术选型</h1><p>先说下背景，要实现的app是一款比较简单的，用于公司内部使用的app。既然要用js来实现，那就要选个市场接受度比较高的框架，于是有了下面两个选择：</p>
 <blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch README.md&#10;git init&#10;git add README.md&#10;git commit -m &#34;first commit&#34;&#10;git remote add origin git@github.com:angrytoro/zepto.plug.git&#10;git push -u origin master</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-<li><p><strong>Push an existing repository from the command line</strong></p>
-<blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:angrytoro/zepto.plug.git&#10;git push -u origin master</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-<li><p><strong>merge我们fork出来的源码</strong></p>
-<blockquote>
-<p>有一种情况，我们fork了项目A的源码，然后过段时间发现A有更新，这时咋整。这里举个博主fork的例子。<br>博主因为工作需要fork了去哪儿的开源项目<a href="https://github.com/rinh/fekit" target="_blank" rel="external">fekit</a>，名字叫<a href="https://github.com/angrytoro/fekit-plus" target="_blank" rel="external">fekit-plus</a>，过了几个月，发现fekit更新了好多，这是博主就需要merge了。OK，看下面步骤</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>git remote add rinh git<span class="variable">@github</span>.<span class="symbol">com:</span>rinh/fekit.git</span><br><span class="line"><span class="variable">$ </span>git fetch rinh</span><br><span class="line"><span class="variable">$ </span>git merge rinh/master</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
+<ol>
+<li>angular</li>
+<li>reacjs</li>
 </ol>
-<p>OK，搞定，就这么几步，不过merge的时候可能会出现冲突的情况.<br>本地的repository看上去是这样的：<br><img src="/img/git-fork-merge.png" alt="本地的repository"></p>
+</blockquote>
+<p>最终选择reactjs，主要有几个原因：</p>
+<ol>
+<li>angular1性能实在让人忧伤</li>
+<li>angular2目前还在beta阶段，没有比较成熟的东西与之相配套</li>
+<li>我想用material风格的设计，可惜angular2还没有相关的组件</li>
+<li>reactjs的虚拟dom很吸引我，虽然单项数据流让人很蛋疼</li>
+<li>最终想尝试下react-native，看看这货开发起来顺手不</li>
+<li>既然大家都说不错，那就尝试下了</li>
+</ol>
+<h1 id="学习之路">学习之路</h1><p>reactjs实在是够灵活，所以要学习的东西很多。</p>
+<h2 id="webpack">webpack</h2><p>这货很灵活，实在是太强大了，不过强大的代价就是学习成本高，很多东西，网上解释了，看了也一知半解，所有就自己弄个个脑图来记忆，防止以后忘记<a href="http://naotu.baidu.com/file/50cc151d07b6890c99f0314f9fa7364f?token=e7649a889ca0c73e" target="_blank" rel="external">webpack主要模块脑图</a></p>
+<h2 id="reactjs">reactjs</h2><p>在某次为了提高一个页面性能的时候，使用过，不过很久没用就忘记了，现学现用吧，需要学习的东西挺多的，除了<code>reactjs</code>外，我们还要学习<code>react-router</code>, <code>redux</code>(看过，然后忘记了)，等等。最近在学习的时候，发现需要边学习边整理下脑图，这样可以增强我们的理解，和记忆。</p>
+<h1 id="ui选型">ui选型</h1><p>差不多花了2天的时间来研究material-ui，react-toolbox，之间的优劣。最后发现两者竟然都不合适，中途还研究过ant-design。<br>本身的需求是这样的：</p>
+<ol>
+<li>移动化</li>
+<li>metarial设计</li>
+<li>组件要丰富</li>
+</ol>
+<h2 id="material-ui">material-ui</h2><p>优势：</p>
+<ol>
+<li>组件丰富，设计精美</li>
+</ol>
+<p>劣势：</p>
+<ol>
+<li>使用inline-style，这实在让人蛋疼，修改起来很麻烦，或许是我自己不熟悉吧</li>
+<li>单位使用的都是px，不是rem，导致自适应能力差</li>
+</ol>
+<h2 id="react-toolbox">react-toolbox</h2><p>优势：</p>
+<ol>
+<li>使用rem做单位，自适应能力好</li>
+<li>使用css module，这点我比较喜欢</li>
+</ol>
+<p>劣势：</p>
+<ol>
+<li>组件不够丰富，不够流畅</li>
+</ol>
+<p>综合评定：material-ui不能自适应，而且使用的是inline-style，不合适做webapp。react-toolbox，这货的组件太少，material设计应用不够流畅。所以都不合适。考察了下ant-design，这个牛逼东西没有应用material设计，而且是适用于PC的。所以也是排除。最后不得不直接学习react-native来开发。</p>
+<h1 id="后记">后记</h1><p>写过一段时间的angular，对比react，还是比较喜欢angular这种把什么事情都做好，约束好的框架，而且还是喜欢把css，html，js分开。react实在灵活，有很多东西需要学习，相对来说个人感觉，学习曲线会相对高。在效率方面，或许reactjs的虚拟dom可以提高性能，在webapp上有很大的优势，不过对于pc端，我还是偏向选择angular，在维护上，比较方便，由于有强约束，可以让团队的编码趋于一致，而且TypeScript实在好用，我喜欢~~，当然如果团队前端牛逼，可以选择reactjs，ant-design是个很好用的东西，大家可以试试。</p>
 
         
       
@@ -260,18 +280,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/03/08/HTML中用到的data类型的url/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          HTML中用到的data类型的url
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/03/08/Angularjs之Directive-指令/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Angularjs之Directive(指令)</div>
+    <a href="/2016/01/27/服务器端截图引发的血案/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">node截图服务可用性报告</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -300,7 +311,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="git常用命令" data-title="git常用命令" data-url="http://blog.angrytoro.com/2015/03/08/git常用命令/"></div>
+	<div class="ds-thread" data-thread-key="reactjs杂谈" data-title="reactjs杂谈" data-url="http://blog.angrytoro.com/2016/03/26/reactjs杂谈/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

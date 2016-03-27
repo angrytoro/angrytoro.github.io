@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.angrytoro.com/2016/03/26/reactjs%E6%9D%82%E8%B0%88/</loc>
+    <lastmod>2016-03-27T03:37:31.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.angrytoro.com/2015/08/06/wepack%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2016-03-26T01:35:56.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://blog.angrytoro.com/2016/01/27/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E6%88%AA%E5%9B%BE%E5%BC%95%E5%8F%91%E7%9A%84%E8%A1%80%E6%A1%88/</loc>
     <lastmod>2016-02-15T14:25:01.000Z</lastmod>
   </url>
@@ -14,11 +24,6 @@
   <url>
     <loc>http://blog.angrytoro.com/2015/10/26/%E5%A6%82%E4%BD%95%E8%AE%A9worker%E6%94%AF%E6%8C%81%E4%B8%8D%E5%8A%A0%E5%A4%96%E9%93%BE/</loc>
     <lastmod>2015-10-26T13:14:34.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://blog.angrytoro.com/2015/08/06/wepack%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2015-08-30T15:13:25.000Z</lastmod>
   </url>
   
   <url>

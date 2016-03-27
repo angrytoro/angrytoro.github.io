@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2016-02-15T14:25:01.000Z</updated>
+  <updated>2016-03-27T03:37:31.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,70 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[reactjs杂谈]]></title>
+    <link href="http://blog.angrytoro.com/2016/03/26/reactjs%E6%9D%82%E8%B0%88/"/>
+    <id>http://blog.angrytoro.com/2016/03/26/reactjs杂谈/</id>
+    <published>2016-03-26T01:33:39.000Z</published>
+    <updated>2016-03-27T03:37:31.000Z</updated>
+    <content type="html"><![CDATA[<p>春节后闲得慌，先写了个markdown编辑器。中途想用reactjs，实现公司目前做的一款app，然后又只想先实现webapp，再封装成混合app。所以，有了这篇杂文。</p>
+<h1 id="技术选型">技术选型</h1><p>先说下背景，要实现的app是一款比较简单的，用于公司内部使用的app。既然要用js来实现，那就要选个市场接受度比较高的框架，于是有了下面两个选择：</p>
+<blockquote>
+<ol>
+<li>angular</li>
+<li>reacjs</li>
+</ol>
+</blockquote>
+<p>最终选择reactjs，主要有几个原因：</p>
+<ol>
+<li>angular1性能实在让人忧伤</li>
+<li>angular2目前还在beta阶段，没有比较成熟的东西与之相配套</li>
+<li>我想用material风格的设计，可惜angular2还没有相关的组件</li>
+<li>reactjs的虚拟dom很吸引我，虽然单项数据流让人很蛋疼</li>
+<li>最终想尝试下react-native，看看这货开发起来顺手不</li>
+<li>既然大家都说不错，那就尝试下了</li>
+</ol>
+<h1 id="学习之路">学习之路</h1><p>reactjs实在是够灵活，所以要学习的东西很多。</p>
+<h2 id="webpack">webpack</h2><p>这货很灵活，实在是太强大了，不过强大的代价就是学习成本高，很多东西，网上解释了，看了也一知半解，所有就自己弄个个脑图来记忆，防止以后忘记<a href="http://naotu.baidu.com/file/50cc151d07b6890c99f0314f9fa7364f?token=e7649a889ca0c73e" target="_blank" rel="external">webpack主要模块脑图</a></p>
+<h2 id="reactjs">reactjs</h2><p>在某次为了提高一个页面性能的时候，使用过，不过很久没用就忘记了，现学现用吧，需要学习的东西挺多的，除了<code>reactjs</code>外，我们还要学习<code>react-router</code>, <code>redux</code>(看过，然后忘记了)，等等。最近在学习的时候，发现需要边学习边整理下脑图，这样可以增强我们的理解，和记忆。</p>
+<h1 id="ui选型">ui选型</h1><p>差不多花了2天的时间来研究material-ui，react-toolbox，之间的优劣。最后发现两者竟然都不合适，中途还研究过ant-design。<br>本身的需求是这样的：</p>
+<ol>
+<li>移动化</li>
+<li>metarial设计</li>
+<li>组件要丰富</li>
+</ol>
+<h2 id="material-ui">material-ui</h2><p>优势：</p>
+<ol>
+<li>组件丰富，设计精美</li>
+</ol>
+<p>劣势：</p>
+<ol>
+<li>使用inline-style，这实在让人蛋疼，修改起来很麻烦，或许是我自己不熟悉吧</li>
+<li>单位使用的都是px，不是rem，导致自适应能力差</li>
+</ol>
+<h2 id="react-toolbox">react-toolbox</h2><p>优势：</p>
+<ol>
+<li>使用rem做单位，自适应能力好</li>
+<li>使用css module，这点我比较喜欢</li>
+</ol>
+<p>劣势：</p>
+<ol>
+<li>组件不够丰富，不够流畅</li>
+</ol>
+<p>综合评定：material-ui不能自适应，而且使用的是inline-style，不合适做webapp。react-toolbox，这货的组件太少，material设计应用不够流畅。所以都不合适。考察了下ant-design，这个牛逼东西没有应用material设计，而且是适用于PC的。所以也是排除。最后不得不直接学习react-native来开发。</p>
+<h1 id="后记">后记</h1><p>写过一段时间的angular，对比react，还是比较喜欢angular这种把什么事情都做好，约束好的框架，而且还是喜欢把css，html，js分开。react实在灵活，有很多东西需要学习，相对来说个人感觉，学习曲线会相对高。在效率方面，或许reactjs的虚拟dom可以提高性能，在webapp上有很大的优势，不过对于pc端，我还是偏向选择angular，在维护上，比较方便，由于有强约束，可以让团队的编码趋于一致，而且TypeScript实在好用，我喜欢~~，当然如果团队前端牛逼，可以选择reactjs，ant-design是个很好用的东西，大家可以试试。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[涉及到框架选型，基本工具学习]]>
+    
+    </summary>
+    
+      <category term="reactjs" scheme="http://blog.angrytoro.com/tags/reactjs/"/>
+    
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[node截图服务可用性报告]]></title>
@@ -226,7 +290,7 @@
     <link href="http://blog.angrytoro.com/2015/08/06/wepack%E5%AD%A6%E4%B9%A0/"/>
     <id>http://blog.angrytoro.com/2015/08/06/wepack学习/</id>
     <published>2015-08-06T14:29:59.000Z</published>
-    <updated>2015-08-30T15:13:25.000Z</updated>
+    <updated>2016-03-26T01:35:56.000Z</updated>
     <content type="html"><![CDATA[<p>回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这智商看不懂，没办法，只能自己硬着头皮满满啃英文，慢慢尝试了。(又唠叨了。)</p>
 <h1 id="配置说明">配置说明</h1><p><em>target:</em>用来指定这些代码是为什么平台准备的，有多种选择’web\webworker\node\async-node\node-webkit\atom’，大家根据需要自行选择。<br><em>cache:</em>还没搞懂，等搞懂了告诉大家<br><em>entry:</em>用来告诉webpack，我们要编译那些文件，如果大家有很页面需要编译，那不好意思，大家只能一条一条写上去了，不能像gulp或者grunt那样直接正则匹配了<br><em>resolve:</em>这货底下有多个配置，其中有一个很特殊很高效值得推荐，<em>modulesDirectories</em>这个配置告诉webpack到哪里找资源，省得webpack到处找，提高编译效率<br><em>output:</em>这货告诉webpack，编译后的资源要放在那里<br><em>output.filename:</em>编译后的文件怎么取名，看大家的喜好和需求了，跟entry是有映射关系的<br><em>output.publicPath:</em>应该是用来告诉web-dev-server请求资源的时候应该去哪个文件夹请求，等实验后再跟大家汇报<br><em>output.library:</em>这货也不知道怎么用<br><em>output.chunkFilename:</em>这货在我使用require.ensure的时候，有用到，其余的不知道咋用了。<br><em>module.loaders</em>这东西其实就是用来放预编译插件的，很重要的一点是，loader这个配置可以加参数，大家别傻傻的不知道。<br><em>plugins</em>一些webpack插件，我暂时之用到了CommonsChunkPlugin，这是用来提取公用代码的。</p>
 <h1 id="TODO">TODO</h1><p>边写个react简单应用，然后搞清楚webpack的大部分特性。</p>
@@ -237,6 +301,10 @@
     <summary type="html">
     <![CDATA[<p>回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这]]>
     </summary>
+    
+      <category term="reactjs" scheme="http://blog.angrytoro.com/tags/reactjs/"/>
+    
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
@@ -725,52 +793,6 @@
       <category term="git" scheme="http://blog.angrytoro.com/tags/git/"/>
     
       <category term="工具" scheme="http://blog.angrytoro.com/categories/%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Angularjs之Directive(指令)]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/Angularjs%E4%B9%8BDirective-%E6%8C%87%E4%BB%A4/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/Angularjs之Directive-指令/</id>
-    <published>2015-03-08T10:13:49.000Z</published>
-    <updated>2015-03-08T10:14:28.000Z</updated>
-    <content type="html"><![CDATA[<p>简要的讲讲配置及要点，如果看不懂就看下面的参考lian</p>
-<ol>
-<li><strong><code>restrict:</code></strong>主要有两种<code>&quot;E&quot;(element)</code>和<code>&quot;A&quot;(attribute)</code>,分别是创建元素指令和属性指令用的。一般情况下只用到这两个。</li>
-<li><strong><code>template:</code></strong>就是这个指令使用的模板。</li>
-<li><strong><code>templateUrl:</code></strong>模板的url地址，主要是用这个。</li>
-<li><strong><code>compile:</code></strong>当指令第一次被AngularJS编译的时候，<code>compile()</code>被调用，也就是说当AngularJS遇到第二个相同的指令的时候，不会再进行编译，<code>compile()</code>函数返回<code>link()</code>.该函数的写法是<code>function(element,attributes){//todo}</code>,<code>element</code>是该指令所在的元素对象，我们可以像在用jQuery操作dom一样操作它，<code>attributes</code>包含了dom元素所包含的所有属性集合的object对象。<a id="more"></a></li>
-<li><strong><code>link:</code></strong>该函数每次跟<code>$scope</code>绑定的时，都会被调用，这个函数相当于，遇到数据时，就被调用，用来渲染dom（compile是创建dom），它带有3个参数，<code>$scope</code>,<code>element</code>,<code>attributes</code>,这两个参数就不多做解释了。(<strong>link和compile不能同时存在，否则只运行compile</strong>)</li>
-<li><strong><code>transclude:</code></strong>用来指示directive是否包含directive所包含的内容,如果是的话，那么值为true,并且要在模板中相应的html元素上加上<code>ng-transclude</code>属性，来告诉angularjs，相应的内容要插到哪里。</li>
-<li><strong><code>replace:</code></strong>这个比较经常用，用来告诉angularjs是否需要把我们编写的directive替换成规范的dom标签（自己尝试下就知道是干嘛用的了）。</li>
-<li><strong><code>scope:</code></strong>这个属性比较复杂，还是看运行<a href="http://runjs.cn/code/rk9spiif" target="_blank" rel="external">实例</a>吧.</li>
-<li><strong><code>controller:</code></strong><code>function($scope, $element, $attrs, $transclude){...}</code>,太烦了，不想写了，大家看参考吧。</li>
-<li><strong><code>require:</code></strong>请求另外的<code>controller</code>,传入当前directive的linking function中.</li>
-</ol>
-<hr>
-<h3 id="参考">参考</h3><blockquote>
-<ol>
-<li><a href="http://my.oschina.net/ilivebox/blog/289670" target="_blank" rel="external">AngularJS 自定义控件</a></li>
-<li><a href="http://blog.51yip.com/jsjquery/1607.html" target="_blank" rel="external">angularjs directive 实例 详解</a></li>
-<li><a href="http://www.ifeenan.com/angularjs/2014-08-19-%5B%E8%AF%91%5D%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3NG%E9%87%8C%E7%9A%84scope%2F" target="_blank" rel="external">深入理解ng里的scope</a></li>
-<li><a href="http://www.html-js.com/article/Using-Angular-to-develop-web-application-to-AngularJS-instruction-to-create-controller-interacts-with-ngModel" target="_blank" rel="external">如何在AngularJS指令中创建controller与ngModel进行交互</a></li>
-<li><a href="http://www.html-js.com/article/1985" target="_blank" rel="external">AngularJS指令进阶 — ngModelController详解</a>js.com/article/1985)</li>
-</ol>
-</blockquote>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>简要的讲讲配置及要点，如果看不懂就看下面的参考lian</p>
-<ol>
-<li><strong><code>restrict:</code></strong>主要有两种<code>&quot;E&quot;(element)</code>和<code>&quot;A&quot;(attribute)</code>,分别是创建元素指令和属性指令用的。一般情况下只用到这两个。</li>
-<li><strong><code>template:</code></strong>就是这个指令使用的模板。</li>
-<li><strong><code>templateUrl:</code></strong>模板的url地址，主要是用这个。</li>
-<li><strong><code>compile:</code></strong>当指令第一次被AngularJS编译的时候，<code>compile()</code>被调用，也就是说当AngularJS遇到第二个相同的指令的时候，不会再进行编译，<code>compile()</code>函数返回<code>link()</code>.该函数的写法是<code>function(element,attributes){//todo}</code>,<code>element</code>是该指令所在的元素对象，我们可以像在用jQuery操作dom一样操作它，<code>attributes</code>包含了dom元素所包含的所有属性集合的object对象。]]>
-    
-    </summary>
-    
-      <category term="AngularJS" scheme="http://blog.angrytoro.com/tags/AngularJS/"/>
-    
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
     
   </entry>
   
