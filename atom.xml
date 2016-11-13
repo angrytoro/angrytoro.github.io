@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.angrytoro.com/"/>
-  <updated>2016-03-27T03:37:31.000Z</updated>
+  <updated>2016-11-13T13:43:44.000Z</updated>
   <id>http://blog.angrytoro.com/</id>
   
   <author>
@@ -13,6 +13,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[express入门]]></title>
+    <link href="http://blog.angrytoro.com/2016/11/13/express%E5%85%A5%E9%97%A8/"/>
+    <id>http://blog.angrytoro.com/2016/11/13/express入门/</id>
+    <published>2016-11-13T11:27:37.000Z</published>
+    <updated>2016-11-13T13:43:44.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="express_是什么鬼">express 是什么鬼</h1><p>了解express前，请先了解下nodejs，不了解的人，赶紧去恶补。简单的说，nodejs给前端开发提供了使用js编写服务器应用的能力，而express让这个能力简单化。正式了解express之前，我们先了解下一个请求的完整过程。</p>
+<h1 id="请求的完整过程">请求的完整过程</h1><p>请求通过express输出到客户端，无非如下几个过程<br><img src="/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="express请求处理过程"><br>从图中可以看出几个要素</p>
+<ul>
+<li>request（请求）</li>
+<li>middleware（中间件）</li>
+<li>router（路由）</li>
+<li>response（响应）<br>因此express无非也是提供这四个主要的功能接口。<h1 id="express主要功能介绍">express主要功能介绍</h1>这里不会跟大家介绍怎么使用，只是从概念上，简单解释。<h2 id="request">request</h2>顾名思义，这个功能的作用封装用户的请求信息，我们可以从这个接口中获取用户请求头，只要跟用户有关的请求信息，这里都能获取到。<h2 id="router">router</h2>路由器更容易解释了，大家自行脑补。<h2 id="response">response</h2>响应接口，这个接口封装了一些方便我们提供响应的函数，如：json，render等。<h2 id="middleware">middleware</h2>express提供了实现和使用中间件的方案，自身带的功能有限，剩下的都需要程序员自行扩展。说到中间件，如果开发过后端的同学应该很清楚，这东西类似于Java中的过滤器。express的中间件既可以作为过滤器，也可以作为功能增强器。如果不懂也不要紧，下面会用通俗易懂的语言和图画解释清楚。<br>先用伪代码来解释下<br>```JavaScript<br>if(判断正确) {<br>do 某些增强功能或者做某些其他事情<br>next(); //进入下个过滤器<br>} else {<br>next(错误信息);<br>}<br>```<br>如果是增强功能，则会往req上面增加某些对象属性或者函数。例如：session<br>如果是过滤器，则只需要判断条件是否可行，如果可行，那么执行next，进入下个过滤器，否则响应错误。<br><img src="/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png" alt="express中间件"><br><strong>可以把中间件看做一叠扑克牌，需要的时候网上叠，不喜欢哪张就抽调哪张</strong>，这个比喻可能不是很形象，但是能比较清楚的说明中间件这个东西。<h1 id="总结">总结</h1>其实express没什么难的，知道了它给开发者提供了什么，那么我们就能很容易的上手。建议现在不要去用koa，这货变化太快，中间件又没有express丰富，经常需要自己去填坑。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[以简单明了的方式讲解express，估计白痴都能看得懂]]>
+    
+    </summary>
+    
+      <category term="nodejs" scheme="http://blog.angrytoro.com/tags/nodejs/"/>
+    
+      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[reactjs杂谈]]></title>
@@ -305,19 +331,6 @@
       <category term="reactjs" scheme="http://blog.angrytoro.com/tags/reactjs/"/>
     
       <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Ghost源码学习之一（ORM）]]></title>
-    <link href="http://blog.angrytoro.com/2015/06/28/Ghost%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0%E4%B9%8B%E4%B8%80%EF%BC%88ORM%EF%BC%89/"/>
-    <id>http://blog.angrytoro.com/2015/06/28/Ghost源码学习之一（ORM）/</id>
-    <published>2015-06-28T01:26:43.000Z</published>
-    <updated>2015-06-28T01:26:43.000Z</updated>
-    <content type="html"></content>
-    <summary type="html">
-    
-    </summary>
     
   </entry>
   

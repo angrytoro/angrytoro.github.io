@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!--
+
+            5
+          5 5 5
+        5 5 5 5       2
+      5 5 5 5 5 5   2 2
+    5 5 5 5 5 5 5 2 2 2
+      5 5 5 5 5 5   2 2
+        5 5 5 5       2
+          5 5 5
+            5
+-->
   <meta charset="utf-8">
   
   <title>freefish</title>
@@ -21,6 +33,7 @@
   <link rel="stylesheet" href="/css/style.css" type="text/css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
+
 <body>
   <div id="container">
     <div class="left-col">
@@ -111,7 +124,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -184,6 +197,76 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-express入门" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/13/express入门/" class="article-date">
+  	<time datetime="2016-11-13T11:27:37.000Z" itemprop="datePublished">2016-11-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/13/express入门/">express入门</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="express_是什么鬼">express 是什么鬼</h1><p>了解express前，请先了解下nodejs，不了解的人，赶紧去恶补。简单的说，nodejs给前端开发提供了使用js编写服务器应用的能力，而express让这个能力简单化。正式了解express之前，我们先了解下一个请求的完整过程。</p>
+<h1 id="请求的完整过程">请求的完整过程</h1><p>请求通过express输出到客户端，无非如下几个过程<br><img src="/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="express请求处理过程"><br>从图中可以看出几个要素</p>
+<ul>
+<li>request（请求）</li>
+<li>middleware（中间件）</li>
+<li>router（路由）</li>
+<li>response（响应）<br>因此express无非也是提供这四个主要的功能接口。<h1 id="express主要功能介绍">express主要功能介绍</h1>这里不会跟大家介绍怎么使用，只是从概念上，简单解释。<h2 id="request">request</h2>顾名思义，这个功能的作用封装用户的请求信息，我们可以从这个接口中获取用户请求头，只要跟用户有关的请求信息，这里都能获取到。<h2 id="router">router</h2>路由器更容易解释了，大家自行脑补。<h2 id="response">response</h2>响应接口，这个接口封装了一些方便我们提供响应的函数，如：json，render等。<h2 id="middleware">middleware</h2>express提供了实现和使用中间件的方案，自身带的功能有限，剩下的都需要程序员自行扩展。说到中间件，如果开发过后端的同学应该很清楚，这东西类似于Java中的过滤器。express的中间件既可以作为过滤器，也可以作为功能增强器。如果不懂也不要紧，下面会用通俗易懂的语言和图画解释清楚。<br>先用伪代码来解释下<br>```JavaScript<br>if(判断正确) {<br>do 某些增强功能或者做某些其他事情<br>next(); //进入下个过滤器<br>} else {<br>next(错误信息);<br>}<br>```<br>如果是增强功能，则会往req上面增加某些对象属性或者函数。例如：session<br>如果是过滤器，则只需要判断条件是否可行，如果可行，那么执行next，进入下个过滤器，否则响应错误。<br><img src="/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png" alt="express中间件"><br><strong>可以把中间件看做一叠扑克牌，需要的时候网上叠，不喜欢哪张就抽调哪张</strong>，这个比喻可能不是很形象，但是能比较清楚的说明中间件这个东西。<h1 id="总结">总结</h1>其实express没什么难的，知道了它给开发者提供了什么，那么我们就能很容易的上手。建议现在不要去用koa，这货变化太快，中间件又没有express丰富，经常需要自己去填坑。</li>
+</ul>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-reactjs杂谈" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -485,74 +568,6 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/worker/">worker</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
-    <article id="post-wepack学习" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/08/06/wepack学习/" class="article-date">
-  	<time datetime="2015-08-06T14:29:59.000Z" itemprop="datePublished">2015-08-06</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/06/wepack学习/">wepack学习</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这智商看不懂，没办法，只能自己硬着头皮满满啃英文，慢慢尝试了。(又唠叨了。)</p>
-<h1 id="配置说明">配置说明</h1><p><em>target:</em>用来指定这些代码是为什么平台准备的，有多种选择’web\webworker\node\async-node\node-webkit\atom’，大家根据需要自行选择。<br><em>cache:</em>还没搞懂，等搞懂了告诉大家<br><em>entry:</em>用来告诉webpack，我们要编译那些文件，如果大家有很页面需要编译，那不好意思，大家只能一条一条写上去了，不能像gulp或者grunt那样直接正则匹配了<br><em>resolve:</em>这货底下有多个配置，其中有一个很特殊很高效值得推荐，<em>modulesDirectories</em>这个配置告诉webpack到哪里找资源，省得webpack到处找，提高编译效率<br><em>output:</em>这货告诉webpack，编译后的资源要放在那里<br><em>output.filename:</em>编译后的文件怎么取名，看大家的喜好和需求了，跟entry是有映射关系的<br><em>output.publicPath:</em>应该是用来告诉web-dev-server请求资源的时候应该去哪个文件夹请求，等实验后再跟大家汇报<br><em>output.library:</em>这货也不知道怎么用<br><em>output.chunkFilename:</em>这货在我使用require.ensure的时候，有用到，其余的不知道咋用了。<br><em>module.loaders</em>这东西其实就是用来放预编译插件的，很重要的一点是，loader这个配置可以加参数，大家别傻傻的不知道。<br><em>plugins</em>一些webpack插件，我暂时之用到了CommonsChunkPlugin，这是用来提取公用代码的。</p>
-<h1 id="TODO">TODO</h1><p>边写个react简单应用，然后搞清楚webpack的大部分特性。</p>
-<blockquote>
-<p><a href="https://underthehood.myob.com/changing-of-the-guard-in-web-technologies/" target="_blank" rel="external">A CHANGING OF THE GUARD IN WEB TECHNOLOGY </a><br><a href="http://segmentfault.com/a/1190000002552008#articleHeader10" target="_blank" rel="external">Webpack 怎么用</a><br><a href="http://segmentfault.com/a/1190000002551952" target="_blank" rel="external">Webpack 入门指迷</a><br><a href="http://www.w2bc.com/Article/50764" target="_blank" rel="external">webpack 入门指南</a><br><a href="https://fakefish.github.io/react-webpack-cookbook/index.html" target="_blank" rel="external">React Webpack cookbook</a><br><a href="http://www.infoq.com/cn/articles/react-and-webpack?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" target="_blank" rel="external">React开发神器Webpack</a><br><a href="http://www.jianshu.com/p/8adf4c2bfa51" target="_blank" rel="external">Webpack-dev-server结合后端服务器的热替换配置</a></p>
-</blockquote>
-
-        
-          <!-- show an end symbol if the article is fully displayed -->
-          <hr/>
-          <p class="article-more-link">
-            <a>end</a>
-          </p>
-        
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reactjs/">reactjs</a></li></ul>
 	</div>
 
       
