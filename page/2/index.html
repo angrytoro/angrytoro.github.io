@@ -124,7 +124,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -197,6 +197,88 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Mac下面WebStorm10没法调试nodejs的解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/" class="article-date">
+  	<time datetime="2015-11-21T12:51:26.000Z" itemprop="datePublished">2015-11-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/">Mac下面WebStorm10没法调试nodejs的解决方案</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Bug场景">Bug场景</h1><blockquote>
+<p>Cannot stop on breakpoint due to internal error: org.jetbrains.v8.V8CommandProcessor$1: TypeError: f is not a function at Function.t.getScopes (eval at undefined, :217:15) at t.describeFrame (eval at undefined, :213:33) at t.getFrames (eval at undefined, :114:89) at DebugCommandProcessor.r.processDebugJSONRequest (eval at undefined, :348:15) …</p>
+</blockquote>
+<p>在升级nodejs到最新版本之后就曝出了上面这种问题，谷歌上说是webstorm的问题，然后webstorm官网给出了响应的解决方案。在webstorm.vmoptions里面加上下面一句<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dnodejs<span class="class">.debugger</span><span class="class">.use</span><span class="class">.jb</span><span class="class">.support</span>=false</span><br></pre></td></tr></table></figure></p>
+<p>最后重启下webstorm，搞定。</p>
+<p>由于Mac下查找和修改webstorm.vmoptions比较繁琐，下面给出相应的步骤：</p>
+<ol>
+<li>进入<strong>/Applications/WebStorm.app/Contents/bin</strong>文件夹下面</li>
+<li>把<strong>webstorm.vmoptions</strong>拷贝到<strong>~/Library/Preferences/WebStorm10/</strong></li>
+<li>编辑<strong>~/Library/Preferences/WebStorm10/</strong>下面的<strong>webstorm.vmoptions</strong></li>
+<li>在最后面加上<code>-Dnodejs.debugger.use.jb.support=false</code></li>
+<li>保存退出</li>
+</ol>
+<h1 id="备注">备注</h1><p>因为权限问题所以不能够直接编辑<strong>/Applications/WebStorm.app/Contents/bin</strong>下的<strong>webstorm.vmoptions</strong>，因此需要把它拷贝到<strong>~/Library/Preferences/WebStorm10/</strong>再进行编辑</p>
+<h1 id="参考">参考</h1><ol>
+<li><a href="http://stackoverflow.com/questions/33515777/node-v5-breaks-webstorms-debugger" target="_blank" rel="external">Node v5 breaks Webstorm’s debugger</a></li>
+<li><a href="https://youtrack.jetbrains.com/issue/IDEA-139990" target="_blank" rel="external">Debugging is broken with io.js v2.0.0</a></li>
+<li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827537-Configuring-JVM-options-and-platform-properties" target="_blank" rel="external">Configuring JVM options and platform properties</a></li>
+<li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827437-Directories-used-by-the-IDE-to-store-settings-caches-plugins-and-logs" target="_blank" rel="external">Directories used by the IDE to store settings, caches, plugins and logs</a></li>
+</ol>
+
+        
+          <!-- show an end symbol if the article is fully displayed -->
+          <hr/>
+          <p class="article-more-link">
+            <a>end</a>
+          </p>
+        
+      
+    </div>
+    
+    <div class="article-info">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/工具/">工具</a>
+	</div>
+
+
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-如何让worker支持不加外链" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -461,91 +543,9 @@
 
 
   
-    <article id="post-如何编写node命令" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/04/28/如何编写node命令/" class="article-date">
-  	<time datetime="2015-04-28T12:57:28.000Z" itemprop="datePublished">2015-04-28</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/04/28/如何编写node命令/">如何编写node命令</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>平时我们都是用别人编写好的nodejs命令，某些时候，我们也想写个命令玩下，咋整。好了，接下去这边流水账就是从头告诉你怎么写一个node命令的。<br>要写一个nodejs命令，首先要储备4个知识点。</p>
-<ol>
-<li>Commander模块</li>
-<li>怎么告诉nodejs，这是一条命令</li>
-<li>如何调试node</li>
-<li>如何发布node插件<h1 id="Commander">Commander</h1>TJ大神写的<a href="https://github.com/tj/commander.js" target="_blank" rel="external">commander</a>（也有Ruby版本），很方便大伙儿写命令，本人就不在这儿翻译commander的说明文档了，大家自己去查看。这里给个官方例子，看看有多方便。<figure class="highlight rsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var program = require(<span class="string">'commander'</span>);</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .version(<span class="string">'0.0.1'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-p, --peppers'</span>, <span class="string">'Add peppers'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-P, --pineapple'</span>, <span class="string">'Add pineapple'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-b, --bbq-sauce'</span>, <span class="string">'Add bbq sauce'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-c, --cheese [type]'</span>, <span class="string">'Add the specified type of cheese [marble]'</span>, <span class="string">'marble'</span>)</span><br><span class="line">  .parse(process.argv);</span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'you ordered a pizza with:'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.peppers) console.<span class="built_in">log</span>(<span class="string">'  - peppers'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.pineapple) console.<span class="built_in">log</span>(<span class="string">'  - pineapple'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.bbqSauce) console.<span class="built_in">log</span>(<span class="string">'  - bbq'</span>);</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'  - %s cheese'</span>, program.cheese);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="如何配置package-json">如何配置package.json</h1><p>我们要在package.json中添加一个字段<code>bin</code><br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="string">"name"</span>: <span class="string">"xxx"</span>, //命令的名字（一定是npm里面没有的）</span><br><span class="line">  	<span class="string">"version"</span>: <span class="string">"0.0.1"</span>, //版本号</span><br><span class="line">  	<span class="string">"bin"</span>: <span class="string">"./bin/yourCommander"</span>, //命令存放的位置</span><br><span class="line">  	<span class="keyword">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>yourCommander文件中需要添加一行<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/usr/bin/env node</span></span><br></pre></td></tr></table></figure></p>
-<p>例如我写的命令<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">require</span>(<span class="string">'../index.js'</span>); <span class="regexp">//</span>程序的入口</span><br></pre></td></tr></table></figure></p>
-<p>假设我们采用全局安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> xxx -g</span><br></pre></td></tr></table></figure></p>
-<p>那么我们就能够直接在终端里面输入<code>xxx -oo</code>（只是举例）来调用我们的命令。</p>
-<h1 id="如何调试node">如何调试node</h1><p>好吧，我只认<code>node-inspector</code>。先全局安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> node-inspector -g</span><br></pre></td></tr></table></figure></p>
-<p>然后直接运行<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node-<span class="keyword">debug</span> xxx/xxx</span><br></pre></td></tr></table></figure></p>
-<p>xxx/xxx是bin文件的路径，这样我们就能在chrome浏览器的控制面板上看到相应的断点了。</p>
-<h1 id="如何发布node插件">如何发布node插件</h1><p>OK，当我们写好了命令，那要怎么发布呢？<br>最好是先本地安装一下，实验看看能不能正确运行<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install <span class="tag">&lt;<span class="title">本地路径</span>&gt;</span> -g</span><br></pre></td></tr></table></figure></p>
-<p>然后就能测试自己边写的命令。如果正确执行，那么我们就能够发布到npm上<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">npm</span> adduser <span class="regexp">//</span>创建<span class="built_in">npm</span>账户</span><br></pre></td></tr></table></figure></p>
-<p>执行此命令后，会依次出现输入用户名、Email、密码的提示，输入好之后等待一会儿就可以了。<br>接下去就是发布了<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm publish <span class="tag">&lt;<span class="title">本地路径</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>如果要更新程序包，只要修改一下package.json中的版本号，再重新执行发布命令就可以了。</p>
-
-        
-          <!-- show an end symbol if the article is fully displayed -->
-          <hr/>
-          <p class="article-more-link">
-            <a>end</a>
-          </p>
-        
-      
-    </div>
-    
-    <div class="article-info">
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
-	</div>
-
-
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 </div>
@@ -553,7 +553,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 freefish
+    		&copy; 2017 freefish
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/angrytoro/hexo-them-fish" target="_blank">fish</a> by fish

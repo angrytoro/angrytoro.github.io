@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--
+
+            5
+          5 5 5
+        5 5 5 5       2
+      5 5 5 5 5 5   2 2
+    5 5 5 5 5 5 5 2 2 2
+      5 5 5 5 5 5   2 2
+        5 5 5 5       2
+          5 5 5
+            5
+-->
+  <meta charset="utf-8">
+  
+  <title>sequelize 笔记 | freefish</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="nodes orm 框架sequelize学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sequelize 笔记">
+<meta property="og:url" content="http://blog.angrytoro.com/2017/01/02/sequelize-笔记/index.html">
+<meta property="og:site_name" content="freefish">
+<meta property="og:description" content="nodes orm 框架sequelize学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sequelize 笔记">
+<meta name="twitter:description" content="nodes orm 框架sequelize学习笔记">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/avatar.jpg">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">freefish</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/categories/JavaScript">JavaScript</a></li>
+				        
+							<li><a href="/categories/HTML">HTML</a></li>
+				        
+							<li><a href="/categories/CSS">CSS</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/angrytoro" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.doyoe.com/">杜瑶的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://css.doyoe.com/">杜瑶CSS参考手册</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">诚聘前端，地点厦门，有兴趣的，邮件我，angrytoro@gmail.com</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">freefish</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/img/avatar.jpg">
+				<hgroup>
+				  <h1 class="header-author">freefish</h1>
+				</hgroup>
+			</div>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/categories/JavaScript">JavaScript</a></li>
+		        
+					<li><a href="/categories/HTML">HTML</a></li>
+		        
+					<li><a href="/categories/CSS">CSS</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/angrytoro" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-sequelize-笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/01/02/sequelize-笔记/" class="article-date">
+  	<time datetime="2017-01-02T02:26:19.000Z" itemprop="datePublished">2017-01-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      sequelize 笔记
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言">前言</h1><p>之前要写一个系统，本来选用的是mongodb，后来发现这个系统数据库之间有着强关系，由于对mongodb没有研究，所以索性用了MySQL。在选择orm框架的时候，看来很多框架的文档，看看看去感觉还是sequelize的设计比较爱。所以后来就干脆用了这个，还不错。这里记录一些使用心得。(ps: 由于用的是MySQL，因此这里的配置只针对MySQL，或许有些地方是所有数据库共用)</p>
+<h1 id="数据库配置">数据库配置</h1><p>咋们先看官网配置</p>
+<pre><code><span class="built_in">var</span> sequelize <span class="subst">=</span> <span class="literal">new</span> Sequelize(<span class="string">'database'</span>, <span class="string">'username'</span>, <span class="string">'password'</span>, {
+  host: <span class="string">'localhost'</span>,
+  dialect: <span class="string">'mysql'</span><span class="subst">|</span><span class="string">'mariadb'</span><span class="subst">|</span><span class="string">'sqlite'</span><span class="subst">|</span><span class="string">'postgres'</span><span class="subst">|</span><span class="string">'mssql'</span>,
+  pool: {
+    <span class="keyword">max</span>: <span class="number">5</span>,
+    <span class="keyword">min</span>: <span class="number">0</span>,
+    idle: <span class="number">10000</span>
+  }
+});
+</code></pre><p>这么明显的配置，我就不用在这里解释了，这也是最简单的入门，实际上，我们需要了解的是更多的东西，sequelize给我们提供了很灵活的配置，可以针对不同的表设置不同的配置，但是如果需要统一配置的话也是可以的，只需要在上面<code>pool</code>同级的地方添加一个配置，如下：<br><a id="more"></a></p>
+<pre><code><span class="comment">//这里只是说明下我自己的配置，大家如果想了解更多需要读官网的文档了哈</span>
+<span class="tag">define</span>: {
+    <span class="attribute">freezeTableName</span>: true, <span class="comment">//默认情况下，sequelize会把王model的名字根据table的名字设置成复数形式，如果你不想要这样的话，就要做这个配置</span>
+    <span class="attribute">underscored</span>: true <span class="comment">//这样设置的话，那么在添加外键的时候，sequelize会自动把外键设置为tableName_key，默认的是tableNameKey，这种驼峰式的命名</span>
+}
+</code></pre><h1 id="创建表">创建表</h1><p>如果自己对数据库很熟悉，我觉得还是自己创建吧。不过如果不是很熟的话，建议还是用sequelize来帮我们创建表。<br>作为一个英文十分垃圾的菜鸟，研究了几天的文档之后发现，用import的方式是最方便的。省下了我们很多创建数据库的烦恼。贴上代码，给大家做一下解释。这里的代码有复制sequelize example的部分代码。</p>
+<pre><code><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);
+<span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);
+<span class="keyword">var</span> Sequelize = <span class="built_in">require</span>(<span class="string">"sequelize"</span>);
+<span class="keyword">var</span> dbConfig = <span class="built_in">require</span>(<span class="string">'../config'</span>).db; <span class="comment">//自己项目的数据库配置</span>
+<span class="keyword">var</span> db = {};
+
+<span class="keyword">var</span> sequelize = <span class="keyword">new</span> Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig.connect); <span class="comment">//创建一个sequelize实例</span>
+
+fs.readdirSync(__dirname) <span class="comment">//读取当前文件夹的文件</span>
+.filter(<span class="function"><span class="keyword">function</span><span class="params">(file)</span> </span>{ <span class="comment">//过滤掉index.js，因为index.js就是这份代码</span>
+  <span class="keyword">return</span> (file.indexOf(<span class="string">"."</span>) !== <span class="number">0</span>) &amp;&amp; (file !== <span class="string">"index.js"</span>);
+})
+.forEach(<span class="function"><span class="keyword">function</span><span class="params">(file)</span> </span>{ <span class="comment">//import的方式创建model，并把它存储到db这个对象中</span>
+  <span class="keyword">var</span> model = sequelize.import(path.join(__dirname, file));
+  db[model.name] = model;
+});
+
+<span class="built_in">Object</span>.keys(db).forEach(<span class="function"><span class="keyword">function</span><span class="params">(modelName)</span> </span>{
+  <span class="keyword">if</span> (<span class="string">"associate"</span> <span class="keyword">in</span> db[modelName]) { <span class="comment">//创建associate,当你需要多对多的时候很需要用到这个，就是在创建数据库表的时候，往基本配置classMethods里面天剑一个associate方法，然后我们就可以在这个方法里面做各种我们想要的关联操作</span>
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+sequelize.sync(); <span class="comment">//这个是当我们没有创建数据库表的时候，sequelize帮我们创建</span>
+
+<span class="built_in">module</span>.exports = db;
+</code></pre><p>有了这份index.js，我们就能很快速的创建model。贴一下我的一个model代码做个参考</p>
+<pre><code><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span><span class="params">(sequelize, DataTypes)</span> </span>{
+  <span class="keyword">var</span> Group = sequelize.define(<span class="string">'Group'</span>, {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: <span class="literal">true</span>,
+      autoIncrement: <span class="literal">true</span>
+    },
+    name: {
+      type: DataTypes.STRING, <span class="comment">//名字不能改</span>
+      allowNull: <span class="literal">false</span>,
+      unique: <span class="literal">true</span>
+    },
+    description: {
+      type: DataTypes.STRING
+    },
+    visibility_level: {<span class="comment">//只要两种权限，私有的和公开</span>
+      type: DataTypes.ENUM,
+      <span class="comment">// values: [0, 1],//0-private,1-public</span>
+      values: [<span class="string">'0'</span>, <span class="string">'1'</span>],<span class="comment">//0-private,1-public</span>
+      defaultValue: <span class="string">'0'</span>
+    }
+  }, {
+    tableName: <span class="string">'group'</span>,
+    classMethods: {
+      associate: <span class="function"><span class="keyword">function</span><span class="params">(models)</span> </span>{
+        Group.belongsToMany(models.User, {through: models.GroupUserRelation});
+        Group.belongsToMany(models.Project, {through: models.ProjectGroupRelation});
+      }
+    }
+  });
+
+  <span class="keyword">return</span> Group;
+};
+</code></pre><h2 id="表关系设计">表关系设计</h2><p>表关系无非就三种<em>一对一，一对多，多对多</em>。无论哪一种，sequelize都提供了很灵活的方式给我们定义外键，不过一般拿id来做外键，因此这里就不在说自定义外键，要看的话请看官方文档哈。</p>
+<h3 id="一对一">一对一</h3><p>有两种表达方式<code>belongsTo</code>和<code>hasOne</code></p>
+<pre><code>var Player = this.sequelize.define(<span class="string">'player'</span>, {/* attributes */})
+  , Team  = this.sequelize.define(<span class="string">'team'</span>, {/* attributes */});
+Player.belongsTo(Team);  //这种方式会为player表，添加一个team_id的外键
+
+var User = sequelize.define(<span class="string">'user'</span>, {/* <span class="keyword">...</span> */})
+var Project = sequelize.define(<span class="string">'project'</span>, {/* <span class="keyword">...</span> */})
+// One-way associations
+Project.hasOne(User) //这种方式会为User添加一个project_id。(个人不是特别喜欢这种方式，不直观，还是belongsTo直观点)
+</code></pre><h3 id="一对多">一对多</h3><p>只有一种表达方式<code>hasMany</code></p>
+<pre><code>var User = sequelize.define(<span class="string">'user'</span>, {/* <span class="keyword">...</span> */})
+var Project = sequelize.define(<span class="string">'project'</span>, {/* <span class="keyword">...</span> */})
+// OK. Now things get more complicated (not really visible to the user :)).
+// First let<span class="string">'s define a hasMany association
+Project.hasMany(User)  //这种情况下，会为User添加project_id字段</span>
+</code></pre><h3 id="多对多">多对多</h3><p>多对多有点比较特别，直接看代码:</p>
+<pre><code><span class="tag">Project</span><span class="class">.belongsToMany</span>(User, {<span class="attribute">through</span>: <span class="string">'UserProject'</span>});
+<span class="tag">User</span><span class="class">.belongsToMany</span>(Project, {<span class="attribute">through</span>: <span class="string">'UserProject'</span>});
+</code></pre><p>大家有没有发现<code>through</code>这个字段，在多对多的情况下，必须有这个字段，用来告诉orm这个多对多的关系是通过那张表来处理的。这个例子里面一定会有一张<code>user_project</code>表来保存这层关系。</p>
+<h1 id="数据库操作">数据库操作</h1><p>在数据库连接，表设计都搞定之后，接下去就是数据库的增删改查了。</p>
+<h2 id="新增">新增</h2><p>新增操作没有什么牛逼的地方，就是一个create，然后用promise的方式返回一个新增的数据，就怎么简单。这里不再多说</p>
+<h2 id="更新">更新</h2><p>这块需要好好讲讲，我们知道数据库有多对多的关系，而且有数据冗余，所以更新的时候需要同步的更新，这个时候我们需要用到事务了。之前没有用mongodb就是因为没有事务。参考下说明文档里面的例子：</p>
+<pre><code><span class="keyword">return</span> sequelize.transaction(function (t) {
+  // chain all your queries here. make sure you <span class="keyword">return</span> them.
+  <span class="keyword">return</span> <span class="type">User</span>.create({
+    firstName: '<span class="type">Abraham</span>',
+    lastName: '<span class="type">Lincoln</span>'
+  }, {transaction: t}).then(function (user) {
+    <span class="keyword">return</span> user.setShooter({
+      firstName: '<span class="type">John</span>',
+      lastName: '<span class="type">Boothe</span>'
+    }, {transaction: t});
+  });
+}).then(function (<span class="literal">result</span>) {
+  // <span class="type">Transaction</span> has been committed
+  // <span class="literal">result</span> <span class="keyword">is</span> whatever the <span class="literal">result</span> <span class="keyword">of</span> the promise chain returned to the transaction callback
+}).catch(function (err) {
+  // <span class="type">Transaction</span> has been rolled back
+  // err <span class="keyword">is</span> whatever rejected the promise chain returned to the transaction callback
+});
+</code></pre><p>在强关联的时候，遇到增删情况下一般都需要用到事务来实现出错回滚机制。<br>在更新的时候需要特别注意的是，更新<code>update</code>这个方法是不会返回更新之后的数据的，只会告诉我们更新了几条数据。所以假如我们有涉及到事务，牵涉到多张表，这个时候建议先查询出相应的数据，然后再进行更新。或者直接又前端把需要用到的数据传递到后端来，这样我们就省去了先查询后更新的操作。</p>
+<h1 id="总结">总结</h1><p>目前就先记录到这里，接下去如果有遇到更多情况，再告诉大家。</p>
+<h1 id="参考">参考</h1><blockquote>
+<ul>
+<li><a href="http://docs.sequelizejs.com/en/v3/" title="sequelize官方文档" target="_blank" rel="external">sequelize官方文档</a></li>
+</ul>
+</blockquote>
+
+        
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/23/泰国游记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">泰国游记</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="sequelize-笔记" data-title="sequelize 笔记" data-url="http://blog.angrytoro.com/2017/01/02/sequelize-笔记/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 freefish
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/angrytoro/hexo-them-fish" target="_blank">fish</a> by fish
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-60687326-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>
