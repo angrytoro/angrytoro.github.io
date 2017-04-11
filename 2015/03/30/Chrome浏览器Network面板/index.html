@@ -17,28 +17,28 @@
   
   <title>Chrome浏览器Network面板 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？
-Resource Timing API这个面板使用Resource Timing API来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由">
+  <meta name="description" content="前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？ #Resource Timing API这个面板使用Resource Timing API来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。">
+<meta name="keywords" content="chrome">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Chrome浏览器Network面板">
-<meta property="og:url" content="http://blog.angrytoro.com/2015/03/30/Chrome浏览器Network面板/index.html">
+<meta property="og:url" content="http://wangsu.co/2015/03/30/Chrome浏览器Network面板/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？
-Resource Timing API这个面板使用Resource Timing API来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由">
-<meta property="og:image" content="/img/resource-timing-overview.png">
-<meta property="og:image" content="/img/performance.getEntries.png">
-<meta property="og:image" content="/img/performance.timing.png">
-<meta property="og:image" content="/img/Timing details tab.png">
-<meta property="og:image" content="/img/页面加载时间.png">
+<meta property="og:description" content="前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？ #Resource Timing API这个面板使用Resource Timing API来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。">
+<meta property="og:image" content="http://wangsu.co/img/resource-timing-overview.png">
+<meta property="og:image" content="http://wangsu.co/img/performance.getEntries.png">
+<meta property="og:image" content="http://wangsu.co/img/performance.timing.png">
+<meta property="og:image" content="http://wangsu.co/img/Timing%20details%20tab.png">
+<meta property="og:image" content="http://wangsu.co/img/页面加载时间.png">
+<meta property="og:updated_time" content="2015-04-01T15:10:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chrome浏览器Network面板">
-<meta name="twitter:description" content="前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？
-Resource Timing API这个面板使用Resource Timing API来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由">
+<meta name="twitter:description" content="前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？ #Resource Timing API这个面板使用Resource Timing API来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。">
+<meta name="twitter:image" content="http://wangsu.co/img/resource-timing-overview.png">
   
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -132,7 +132,7 @@ Resource Timing API这个面板使用Resource Timing API来计算相应的数据
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -246,9 +246,10 @@ Resource Timing API这个面板使用Resource Timing API来计算相应的数据
     <div class="article-entry" itemprop="articleBody">
       
         <p>前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？</p>
-<h1 id="Resource_Timing_API">Resource Timing API</h1><p>这个面板使用<a href="http://www.w3.org/TR/resource-timing/" target="_blank" rel="external">Resource Timing API</a>来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考<a href="http://www.w3cfuns.com/article-5598442-1-1.html" target="_blank" rel="external">Navigation Timing 测试网页加载速度</a>，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。<br><img src="/img/resource-timing-overview.png" alt="network timing data points"><br>咋们看看每个请求，都包含有哪些数据。在控制台输入<code>performance.getEntries()[0]</code><br><a id="more"></a><br><img src="/img/performance.getEntries.png" alt="这个api记录的第一个请求的数据"><br>有这些数据，我们可以做详细的网站性能统计。<br>这里只记录了每个请求的每个节点所花的时间，那么有没有接口记录整个网页的加载详情呢。有的，<code>performance.timing</code>这个接口记录了整个网页加载的详细时间数据。<br><img src="/img/performance.timing.png" alt="performance.timing"></p>
-<h1 id="Timing_details_tab">Timing details tab</h1><p>当我们在测试某个接口，或者某个资源的加载速度时，我们最常用的就是<strong>Timing details tab</strong>这个东东了，先看下，它到底是什么，然后咋们在来解释每个字段的意思。<br><img src="/img/Timing details tab.png" alt="Timing details tab"><br>这个截图没有包含<strong>Timing details tab</strong>的所有字段。</p>
-<h2 id="字段解释">字段解释</h2><ul>
+<p>#Resource Timing API<br>这个面板使用<a href="http://www.w3.org/TR/resource-timing/" target="_blank" rel="external">Resource Timing API</a>来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考<a href="http://www.w3cfuns.com/article-5598442-1-1.html" target="_blank" rel="external">Navigation Timing 测试网页加载速度</a>，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。<br><img src="/img/resource-timing-overview.png" alt="network timing data points"><br>咋们看看每个请求，都包含有哪些数据。在控制台输入<code>performance.getEntries()[0]</code><br><a id="more"></a><br><img src="/img/performance.getEntries.png" alt="这个api记录的第一个请求的数据"><br>有这些数据，我们可以做详细的网站性能统计。<br>这里只记录了每个请求的每个节点所花的时间，那么有没有接口记录整个网页的加载详情呢。有的，<code>performance.timing</code>这个接口记录了整个网页加载的详细时间数据。<br><img src="/img/performance.timing.png" alt="performance.timing"></p>
+<p>#Timing details tab<br>当我们在测试某个接口，或者某个资源的加载速度时，我们最常用的就是<strong>Timing details tab</strong>这个东东了，先看下，它到底是什么，然后咋们在来解释每个字段的意思。<br><img src="/img/Timing details tab.png" alt="Timing details tab"><br>这个截图没有包含<strong>Timing details tab</strong>的所有字段。</p>
+<p>##字段解释</p>
+<ul>
 <li><strong>Stalled/Blocking:</strong>是浏览器得到发出请求指令，到请求可以发出所等待的时间.包括等待代理协商等待的时间，除此之外还有浏览器等待可复用的连接的时间（Chrome下，同一个域名下最多可同时并行6个请求，不同浏览器的可同时并发请求连接数量不一样，详情请参考<a href="http://www.zhihu.com/question/20474326" target="_blank" rel="external">浏览器允许的并发请求资源数是什么意思</a>）</li>
 <li><strong>Proxy Negotiation:</strong>链接代理服务器所花的协商时间</li>
 <li><strong>DNS Lookup:</strong>dns查询所花的时间(像刚才的截图，我们可以发现这个网站花在dns查找的时间太多了)</li>
@@ -256,9 +257,10 @@ Resource Timing API这个面板使用Resource Timing API来计算相应的数据
 <li><strong>SSL:</strong>如果是https请求，那么浏览器还要话费SSL握手时间。</li>
 <li><strong>Request Sent / Sending:</strong>请求发送完成所花的时间</li>
 <li><strong>Waiting (TTFB):</strong>请求发出后，到接收第一个字节所花的时间（在网速稳定的情况下，如果花的时间很长，那么就要检查下是程序写得有问题还是服务器出问题了）</li>
-<li><strong>Content Download / Downloading:</strong>接收服务器传来的数据所花的时间<br>以上所有时间加起来就是这个请求所花的时间。如果网页加载慢，从这里我们大概可以检查哪个请求有异常。<h1 id="如何查看我们网页首屏加载时间">如何查看我们网页首屏加载时间</h1>先看一张图片<br><img src="/img/页面加载时间.png" alt="页面加载时间"><br>这里有两个参数<strong>DOMContentLoaded</strong>和<strong>load</strong><br><strong>DOMContentLoaded:</strong>表示 DOM 与 CSSOM 皆已准备就绪(很多 JavaScript 框架会在执行它们自己的逻辑前等待这个事件的触发)。这个所花时间越长，证明这个页面越复杂，或者你的代码有问题。首屏对用户很重要，所以这个时间不要太长。<br><strong>load:</strong>表示页面所需的资源已经都加载了，如果这个花很长时间，该看看哪个坑爹的资源出问题了。<br>目前看过对首屏优化做得最好的之一是亚马逊，那速度简直是变态的快。<h1 id="总结">总结</h1>当我们网站加载速度慢的时候，看看这个tab，检查下哪些地方可以优化。</li>
+<li><strong>Content Download / Downloading:</strong>接收服务器传来的数据所花的时间<br>以上所有时间加起来就是这个请求所花的时间。如果网页加载慢，从这里我们大概可以检查哪个请求有异常。<br>#如何查看我们网页首屏加载时间<br>先看一张图片<br><img src="/img/页面加载时间.png" alt="页面加载时间"><br>这里有两个参数<strong>DOMContentLoaded</strong>和<strong>load</strong><br><strong>DOMContentLoaded:</strong>表示 DOM 与 CSSOM 皆已准备就绪(很多 JavaScript 框架会在执行它们自己的逻辑前等待这个事件的触发)。这个所花时间越长，证明这个页面越复杂，或者你的代码有问题。首屏对用户很重要，所以这个时间不要太长。<br><strong>load:</strong>表示页面所需的资源已经都加载了，如果这个花很长时间，该看看哪个坑爹的资源出问题了。<br>目前看过对首屏优化做得最好的之一是亚马逊，那速度简直是变态的快。<br>#总结<br>当我们网站加载速度慢的时候，看看这个tab，检查下哪些地方可以优化。</li>
 </ul>
-<h1 id="参考">参考</h1><blockquote>
+<p>#参考</p>
+<blockquote>
 <p><a href="https://developer.chrome.com/devtools/docs/network" target="_blank" rel="external">Evaluating network performance</a><br><a href="http://www.w3.org/TR/resource-timing/" target="_blank" rel="external">Resource Timing</a><br><a href="http://www.w3cfuns.com/article-5598442-1-1.html" target="_blank" rel="external">Navigation Timing 测试网页加载速度</a><br><a href="http://www.th7.cn/web/html-css/201311/14802.shtml" target="_blank" rel="external">初探performance.timing API</a><br><a href="http://segmentfault.com/q/1010000002399481/a-1020000002399855" target="_blank" rel="external">chrome的timeline的问题？</a><br><a href="http://www.zhihu.com/question/20474326" target="_blank" rel="external">浏览器允许的并发请求资源数是什么意思？</a></p>
 </blockquote>
 
@@ -271,18 +273,18 @@ Resource Timing API这个面板使用Resource Timing API来计算相应的数据
     
 <nav id="article-nav">
   
-    <a href="/2015/04/19/es6编译成es5/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/03/24/对于JavaScript中继承的思考/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          es6编译成es5
+          对于JavaScript中继承的思考
         
       </div>
     </a>
   
   
-    <a href="/2015/03/24/对于JavaScript中继承的思考/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">对于JavaScript中继承的思考</div>
+    <a href="/2015/04/19/es6编译成es5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">es6编译成es5</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -311,7 +313,7 @@ Resource Timing API这个面板使用Resource Timing API来计算相应的数据
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Chrome浏览器Network面板" data-title="Chrome浏览器Network面板" data-url="http://blog.angrytoro.com/2015/03/30/Chrome浏览器Network面板/"></div>
+	<div class="ds-thread" data-thread-key="Chrome浏览器Network面板" data-title="Chrome浏览器Network面板" data-url="http://wangsu.co/2015/03/30/Chrome浏览器Network面板/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -345,12 +347,12 @@ Resource Timing API这个面板使用Resource Timing API来计算相应的数据
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

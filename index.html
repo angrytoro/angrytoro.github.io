@@ -20,7 +20,7 @@
   <meta name="description" content="this blog is just to record my learning">
 <meta property="og:type" content="website">
 <meta property="og:title" content="freefish">
-<meta property="og:url" content="http://blog.angrytoro.com/index.html">
+<meta property="og:url" content="http://wangsu.co/index.html">
 <meta property="og:site_name" content="freefish">
 <meta property="og:description" content="this blog is just to record my learning">
 <meta name="twitter:card" content="summary">
@@ -30,7 +30,7 @@
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -124,7 +124,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -224,15 +224,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="前言">前言</h1><p>之前要写一个系统，本来选用的是mongodb，后来发现这个系统数据库之间有着强关系，由于对mongodb没有研究，所以索性用了MySQL。在选择orm框架的时候，看来很多框架的文档，看看看去感觉还是sequelize的设计比较爱。所以后来就干脆用了这个，还不错。这里记录一些使用心得。(ps: 由于用的是MySQL，因此这里的配置只针对MySQL，或许有些地方是所有数据库共用)</p>
-<h1 id="数据库配置">数据库配置</h1><p>咋们先看官网配置</p>
-<pre><code><span class="built_in">var</span> sequelize <span class="subst">=</span> <span class="literal">new</span> Sequelize(<span class="string">'database'</span>, <span class="string">'username'</span>, <span class="string">'password'</span>, {
-  host: <span class="string">'localhost'</span>,
-  dialect: <span class="string">'mysql'</span><span class="subst">|</span><span class="string">'mariadb'</span><span class="subst">|</span><span class="string">'sqlite'</span><span class="subst">|</span><span class="string">'postgres'</span><span class="subst">|</span><span class="string">'mssql'</span>,
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前要写一个系统，本来选用的是mongodb，后来发现这个系统数据库之间有着强关系，由于对mongodb没有研究，所以索性用了MySQL。在选择orm框架的时候，看来很多框架的文档，看看看去感觉还是sequelize的设计比较爱。所以后来就干脆用了这个，还不错。这里记录一些使用心得。(ps: 由于用的是MySQL，因此这里的配置只针对MySQL，或许有些地方是所有数据库共用)</p>
+<h1 id="数据库配置"><a href="#数据库配置" class="headerlink" title="数据库配置"></a>数据库配置</h1><p>咋们先看官网配置</p>
+<pre><code>var sequelize = new Sequelize(&apos;database&apos;, &apos;username&apos;, &apos;password&apos;, {
+  host: &apos;localhost&apos;,
+  dialect: &apos;mysql&apos;|&apos;mariadb&apos;|&apos;sqlite&apos;|&apos;postgres&apos;|&apos;mssql&apos;,
   pool: {
-    <span class="keyword">max</span>: <span class="number">5</span>,
-    <span class="keyword">min</span>: <span class="number">0</span>,
-    idle: <span class="number">10000</span>
+    max: 5,
+    min: 0,
+    idle: 10000
   }
 });
 </code></pre><p>这么明显的配置，我就不用在这里解释了，这也是最简单的入门，实际上，我们需要了解的是更多的东西，sequelize给我们提供了很灵活的配置，可以针对不同的表设置不同的配置，但是如果需要统一配置的话也是可以的，只需要在上面<code>pool</code>同级的地方添加一个配置，如下：<br>
@@ -296,7 +296,7 @@
       
         <blockquote>
 <p>平时很少写游记，应朋友之邀，第一次写游记，不过估计也就是流水账。这里记录的东西有点杂，大家要看的话将就着看一下！不过先给大家一些建议。</p>
-<h1 id="建议">建议</h1><ul>
+<h1 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h1><ul>
 <li>不差那点钱的话，还是不要廉价航空。泰国国内的飞机，泰国航空最好，一般都可以做到一排9坐的大飞机，这次从清迈会曼谷的时候，坐的是双层飞机，贼大。</li>
 <li>在国内就办好签证，听说办理落地签的人很多，不想排队就听过建议</li>
 <li>在国内买好泰国的电话卡，一张电话卡，可以用7天，根据自己的行程来买。我们可以在飞机上就把电话卡换好，下飞机就可以用啦，网速还是很快的。</li>
@@ -364,13 +364,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="express_是什么鬼">express 是什么鬼</h1><p>了解express前，请先了解下nodejs，不了解的人，赶紧去恶补。简单的说，nodejs给前端开发提供了使用js编写服务器应用的能力，而express让这个能力简单化。正式了解express之前，我们先了解下一个请求的完整过程。</p>
-<h1 id="请求的完整过程">请求的完整过程</h1><p>请求通过express输出到客户端，无非如下几个过程<br><img src="/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="express请求处理过程"><br>从图中可以看出几个要素</p>
+        <h1 id="express-是什么鬼"><a href="#express-是什么鬼" class="headerlink" title="express 是什么鬼"></a>express 是什么鬼</h1><p>了解express前，请先了解下nodejs，不了解的人，赶紧去恶补。简单的说，nodejs给前端开发提供了使用js编写服务器应用的能力，而express让这个能力简单化。正式了解express之前，我们先了解下一个请求的完整过程。</p>
+<h1 id="请求的完整过程"><a href="#请求的完整过程" class="headerlink" title="请求的完整过程"></a>请求的完整过程</h1><p>请求通过express输出到客户端，无非如下几个过程<br><img src="/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="express请求处理过程"><br>从图中可以看出几个要素</p>
 <ul>
 <li>request（请求）</li>
 <li>middleware（中间件）</li>
 <li>router（路由）</li>
-<li>response（响应）<br>因此express无非也是提供这四个主要的功能接口。<h1 id="express主要功能介绍">express主要功能介绍</h1>这里不会跟大家介绍怎么使用，只是从概念上，简单解释。<h2 id="request">request</h2>顾名思义，这个功能的作用封装用户的请求信息，我们可以从这个接口中获取用户请求头，只要跟用户有关的请求信息，这里都能获取到。<h2 id="router">router</h2>路由器更容易解释了，大家自行脑补。<h2 id="response">response</h2>响应接口，这个接口封装了一些方便我们提供响应的函数，如：json，render等。<h2 id="middleware">middleware</h2>express提供了实现和使用中间件的方案，自身带的功能有限，剩下的都需要程序员自行扩展。说到中间件，如果开发过后端的同学应该很清楚，这东西类似于Java中的过滤器。express的中间件既可以作为过滤器，也可以作为功能增强器。如果不懂也不要紧，下面会用通俗易懂的语言和图画解释清楚。<br>先用伪代码来解释下<br>```JavaScript<br>if(判断正确) {<br>do 某些增强功能或者做某些其他事情<br>next(); //进入下个过滤器<br>} else {<br>next(错误信息);<br>}<br>```<br>如果是增强功能，则会往req上面增加某些对象属性或者函数。例如：session<br>如果是过滤器，则只需要判断条件是否可行，如果可行，那么执行next，进入下个过滤器，否则响应错误。<br><img src="/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png" alt="express中间件"><br><strong>可以把中间件看做一叠扑克牌，需要的时候网上叠，不喜欢哪张就抽调哪张</strong>，这个比喻可能不是很形象，但是能比较清楚的说明中间件这个东西。<h1 id="总结">总结</h1>其实express没什么难的，知道了它给开发者提供了什么，那么我们就能很容易的上手。建议现在不要去用koa，这货变化太快，中间件又没有express丰富，经常需要自己去填坑。</li>
+<li>response（响应）<br>因此express无非也是提供这四个主要的功能接口。<h1 id="express主要功能介绍"><a href="#express主要功能介绍" class="headerlink" title="express主要功能介绍"></a>express主要功能介绍</h1>这里不会跟大家介绍怎么使用，只是从概念上，简单解释。<h2 id="request"><a href="#request" class="headerlink" title="request"></a>request</h2>顾名思义，这个功能的作用封装用户的请求信息，我们可以从这个接口中获取用户请求头，只要跟用户有关的请求信息，这里都能获取到。<h2 id="router"><a href="#router" class="headerlink" title="router"></a>router</h2>路由器更容易解释了，大家自行脑补。<h2 id="response"><a href="#response" class="headerlink" title="response"></a>response</h2>响应接口，这个接口封装了一些方便我们提供响应的函数，如：json，render等。<h2 id="middleware"><a href="#middleware" class="headerlink" title="middleware"></a>middleware</h2>express提供了实现和使用中间件的方案，自身带的功能有限，剩下的都需要程序员自行扩展。说到中间件，如果开发过后端的同学应该很清楚，这东西类似于Java中的过滤器。express的中间件既可以作为过滤器，也可以作为功能增强器。如果不懂也不要紧，下面会用通俗易懂的语言和图画解释清楚。<br>先用伪代码来解释下<br>```JavaScript<br>if(判断正确) {<br>do 某些增强功能或者做某些其他事情<br>next(); //进入下个过滤器<br>} else {<br>next(错误信息);<br>}<br>```<br>如果是增强功能，则会往req上面增加某些对象属性或者函数。例如：session<br>如果是过滤器，则只需要判断条件是否可行，如果可行，那么执行next，进入下个过滤器，否则响应错误。<br><img src="/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png" alt="express中间件"><br><strong>可以把中间件看做一叠扑克牌，需要的时候网上叠，不喜欢哪张就抽调哪张</strong>，这个比喻可能不是很形象，但是能比较清楚的说明中间件这个东西。<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1>其实express没什么难的，知道了它给开发者提供了什么，那么我们就能很容易的上手。建议现在不要去用koa，这货变化太快，中间件又没有express丰富，经常需要自己去填坑。</li>
 </ul>
 
         
@@ -435,7 +435,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>春节后闲得慌，先写了个markdown编辑器。中途想用reactjs，实现公司目前做的一款app，然后又只想先实现webapp，再封装成混合app。所以，有了这篇杂文。</p>
-<h1 id="技术选型">技术选型</h1><p>先说下背景，要实现的app是一款比较简单的，用于公司内部使用的app。既然要用js来实现，那就要选个市场接受度比较高的框架，于是有了下面两个选择：</p>
+<p>#技术选型</p>
+<p>先说下背景，要实现的app是一款比较简单的，用于公司内部使用的app。既然要用js来实现，那就要选个市场接受度比较高的框架，于是有了下面两个选择：</p>
 <blockquote>
 <ol>
 <li>angular</li>
@@ -451,16 +452,16 @@
 <li>最终想尝试下react-native，看看这货开发起来顺手不</li>
 <li>既然大家都说不错，那就尝试下了</li>
 </ol>
-<h1 id="学习之路">学习之路</h1><p>reactjs实在是够灵活，所以要学习的东西很多。</p>
-<h2 id="webpack">webpack</h2><p>这货很灵活，实在是太强大了，不过强大的代价就是学习成本高，很多东西，网上解释了，看了也一知半解，所有就自己弄个个脑图来记忆，防止以后忘记<a href="http://naotu.baidu.com/file/50cc151d07b6890c99f0314f9fa7364f?token=e7649a889ca0c73e" target="_blank" rel="external">webpack主要模块脑图</a></p>
-<h2 id="reactjs">reactjs</h2><p>在某次为了提高一个页面性能的时候，使用过，不过很久没用就忘记了，现学现用吧，需要学习的东西挺多的，除了<code>reactjs</code>外，我们还要学习<code>react-router</code>, <code>redux</code>(看过，然后忘记了)，等等。最近在学习的时候，发现需要边学习边整理下脑图，这样可以增强我们的理解，和记忆。</p>
-<h1 id="ui选型">ui选型</h1><p>差不多花了2天的时间来研究material-ui，react-toolbox，之间的优劣。最后发现两者竟然都不合适，中途还研究过ant-design。<br>本身的需求是这样的：</p>
+<p>#学习之路<br>reactjs实在是够灵活，所以要学习的东西很多。</p>
+<p>##webpack<br>这货很灵活，实在是太强大了，不过强大的代价就是学习成本高，很多东西，网上解释了，看了也一知半解，所有就自己弄个个脑图来记忆，防止以后忘记<a href="http://naotu.baidu.com/file/50cc151d07b6890c99f0314f9fa7364f?token=e7649a889ca0c73e" target="_blank" rel="external">webpack主要模块脑图</a></p>
+<p>##reactjs<br>在某次为了提高一个页面性能的时候，使用过，不过很久没用就忘记了，现学现用吧，需要学习的东西挺多的，除了<code>reactjs</code>外，我们还要学习<code>react-router</code>, <code>redux</code>(看过，然后忘记了)，等等。最近在学习的时候，发现需要边学习边整理下脑图，这样可以增强我们的理解，和记忆。</p>
+<p>#ui选型<br>差不多花了2天的时间来研究material-ui，react-toolbox，之间的优劣。最后发现两者竟然都不合适，中途还研究过ant-design。<br>本身的需求是这样的：</p>
 <ol>
 <li>移动化</li>
 <li>metarial设计</li>
 <li>组件要丰富</li>
 </ol>
-<h2 id="material-ui">material-ui</h2><p>优势：</p>
+<p>##material-ui<br>优势：</p>
 <ol>
 <li>组件丰富，设计精美</li>
 </ol>
@@ -469,7 +470,7 @@
 <li>使用inline-style，这实在让人蛋疼，修改起来很麻烦，或许是我自己不熟悉吧</li>
 <li>单位使用的都是px，不是rem，导致自适应能力差</li>
 </ol>
-<h2 id="react-toolbox">react-toolbox</h2><p>优势：</p>
+<p>##react-toolbox<br>优势：</p>
 <ol>
 <li>使用rem做单位，自适应能力好</li>
 <li>使用css module，这点我比较喜欢</li>
@@ -479,7 +480,7 @@
 <li>组件不够丰富，不够流畅</li>
 </ol>
 <p>综合评定：material-ui不能自适应，而且使用的是inline-style，不合适做webapp。react-toolbox，这货的组件太少，material设计应用不够流畅。所以都不合适。考察了下ant-design，这个牛逼东西没有应用material设计，而且是适用于PC的。所以也是排除。最后不得不直接学习react-native来开发。</p>
-<h1 id="后记">后记</h1><p>写过一段时间的angular，对比react，还是比较喜欢angular这种把什么事情都做好，约束好的框架，而且还是喜欢把css，html，js分开。react实在灵活，有很多东西需要学习，相对来说个人感觉，学习曲线会相对高。在效率方面，或许reactjs的虚拟dom可以提高性能，在webapp上有很大的优势，不过对于pc端，我还是偏向选择angular，在维护上，比较方便，由于有强约束，可以让团队的编码趋于一致，而且TypeScript实在好用，我喜欢~~，当然如果团队前端牛逼，可以选择reactjs，ant-design是个很好用的东西，大家可以试试。</p>
+<p>#后记<br>写过一段时间的angular，对比react，还是比较喜欢angular这种把什么事情都做好，约束好的框架，而且还是喜欢把css，html，js分开。react实在灵活，有很多东西需要学习，相对来说个人感觉，学习曲线会相对高。在效率方面，或许reactjs的虚拟dom可以提高性能，在webapp上有很大的优势，不过对于pc端，我还是偏向选择angular，在维护上，比较方便，由于有强约束，可以让团队的编码趋于一致，而且TypeScript实在好用，我喜欢~~，当然如果团队前端牛逼，可以选择reactjs，ant-design是个很好用的东西，大家可以试试。</p>
 
         
           <!-- show an end symbol if the article is fully displayed -->
@@ -542,8 +543,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="前言">前言</h1><p>服务器端截图可以做什么？<br>个人观点：省去跟报表有关的EDM开发，直接从系统上截图，然后发图片给用户就搞定。剩下的自己脑补。<br>既然这么好，为毛不赶紧弄。需要用到的工具坑太多，没有尝试，不敢拿上去用。</p>
-<h1 id="环境准备">环境准备</h1><p>如果是window环境就更简单了，大家自行处理，这里不做介绍。</p>
+        <p>#前言<br>服务器端截图可以做什么？<br>个人观点：省去跟报表有关的EDM开发，直接从系统上截图，然后发图片给用户就搞定。剩下的自己脑补。<br>既然这么好，为毛不赶紧弄。需要用到的工具坑太多，没有尝试，不敢拿上去用。</p>
+<p>#环境准备<br>如果是window环境就更简单了，大家自行处理，这里不做介绍。</p>
 <ol>
 <li>centos6.5（5.x版本来落后了，不要用，会出问题的。其他高级版本，自己掂量着用，公司提供给我的测试机只有6.5版本）</li>
 <li>phantomjs 2.x （1.9.x版本的各种bug，测试的时候并发一起来，进程各种crash，所以大家别脑残用1.9.x的）</li>
@@ -602,12 +603,12 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

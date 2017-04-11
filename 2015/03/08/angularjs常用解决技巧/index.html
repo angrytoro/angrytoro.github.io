@@ -17,20 +17,22 @@
   
   <title>angularjs常用解决技巧 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题一：解决angular-ui中modal dialog form object is undefined in controller在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据$scope.formName获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverflow里面">
+  <meta name="description" content="####问题一：解决angular-ui中modal dialog form object is undefined in controller在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据$scope.formName获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverfl">
+<meta name="keywords" content="AngularJS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="angularjs常用解决技巧">
-<meta property="og:url" content="http://blog.angrytoro.com/2015/03/08/angularjs常用解决技巧/index.html">
+<meta property="og:url" content="http://wangsu.co/2015/03/08/angularjs常用解决技巧/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="问题一：解决angular-ui中modal dialog form object is undefined in controller在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据$scope.formName获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverflow里面">
+<meta property="og:description" content="####问题一：解决angular-ui中modal dialog form object is undefined in controller在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据$scope.formName获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverfl">
+<meta property="og:updated_time" content="2015-03-08T08:02:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="angularjs常用解决技巧">
-<meta name="twitter:description" content="问题一：解决angular-ui中modal dialog form object is undefined in controller在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据$scope.formName获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverflow里面">
+<meta name="twitter:description" content="####问题一：解决angular-ui中modal dialog form object is undefined in controller在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据$scope.formName获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverfl">
   
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -124,7 +126,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -237,7 +239,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="问题一：解决angular-ui中modal_dialog_form_object_is_undefined_in_controller">问题一：解决angular-ui中modal dialog form object is undefined in controller</h4><p>在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据<code>$scope.formName</code>获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverflow里面啥解决办法都有。相关<a href="http://stackoverflow.com/questions/19312936/angularjs-modal-dialog-form-object-is-undefined-in-controller" target="_blank" rel="external">链接</a>。这里面最有效的办法就是在dialog里面的form表单的name属性设置成<code>$parent.formName</code>，不过在创建dialog的时候需要设置scope这个属性，相关的angular-ui见<a href="http://angular-ui.github.io/bootstrap/" target="_blank" rel="external">链接</a>。这样就能在dialog的controller中使用$scope.formName。</p>
+        <p>####问题一：解决angular-ui中modal dialog form object is undefined in controller<br>在使用angular-ui的dialog的时候我们有时候需要验证dialog里面的form表单有没有符合校验规则，不过按照平常的写法，我们是没法根据<code>$scope.formName</code>获得这个表单对象，也就没法判断表单是否验证通过。不过呢，stackoverflow里面啥解决办法都有。相关<a href="http://stackoverflow.com/questions/19312936/angularjs-modal-dialog-form-object-is-undefined-in-controller" target="_blank" rel="external">链接</a>。这里面最有效的办法就是在dialog里面的form表单的name属性设置成<code>$parent.formName</code>，不过在创建dialog的时候需要设置scope这个属性，相关的angular-ui见<a href="http://angular-ui.github.io/bootstrap/" target="_blank" rel="external">链接</a>。这样就能在dialog的controller中使用$scope.formName。</p>
 
         
       
@@ -248,18 +250,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/03/08/angularjs开发笔记之checkbox/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/03/08/angularjs笔记（一）/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          angularjs开发笔记之checkbox
+          angularjs笔记（一）
         
       </div>
     </a>
   
   
-    <a href="/2015/03/08/angularjs笔记（一）/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">angularjs笔记（一）</div>
+    <a href="/2015/03/08/angularjs开发笔记之checkbox/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">angularjs开发笔记之checkbox</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -288,7 +290,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="angularjs常用解决技巧" data-title="angularjs常用解决技巧" data-url="http://blog.angrytoro.com/2015/03/08/angularjs常用解决技巧/"></div>
+	<div class="ds-thread" data-thread-key="angularjs常用解决技巧" data-title="angularjs常用解决技巧" data-url="http://wangsu.co/2015/03/08/angularjs常用解决技巧/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -322,12 +324,12 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

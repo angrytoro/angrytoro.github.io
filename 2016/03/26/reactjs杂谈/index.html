@@ -18,11 +18,13 @@
   <title>reactjs杂谈 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="涉及到框架选型，基本工具学习">
+<meta name="keywords" content="reactjs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="reactjs杂谈">
-<meta property="og:url" content="http://blog.angrytoro.com/2016/03/26/reactjs杂谈/index.html">
+<meta property="og:url" content="http://wangsu.co/2016/03/26/reactjs杂谈/index.html">
 <meta property="og:site_name" content="freefish">
 <meta property="og:description" content="涉及到框架选型，基本工具学习">
+<meta property="og:updated_time" content="2016-03-27T03:37:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="reactjs杂谈">
 <meta name="twitter:description" content="涉及到框架选型，基本工具学习">
@@ -30,7 +32,7 @@
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -124,7 +126,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -238,7 +240,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>春节后闲得慌，先写了个markdown编辑器。中途想用reactjs，实现公司目前做的一款app，然后又只想先实现webapp，再封装成混合app。所以，有了这篇杂文。</p>
-<h1 id="技术选型">技术选型</h1><p>先说下背景，要实现的app是一款比较简单的，用于公司内部使用的app。既然要用js来实现，那就要选个市场接受度比较高的框架，于是有了下面两个选择：</p>
+<p>#技术选型</p>
+<p>先说下背景，要实现的app是一款比较简单的，用于公司内部使用的app。既然要用js来实现，那就要选个市场接受度比较高的框架，于是有了下面两个选择：</p>
 <blockquote>
 <ol>
 <li>angular</li>
@@ -254,16 +257,16 @@
 <li>最终想尝试下react-native，看看这货开发起来顺手不</li>
 <li>既然大家都说不错，那就尝试下了</li>
 </ol>
-<h1 id="学习之路">学习之路</h1><p>reactjs实在是够灵活，所以要学习的东西很多。</p>
-<h2 id="webpack">webpack</h2><p>这货很灵活，实在是太强大了，不过强大的代价就是学习成本高，很多东西，网上解释了，看了也一知半解，所有就自己弄个个脑图来记忆，防止以后忘记<a href="http://naotu.baidu.com/file/50cc151d07b6890c99f0314f9fa7364f?token=e7649a889ca0c73e" target="_blank" rel="external">webpack主要模块脑图</a></p>
-<h2 id="reactjs">reactjs</h2><p>在某次为了提高一个页面性能的时候，使用过，不过很久没用就忘记了，现学现用吧，需要学习的东西挺多的，除了<code>reactjs</code>外，我们还要学习<code>react-router</code>, <code>redux</code>(看过，然后忘记了)，等等。最近在学习的时候，发现需要边学习边整理下脑图，这样可以增强我们的理解，和记忆。</p>
-<h1 id="ui选型">ui选型</h1><p>差不多花了2天的时间来研究material-ui，react-toolbox，之间的优劣。最后发现两者竟然都不合适，中途还研究过ant-design。<br>本身的需求是这样的：</p>
+<p>#学习之路<br>reactjs实在是够灵活，所以要学习的东西很多。</p>
+<p>##webpack<br>这货很灵活，实在是太强大了，不过强大的代价就是学习成本高，很多东西，网上解释了，看了也一知半解，所有就自己弄个个脑图来记忆，防止以后忘记<a href="http://naotu.baidu.com/file/50cc151d07b6890c99f0314f9fa7364f?token=e7649a889ca0c73e" target="_blank" rel="external">webpack主要模块脑图</a></p>
+<p>##reactjs<br>在某次为了提高一个页面性能的时候，使用过，不过很久没用就忘记了，现学现用吧，需要学习的东西挺多的，除了<code>reactjs</code>外，我们还要学习<code>react-router</code>, <code>redux</code>(看过，然后忘记了)，等等。最近在学习的时候，发现需要边学习边整理下脑图，这样可以增强我们的理解，和记忆。</p>
+<p>#ui选型<br>差不多花了2天的时间来研究material-ui，react-toolbox，之间的优劣。最后发现两者竟然都不合适，中途还研究过ant-design。<br>本身的需求是这样的：</p>
 <ol>
 <li>移动化</li>
 <li>metarial设计</li>
 <li>组件要丰富</li>
 </ol>
-<h2 id="material-ui">material-ui</h2><p>优势：</p>
+<p>##material-ui<br>优势：</p>
 <ol>
 <li>组件丰富，设计精美</li>
 </ol>
@@ -272,7 +275,7 @@
 <li>使用inline-style，这实在让人蛋疼，修改起来很麻烦，或许是我自己不熟悉吧</li>
 <li>单位使用的都是px，不是rem，导致自适应能力差</li>
 </ol>
-<h2 id="react-toolbox">react-toolbox</h2><p>优势：</p>
+<p>##react-toolbox<br>优势：</p>
 <ol>
 <li>使用rem做单位，自适应能力好</li>
 <li>使用css module，这点我比较喜欢</li>
@@ -282,7 +285,7 @@
 <li>组件不够丰富，不够流畅</li>
 </ol>
 <p>综合评定：material-ui不能自适应，而且使用的是inline-style，不合适做webapp。react-toolbox，这货的组件太少，material设计应用不够流畅。所以都不合适。考察了下ant-design，这个牛逼东西没有应用material设计，而且是适用于PC的。所以也是排除。最后不得不直接学习react-native来开发。</p>
-<h1 id="后记">后记</h1><p>写过一段时间的angular，对比react，还是比较喜欢angular这种把什么事情都做好，约束好的框架，而且还是喜欢把css，html，js分开。react实在灵活，有很多东西需要学习，相对来说个人感觉，学习曲线会相对高。在效率方面，或许reactjs的虚拟dom可以提高性能，在webapp上有很大的优势，不过对于pc端，我还是偏向选择angular，在维护上，比较方便，由于有强约束，可以让团队的编码趋于一致，而且TypeScript实在好用，我喜欢~~，当然如果团队前端牛逼，可以选择reactjs，ant-design是个很好用的东西，大家可以试试。</p>
+<p>#后记<br>写过一段时间的angular，对比react，还是比较喜欢angular这种把什么事情都做好，约束好的框架，而且还是喜欢把css，html，js分开。react实在灵活，有很多东西需要学习，相对来说个人感觉，学习曲线会相对高。在效率方面，或许reactjs的虚拟dom可以提高性能，在webapp上有很大的优势，不过对于pc端，我还是偏向选择angular，在维护上，比较方便，由于有强约束，可以让团队的编码趋于一致，而且TypeScript实在好用，我喜欢~~，当然如果团队前端牛逼，可以选择reactjs，ant-design是个很好用的东西，大家可以试试。</p>
 
         
       
@@ -293,18 +296,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/11/13/express入门/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/01/27/服务器端截图引发的血案/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          express入门
+          node截图服务可用性报告
         
       </div>
     </a>
   
   
-    <a href="/2016/01/27/服务器端截图引发的血案/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">node截图服务可用性报告</div>
+    <a href="/2016/11/13/express入门/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">express入门</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -333,7 +336,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="reactjs杂谈" data-title="reactjs杂谈" data-url="http://blog.angrytoro.com/2016/03/26/reactjs杂谈/"></div>
+	<div class="ds-thread" data-thread-key="reactjs杂谈" data-title="reactjs杂谈" data-url="http://wangsu.co/2016/03/26/reactjs杂谈/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -367,12 +370,12 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

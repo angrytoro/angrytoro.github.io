@@ -17,26 +17,22 @@
   
   <title>如何对服务器进行免密码登录配置 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName
-
-用户操作12useradd xxx -g groupName//新增用户xxx并把它划分到groupNam">
+  <meta name="description" content="#用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName  #用户操作12useradd xxx -g groupName//新增用户xxx并把它划分到groupN">
+<meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何对服务器进行免密码登录配置">
-<meta property="og:url" content="http://blog.angrytoro.com/2015/03/12/如何对服务器进行免密码登录配置/index.html">
+<meta property="og:url" content="http://wangsu.co/2015/03/12/如何对服务器进行免密码登录配置/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName
-
-用户操作12useradd xxx -g groupName//新增用户xxx并把它划分到groupNam">
+<meta property="og:description" content="#用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName  #用户操作12useradd xxx -g groupName//新增用户xxx并把它划分到groupN">
+<meta property="og:updated_time" content="2015-03-18T13:42:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何对服务器进行免密码登录配置">
-<meta name="twitter:description" content="用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName
-
-用户操作12useradd xxx -g groupName//新增用户xxx并把它划分到groupNam">
+<meta name="twitter:description" content="#用户组操作命令解释123grooupadd xxx //新建用户组chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)gpasswd -a user groupName //将用户user 添加到组groupName  #用户操作12useradd xxx -g groupName//新增用户xxx并把它划分到groupN">
   
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -130,7 +126,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -239,16 +235,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
+        <p>#用户组操作<br>命令解释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">grooupadd xxx //新建用户组</div><div class="line">chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)</div><div class="line">gpasswd -a user groupName //将用户user 添加到组groupName</div></pre></td></tr></table></figure></p>
 <hr>
-<h1 id="用户操作">用户操作</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx -<span class="keyword">g</span> groupName<span class="comment">//新增用户<span class="label">xxx并把它划分到groupName这个组</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>
+<p>#用户操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">useradd xxx -g groupName//新增用户xxx并把它划分到groupName这个组</div><div class="line">passwd xxx //为xxx用户设置密码</div></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<h1 id="新增用户并赋予某个组的脚本">新增用户并赋予某个组的脚本</h1><p>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line">useradd <span class="variable">$1</span> -g fontend</span><br><span class="line">passwd <span class="variable">$1</span></span><br></pre></td></tr></table></figure></p>
-<p>我们可以这么执行<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sh</span> useradd.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
-<p>也可以取一个别名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> addFontendUser = <span class="string">'sh useradd.sh'</span></span><br></pre></td></tr></table></figure></p>
-<p>那么之后我们就可以直接在系统执行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addFontendUser</span><br></pre></td></tr></table></figure></p>
+<p>#新增用户并赋予某个组的脚本<br>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">useradd $1 -g fontend</div><div class="line">passwd $1</div></pre></td></tr></table></figure></p>
+<p>我们可以这么执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh useradd.sh</div></pre></td></tr></table></figure></p>
+<p>也可以取一个别名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alias addFontendUser = &apos;sh useradd.sh&apos;</div></pre></td></tr></table></figure></p>
+<p>那么之后我们就可以直接在系统执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">addFontendUser</div></pre></td></tr></table></figure></p>
 <p>来添加fontend组的用户了</p>
-<h1 id="免密码登录">免密码登录</h1><p>假设创建了个用户abc，那么用abc登录服务器<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#cd</span> ~</span><br><span class="line"><span class="id">#mkdir</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#chmod</span> <span class="number">700</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#cd</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#vi</span> authorized_keys <span class="comment">//将你pc的公钥放进去</span></span><br><span class="line"><span class="id">#chmod</span> <span class="number">655</span> authorized_keys</span><br></pre></td></tr></table></figure></p>
+<p>#免密码登录<br>假设创建了个用户abc，那么用abc登录服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#cd ~</div><div class="line">#mkdir .ssh</div><div class="line">#chmod 700 .ssh</div><div class="line">#cd .ssh</div><div class="line">#vi authorized_keys //将你pc的公钥放进去</div><div class="line">#chmod 655 authorized_keys</div></pre></td></tr></table></figure></p>
 <p>设置完，退出登录，然后就可以享受免密码登录了<br>注意事项</p>
 <blockquote>
 <ol>
@@ -266,18 +262,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/03/09/chrome重度用户必装插件/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          为了运行fekit sync，在服务器配置rsync的时候遇到的问题
+          chrome重度用户必备插件
         
       </div>
     </a>
   
   
-    <a href="/2015/03/09/chrome重度用户必装插件/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">chrome重度用户必备插件</div>
+    <a href="/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">为了运行fekit sync，在服务器配置rsync的时候遇到的问题</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -306,7 +302,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="如何对服务器进行免密码登录配置" data-title="如何对服务器进行免密码登录配置" data-url="http://blog.angrytoro.com/2015/03/12/如何对服务器进行免密码登录配置/"></div>
+	<div class="ds-thread" data-thread-key="如何对服务器进行免密码登录配置" data-title="如何对服务器进行免密码登录配置" data-url="http://wangsu.co/2015/03/12/如何对服务器进行免密码登录配置/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -340,12 +336,12 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

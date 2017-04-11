@@ -1,62 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[freefish]]></title>
+  <title>freefish</title>
   
   <link href="/atom.xml" rel="self"/>
-  <link href="http://blog.angrytoro.com/"/>
+  
+  <link href="http://wangsu.co/"/>
   <updated>2017-01-02T12:26:25.000Z</updated>
-  <id>http://blog.angrytoro.com/</id>
+  <id>http://wangsu.co/</id>
   
   <author>
-    <name><![CDATA[freefish]]></name>
+    <name>freefish</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[sequelize 笔记]]></title>
-    <link href="http://blog.angrytoro.com/2017/01/02/sequelize-%E7%AC%94%E8%AE%B0/"/>
-    <id>http://blog.angrytoro.com/2017/01/02/sequelize-笔记/</id>
+    <title>sequelize 笔记</title>
+    <link href="http://wangsu.co/2017/01/02/sequelize-%E7%AC%94%E8%AE%B0/"/>
+    <id>http://wangsu.co/2017/01/02/sequelize-笔记/</id>
     <published>2017-01-02T02:26:19.000Z</published>
     <updated>2017-01-02T12:26:25.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="前言">前言</h1><p>之前要写一个系统，本来选用的是mongodb，后来发现这个系统数据库之间有着强关系，由于对mongodb没有研究，所以索性用了MySQL。在选择orm框架的时候，看来很多框架的文档，看看看去感觉还是sequelize的设计比较爱。所以后来就干脆用了这个，还不错。这里记录一些使用心得。(ps: 由于用的是MySQL，因此这里的配置只针对MySQL，或许有些地方是所有数据库共用)</p>
-<h1 id="数据库配置">数据库配置</h1><p>咋们先看官网配置</p>
-<pre><code><span class="built_in">var</span> sequelize <span class="subst">=</span> <span class="literal">new</span> Sequelize(<span class="string">'database'</span>, <span class="string">'username'</span>, <span class="string">'password'</span>, {
-  host: <span class="string">'localhost'</span>,
-  dialect: <span class="string">'mysql'</span><span class="subst">|</span><span class="string">'mariadb'</span><span class="subst">|</span><span class="string">'sqlite'</span><span class="subst">|</span><span class="string">'postgres'</span><span class="subst">|</span><span class="string">'mssql'</span>,
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前要写一个系统，本来选用的是mongodb，后来发现这个系统数据库之间有着强关系，由于对mongodb没有研究，所以索性用了MySQL。在选择orm框架的时候，看来很多框架的文档，看看看去感觉还是sequelize的设计比较爱。所以后来就干脆用了这个，还不错。这里记录一些使用心得。(ps: 由于用的是MySQL，因此这里的配置只针对MySQL，或许有些地方是所有数据库共用)</p>
+<h1 id="数据库配置"><a href="#数据库配置" class="headerlink" title="数据库配置"></a>数据库配置</h1><p>咋们先看官网配置</p>
+<pre><code>var sequelize = new Sequelize(&apos;database&apos;, &apos;username&apos;, &apos;password&apos;, {
+  host: &apos;localhost&apos;,
+  dialect: &apos;mysql&apos;|&apos;mariadb&apos;|&apos;sqlite&apos;|&apos;postgres&apos;|&apos;mssql&apos;,
   pool: {
-    <span class="keyword">max</span>: <span class="number">5</span>,
-    <span class="keyword">min</span>: <span class="number">0</span>,
-    idle: <span class="number">10000</span>
+    max: 5,
+    min: 0,
+    idle: 10000
   }
 });
 </code></pre><p>这么明显的配置，我就不用在这里解释了，这也是最简单的入门，实际上，我们需要了解的是更多的东西，sequelize给我们提供了很灵活的配置，可以针对不同的表设置不同的配置，但是如果需要统一配置的话也是可以的，只需要在上面<code>pool</code>同级的地方添加一个配置，如下：<br><a id="more"></a></p>
-<pre><code><span class="comment">//这里只是说明下我自己的配置，大家如果想了解更多需要读官网的文档了哈</span>
-<span class="tag">define</span>: {
-    <span class="attribute">freezeTableName</span>: true, <span class="comment">//默认情况下，sequelize会把王model的名字根据table的名字设置成复数形式，如果你不想要这样的话，就要做这个配置</span>
-    <span class="attribute">underscored</span>: true <span class="comment">//这样设置的话，那么在添加外键的时候，sequelize会自动把外键设置为tableName_key，默认的是tableNameKey，这种驼峰式的命名</span>
+<pre><code>//这里只是说明下我自己的配置，大家如果想了解更多需要读官网的文档了哈
+define: {
+    freezeTableName: true, //默认情况下，sequelize会把王model的名字根据table的名字设置成复数形式，如果你不想要这样的话，就要做这个配置
+    underscored: true //这样设置的话，那么在添加外键的时候，sequelize会自动把外键设置为tableName_key，默认的是tableNameKey，这种驼峰式的命名
 }
-</code></pre><h1 id="创建表">创建表</h1><p>如果自己对数据库很熟悉，我觉得还是自己创建吧。不过如果不是很熟的话，建议还是用sequelize来帮我们创建表。<br>作为一个英文十分垃圾的菜鸟，研究了几天的文档之后发现，用import的方式是最方便的。省下了我们很多创建数据库的烦恼。贴上代码，给大家做一下解释。这里的代码有复制sequelize example的部分代码。</p>
-<pre><code><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);
-<span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);
-<span class="keyword">var</span> Sequelize = <span class="built_in">require</span>(<span class="string">"sequelize"</span>);
-<span class="keyword">var</span> dbConfig = <span class="built_in">require</span>(<span class="string">'../config'</span>).db; <span class="comment">//自己项目的数据库配置</span>
-<span class="keyword">var</span> db = {};
+</code></pre><h1 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h1><p>如果自己对数据库很熟悉，我觉得还是自己创建吧。不过如果不是很熟的话，建议还是用sequelize来帮我们创建表。<br>作为一个英文十分垃圾的菜鸟，研究了几天的文档之后发现，用import的方式是最方便的。省下了我们很多创建数据库的烦恼。贴上代码，给大家做一下解释。这里的代码有复制sequelize example的部分代码。</p>
+<pre><code>var fs = require(&apos;fs&apos;);
+var path = require(&apos;path&apos;);
+var Sequelize = require(&quot;sequelize&quot;);
+var dbConfig = require(&apos;../config&apos;).db; //自己项目的数据库配置
+var db = {};
 
-<span class="keyword">var</span> sequelize = <span class="keyword">new</span> Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig.connect); <span class="comment">//创建一个sequelize实例</span>
+var sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig.connect); //创建一个sequelize实例
 
-fs.readdirSync(__dirname) <span class="comment">//读取当前文件夹的文件</span>
-.filter(<span class="function"><span class="keyword">function</span><span class="params">(file)</span> </span>{ <span class="comment">//过滤掉index.js，因为index.js就是这份代码</span>
-  <span class="keyword">return</span> (file.indexOf(<span class="string">"."</span>) !== <span class="number">0</span>) &amp;&amp; (file !== <span class="string">"index.js"</span>);
+fs.readdirSync(__dirname) //读取当前文件夹的文件
+.filter(function(file) { //过滤掉index.js，因为index.js就是这份代码
+  return (file.indexOf(&quot;.&quot;) !== 0) &amp;&amp; (file !== &quot;index.js&quot;);
 })
-.forEach(<span class="function"><span class="keyword">function</span><span class="params">(file)</span> </span>{ <span class="comment">//import的方式创建model，并把它存储到db这个对象中</span>
-  <span class="keyword">var</span> model = sequelize.import(path.join(__dirname, file));
+.forEach(function(file) { //import的方式创建model，并把它存储到db这个对象中
+  var model = sequelize.import(path.join(__dirname, file));
   db[model.name] = model;
 });
 
-<span class="built_in">Object</span>.keys(db).forEach(<span class="function"><span class="keyword">function</span><span class="params">(modelName)</span> </span>{
-  <span class="keyword">if</span> (<span class="string">"associate"</span> <span class="keyword">in</span> db[modelName]) { <span class="comment">//创建associate,当你需要多对多的时候很需要用到这个，就是在创建数据库表的时候，往基本配置classMethods里面天剑一个associate方法，然后我们就可以在这个方法里面做各种我们想要的关联操作</span>
+Object.keys(db).forEach(function(modelName) {
+  if (&quot;associate&quot; in db[modelName]) { //创建associate,当你需要多对多的时候很需要用到这个，就是在创建数据库表的时候，往基本配置classMethods里面天剑一个associate方法，然后我们就可以在这个方法里面做各种我们想要的关联操作
     db[modelName].associate(db);
   }
 });
@@ -64,112 +66,116 @@ fs.readdirSync(__dirname) <span class="comment">//读取当前文件夹的文件
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-sequelize.sync(); <span class="comment">//这个是当我们没有创建数据库表的时候，sequelize帮我们创建</span>
+sequelize.sync(); //这个是当我们没有创建数据库表的时候，sequelize帮我们创建
 
-<span class="built_in">module</span>.exports = db;
+module.exports = db;
 </code></pre><p>有了这份index.js，我们就能很快速的创建model。贴一下我的一个model代码做个参考</p>
-<pre><code><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span><span class="params">(sequelize, DataTypes)</span> </span>{
-  <span class="keyword">var</span> Group = sequelize.define(<span class="string">'Group'</span>, {
+<pre><code>module.exports = function(sequelize, DataTypes) {
+  var Group = sequelize.define(&apos;Group&apos;, {
     id: {
       type: DataTypes.INTEGER,
-      primaryKey: <span class="literal">true</span>,
-      autoIncrement: <span class="literal">true</span>
+      primaryKey: true,
+      autoIncrement: true
     },
     name: {
-      type: DataTypes.STRING, <span class="comment">//名字不能改</span>
-      allowNull: <span class="literal">false</span>,
-      unique: <span class="literal">true</span>
+      type: DataTypes.STRING, //名字不能改
+      allowNull: false,
+      unique: true
     },
     description: {
       type: DataTypes.STRING
     },
-    visibility_level: {<span class="comment">//只要两种权限，私有的和公开</span>
+    visibility_level: {//只要两种权限，私有的和公开
       type: DataTypes.ENUM,
-      <span class="comment">// values: [0, 1],//0-private,1-public</span>
-      values: [<span class="string">'0'</span>, <span class="string">'1'</span>],<span class="comment">//0-private,1-public</span>
-      defaultValue: <span class="string">'0'</span>
+      // values: [0, 1],//0-private,1-public
+      values: [&apos;0&apos;, &apos;1&apos;],//0-private,1-public
+      defaultValue: &apos;0&apos;
     }
   }, {
-    tableName: <span class="string">'group'</span>,
+    tableName: &apos;group&apos;,
     classMethods: {
-      associate: <span class="function"><span class="keyword">function</span><span class="params">(models)</span> </span>{
+      associate: function(models) {
         Group.belongsToMany(models.User, {through: models.GroupUserRelation});
         Group.belongsToMany(models.Project, {through: models.ProjectGroupRelation});
       }
     }
   });
 
-  <span class="keyword">return</span> Group;
+  return Group;
 };
-</code></pre><h2 id="表关系设计">表关系设计</h2><p>表关系无非就三种<em>一对一，一对多，多对多</em>。无论哪一种，sequelize都提供了很灵活的方式给我们定义外键，不过一般拿id来做外键，因此这里就不在说自定义外键，要看的话请看官方文档哈。</p>
-<h3 id="一对一">一对一</h3><p>有两种表达方式<code>belongsTo</code>和<code>hasOne</code></p>
-<pre><code>var Player = this.sequelize.define(<span class="string">'player'</span>, {/* attributes */})
-  , Team  = this.sequelize.define(<span class="string">'team'</span>, {/* attributes */});
+</code></pre><h2 id="表关系设计"><a href="#表关系设计" class="headerlink" title="表关系设计"></a>表关系设计</h2><p>表关系无非就三种<em>一对一，一对多，多对多</em>。无论哪一种，sequelize都提供了很灵活的方式给我们定义外键，不过一般拿id来做外键，因此这里就不在说自定义外键，要看的话请看官方文档哈。</p>
+<h3 id="一对一"><a href="#一对一" class="headerlink" title="一对一"></a>一对一</h3><p>有两种表达方式<code>belongsTo</code>和<code>hasOne</code></p>
+<pre><code>var Player = this.sequelize.define(&apos;player&apos;, {/* attributes */})
+  , Team  = this.sequelize.define(&apos;team&apos;, {/* attributes */});
 Player.belongsTo(Team);  //这种方式会为player表，添加一个team_id的外键
 
-var User = sequelize.define(<span class="string">'user'</span>, {/* <span class="keyword">...</span> */})
-var Project = sequelize.define(<span class="string">'project'</span>, {/* <span class="keyword">...</span> */})
+var User = sequelize.define(&apos;user&apos;, {/* ... */})
+var Project = sequelize.define(&apos;project&apos;, {/* ... */})
 // One-way associations
 Project.hasOne(User) //这种方式会为User添加一个project_id。(个人不是特别喜欢这种方式，不直观，还是belongsTo直观点)
-</code></pre><h3 id="一对多">一对多</h3><p>只有一种表达方式<code>hasMany</code></p>
-<pre><code>var User = sequelize.define(<span class="string">'user'</span>, {/* <span class="keyword">...</span> */})
-var Project = sequelize.define(<span class="string">'project'</span>, {/* <span class="keyword">...</span> */})
+</code></pre><h3 id="一对多"><a href="#一对多" class="headerlink" title="一对多"></a>一对多</h3><p>只有一种表达方式<code>hasMany</code></p>
+<pre><code>var User = sequelize.define(&apos;user&apos;, {/* ... */})
+var Project = sequelize.define(&apos;project&apos;, {/* ... */})
 // OK. Now things get more complicated (not really visible to the user :)).
-// First let<span class="string">'s define a hasMany association
-Project.hasMany(User)  //这种情况下，会为User添加project_id字段</span>
-</code></pre><h3 id="多对多">多对多</h3><p>多对多有点比较特别，直接看代码:</p>
-<pre><code><span class="tag">Project</span><span class="class">.belongsToMany</span>(User, {<span class="attribute">through</span>: <span class="string">'UserProject'</span>});
-<span class="tag">User</span><span class="class">.belongsToMany</span>(Project, {<span class="attribute">through</span>: <span class="string">'UserProject'</span>});
+// First let&apos;s define a hasMany association
+Project.hasMany(User)  //这种情况下，会为User添加project_id字段
+</code></pre><h3 id="多对多"><a href="#多对多" class="headerlink" title="多对多"></a>多对多</h3><p>多对多有点比较特别，直接看代码:</p>
+<pre><code>Project.belongsToMany(User, {through: &apos;UserProject&apos;});
+User.belongsToMany(Project, {through: &apos;UserProject&apos;});
 </code></pre><p>大家有没有发现<code>through</code>这个字段，在多对多的情况下，必须有这个字段，用来告诉orm这个多对多的关系是通过那张表来处理的。这个例子里面一定会有一张<code>user_project</code>表来保存这层关系。</p>
-<h1 id="数据库操作">数据库操作</h1><p>在数据库连接，表设计都搞定之后，接下去就是数据库的增删改查了。</p>
-<h2 id="新增">新增</h2><p>新增操作没有什么牛逼的地方，就是一个create，然后用promise的方式返回一个新增的数据，就怎么简单。这里不再多说</p>
-<h2 id="更新">更新</h2><p>这块需要好好讲讲，我们知道数据库有多对多的关系，而且有数据冗余，所以更新的时候需要同步的更新，这个时候我们需要用到事务了。之前没有用mongodb就是因为没有事务。参考下说明文档里面的例子：</p>
-<pre><code><span class="keyword">return</span> sequelize.transaction(function (t) {
-  // chain all your queries here. make sure you <span class="keyword">return</span> them.
-  <span class="keyword">return</span> <span class="type">User</span>.create({
-    firstName: '<span class="type">Abraham</span>',
-    lastName: '<span class="type">Lincoln</span>'
+<h1 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h1><p>在数据库连接，表设计都搞定之后，接下去就是数据库的增删改查了。</p>
+<h2 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h2><p>新增操作没有什么牛逼的地方，就是一个create，然后用promise的方式返回一个新增的数据，就怎么简单。这里不再多说</p>
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>这块需要好好讲讲，我们知道数据库有多对多的关系，而且有数据冗余，所以更新的时候需要同步的更新，这个时候我们需要用到事务了。之前没有用mongodb就是因为没有事务。参考下说明文档里面的例子：</p>
+<pre><code>return sequelize.transaction(function (t) {
+  // chain all your queries here. make sure you return them.
+  return User.create({
+    firstName: &apos;Abraham&apos;,
+    lastName: &apos;Lincoln&apos;
   }, {transaction: t}).then(function (user) {
-    <span class="keyword">return</span> user.setShooter({
-      firstName: '<span class="type">John</span>',
-      lastName: '<span class="type">Boothe</span>'
+    return user.setShooter({
+      firstName: &apos;John&apos;,
+      lastName: &apos;Boothe&apos;
     }, {transaction: t});
   });
-}).then(function (<span class="literal">result</span>) {
-  // <span class="type">Transaction</span> has been committed
-  // <span class="literal">result</span> <span class="keyword">is</span> whatever the <span class="literal">result</span> <span class="keyword">of</span> the promise chain returned to the transaction callback
+}).then(function (result) {
+  // Transaction has been committed
+  // result is whatever the result of the promise chain returned to the transaction callback
 }).catch(function (err) {
-  // <span class="type">Transaction</span> has been rolled back
-  // err <span class="keyword">is</span> whatever rejected the promise chain returned to the transaction callback
+  // Transaction has been rolled back
+  // err is whatever rejected the promise chain returned to the transaction callback
 });
 </code></pre><p>在强关联的时候，遇到增删情况下一般都需要用到事务来实现出错回滚机制。<br>在更新的时候需要特别注意的是，更新<code>update</code>这个方法是不会返回更新之后的数据的，只会告诉我们更新了几条数据。所以假如我们有涉及到事务，牵涉到多张表，这个时候建议先查询出相应的数据，然后再进行更新。或者直接又前端把需要用到的数据传递到后端来，这样我们就省去了先查询后更新的操作。</p>
-<h1 id="总结">总结</h1><p>目前就先记录到这里，接下去如果有遇到更多情况，再告诉大家。</p>
-<h1 id="参考">参考</h1><blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>目前就先记录到这里，接下去如果有遇到更多情况，再告诉大家。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><blockquote>
 <ul>
 <li><a href="http://docs.sequelizejs.com/en/v3/" title="sequelize官方文档" target="_blank" rel="external">sequelize官方文档</a></li>
 </ul>
 </blockquote>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[nodes orm 框架sequelize学习笔记]]>
+    
+      nodes orm 框架sequelize学习笔记
     
     </summary>
     
-      <category term="nodejs" scheme="http://blog.angrytoro.com/tags/nodejs/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+      <category term="nodejs" scheme="http://wangsu.co/tags/nodejs/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[泰国游记]]></title>
-    <link href="http://blog.angrytoro.com/2016/12/23/%E6%B3%B0%E5%9B%BD%E6%B8%B8%E8%AE%B0/"/>
-    <id>http://blog.angrytoro.com/2016/12/23/泰国游记/</id>
+    <title>泰国游记</title>
+    <link href="http://wangsu.co/2016/12/23/%E6%B3%B0%E5%9B%BD%E6%B8%B8%E8%AE%B0/"/>
+    <id>http://wangsu.co/2016/12/23/泰国游记/</id>
     <published>2016-12-23T14:26:17.000Z</published>
     <updated>2016-12-24T12:51:32.000Z</updated>
+    
     <content type="html"><![CDATA[<blockquote>
 <p>平时很少写游记，应朋友之邀，第一次写游记，不过估计也就是流水账。这里记录的东西有点杂，大家要看的话将就着看一下！不过先给大家一些建议。</p>
-<h1 id="建议">建议</h1><ul>
+<h1 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h1><ul>
 <li>不差那点钱的话，还是不要廉价航空。泰国国内的飞机，泰国航空最好，一般都可以做到一排9坐的大飞机，这次从清迈会曼谷的时候，坐的是双层飞机，贼大。</li>
 <li>在国内就办好签证，听说办理落地签的人很多，不想排队就听过建议</li>
 <li>在国内买好泰国的电话卡，一张电话卡，可以用7天，根据自己的行程来买。我们可以在飞机上就把电话卡换好，下飞机就可以用啦，网速还是很快的。</li>
@@ -180,60 +186,69 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 </ul>
 </blockquote>
 <a id="more"></a>
-<h1 id="2016-11-16">2016-11-16</h1><p>我们是从厦门出发的，搭乘厦门航空，4月份去过一次，当时机票费比较贵，这次11月份是泰国的淡季，所以来回一个人才1700多（含税）。如果是我自己去的话估计是搭乘廉价航空了，选择贵的还是廉价的，大家根据自己的情况而定哈，不过建议，不是穷游的话，还是好一点的航空。<br>中国经常有航空管制，这次就牛逼的碰上了。当时还特别担心会管制很久来着，还好只延误了1个小时，没有影响到我们之后的航程。<br>厦门到曼谷只要3.5个小时，看个杂志睡一觉就过去了。到了曼谷素万那普机场之后，你会发现，这机场还是很大的。机场有很多中文提示，加上手机很方便，所以从下飞机到出关应该不会有啥问题。<br>我们当天从素万那普机场飞到清迈的，所以我们一出关，吃点东西，我们就又进入安检去清迈了。由于时间的问题，我们定的机票不是泰国航空，所以清迈的飞机还是有点小。也不知道为什么，这次到清迈的飞机又晚点了，晚了1.5个小时，本来晚上9点的飞机，没想到一下子到10点半才起飞，所以到了清迈都12点多了。幸好清迈的店主有接机服务，省去了我们找住宿地点的时间。</p>
-<h1 id="2016-11-17">2016-11-17</h1><p>由于老婆要去学泰北按摩，9点就得到，所以我们8点就去吃饭了，在住的别墅附近就有一家早餐店，人还是很多的，很多当地的人在那边吃，3个人，吃了180泰铢，算挺便宜，尤其是粥非常好吃。吃完想去租摩托车，简直是日了狗，绕了20几分钟没找到开门的，泰国人一般都很晚起来，10点开门算很早了。后来没办法只能坐双条去目的地，一个人20泰铢。老婆自己去旅游，我们就自己到城内自己溜达。贴上几张第一天的图片。<br><img src="/img/%E6%B8%85%E8%BF%88%E4%BD%8F%E5%AE%BF-airbnb-%E8%8A%B1%E5%9B%AD.JPG" alt="清迈住宿-airbnb-花园" title="清迈住宿-airbnb-花园"><img src="/img/%E6%B8%85%E8%BF%88%E4%BD%8F%E5%AE%BF-airbnb-%E8%8A%B1%E5%9B%AD1.JPG" alt="清迈住宿-airbnb-花园" title="清迈住宿-airbnb-花园"><img src="/img/%E9%BE%99%E5%A9%86%E6%89%98%E5%8F%8A%E6%9F%B4%E8%BF%AA%E9%9A%86%E5%AF%BA.jpg" alt="龙婆托及柴迪隆寺" title="龙婆托及柴迪隆寺"><img src="/img/%E9%BE%99%E5%A9%86%E6%89%98%E5%8F%8A%E6%9F%B4%E8%BF%AA%E9%9A%86%E5%AF%BA1.jpg" alt="龙婆托及柴迪隆寺的一棵大树" title="龙婆托及柴迪隆寺的一棵大树"><img src="/img/%E4%B8%80%E6%9D%A1%E8%A1%97.jpg" alt="一条街" title="一条街"><br>清迈到处都有好吃的，又便宜，尤其是清迈门附近的一家小店，芒果糯米饭特别好吃，椰子也很好喝，在国内还没喝过如此好喝的。其实只要按着猫途鹰上面的推荐去吃就行了，然后菠萝饭和绿咖喱也要吃，其中一家叫<strong>Taste From Heaven Vegan and Vegetarian Restaurant</strong>的绿咖喱和菠萝饭最好吃。</p>
-<h1 id="2016-11-18">2016-11-18</h1><p>由于马杀鸡店的老板觉得我学泰北按摩很有天赋，因此这一天一直在陪老婆学泰北按摩。没有怎么去玩。</p>
-<h1 id="2016-11-19">2016-11-19</h1><p>按照计划，早上继续学习按摩，下午搭<strong>Green Bus</strong>去清莱。所以一大早，我就骑车到清迈<strong>Arcade Bus Station</strong>买票。下午按计划搭车到清莱，泰国的长途汽车真是便宜30块左右，3个小时路程，还提供饼干，矿泉水，湿纸巾。从清迈到清莱都是山路，不过还挺好走的，道路两边就像原始深林似得。<br>我们是住在清莱钻石公园度假村，算挺贵的，其实，一晚两百多，不过房子很好，有阳台。<br>这天刚好是周六，有周六夜市，清莱的周六夜市感觉比清迈的周六夜市好很多。东西挺便宜，尤其是牛油果，比国内超市里面的牛油果大好几倍。在去周六夜市的路上，碰到一个开双条的，会讲中文，在后来的交流中才知道，他原来在台湾工作过好几年。约定第二天他用双条载我们去黑庙和白庙，总共才600泰铢，最后赔了我们好几个小时，从早上9点到下午2点多，不过我们搭乘的双条比较破，所以也比较便宜。上两张周六夜市拍的照片。<br><img src="/img/%E6%B8%85%E8%8E%B1%E5%91%A8%E5%85%AD%E5%A4%9C%E5%B8%82.JPG" alt="清莱周六夜市吃饭广场" title="清莱周六夜市"><img src="/img/%E6%B8%85%E8%8E%B1%E5%91%A8%E5%85%AD%E5%A4%9C%E5%B8%821.JPG" alt="清莱周六夜市灯塔" title="清莱周六夜市灯塔"><img src="/img/%E6%B8%85%E8%8E%B1%E5%91%A8%E5%85%AD%E5%A4%9C%E5%B8%822.JPG" alt="清莱周六夜市灯塔" title="清莱周六夜市灯塔"></p>
-<h1 id="2016-11-20">2016-11-20</h1><p>我们住的地方刚好处于白庙和黑庙的中间。按照约定，我们先去白庙，说句真的，清莱也就白庙可以看，而且必须要来看，刚好那天天气很好，拍出来的照片很好看。黑庙没有什么必要过来，也就有一些特色的东西而已。来上几张图片。<br><img src="/img/%E7%99%BD%E5%BA%99.JPG" alt="白庙" title="白庙"><img src="/img/%E7%99%BD%E5%BA%991.JPG" alt="白庙" title="白庙"><img src="/img/%E9%BB%91%E5%BA%99.JPG" alt="黑庙" title="黑庙"><img src="/img/%E6%B8%85%E8%8E%B1%E5%8F%8C%E6%9D%A1.JPG" alt="清莱双条" title="清莱双条"></p>
-<h1 id="2016-11-21">2016-11-21</h1><p>这天就要回清迈。给个建议，大家可以直接在在清迈订票，一天来回清莱，就直接看白庙够了。这次感觉有点浪费时间在清莱了，清迈还没玩够。<br>回到清迈之后，就开始买带回来的东西了。买东西的好去处是瓦洛洛，这里应有尽有，不过5点还是6点就休市了（真是爽啊），这个时候夜市也差不多快开始了，这里的夜市每天都有。说到这个，不得不说的是泰国的大象裤，之前随便在外面买，质量差的都需要100多泰铢，这次终于在瓦洛洛市场附近发现了个夜市，这里就是个批发市场，衣服很便宜，那种在路上卖2,3百泰铢的裤子，这里只要100泰铢，这个地方叫<strong>Night Bazaar</strong>，在谷歌地图上搜索下就能查到。</p>
-<h1 id="2016-11-22">2016-11-22</h1><p>回家</p>
-<h1 id="总结">总结</h1><p>流水账记完了，可能大家还有很多问题，其他问题我不太清楚，大家自己到网上查一下。</p>
+<h1 id="2016-11-16"><a href="#2016-11-16" class="headerlink" title="2016-11-16"></a>2016-11-16</h1><p>我们是从厦门出发的，搭乘厦门航空，4月份去过一次，当时机票费比较贵，这次11月份是泰国的淡季，所以来回一个人才1700多（含税）。如果是我自己去的话估计是搭乘廉价航空了，选择贵的还是廉价的，大家根据自己的情况而定哈，不过建议，不是穷游的话，还是好一点的航空。<br>中国经常有航空管制，这次就牛逼的碰上了。当时还特别担心会管制很久来着，还好只延误了1个小时，没有影响到我们之后的航程。<br>厦门到曼谷只要3.5个小时，看个杂志睡一觉就过去了。到了曼谷素万那普机场之后，你会发现，这机场还是很大的。机场有很多中文提示，加上手机很方便，所以从下飞机到出关应该不会有啥问题。<br>我们当天从素万那普机场飞到清迈的，所以我们一出关，吃点东西，我们就又进入安检去清迈了。由于时间的问题，我们定的机票不是泰国航空，所以清迈的飞机还是有点小。也不知道为什么，这次到清迈的飞机又晚点了，晚了1.5个小时，本来晚上9点的飞机，没想到一下子到10点半才起飞，所以到了清迈都12点多了。幸好清迈的店主有接机服务，省去了我们找住宿地点的时间。</p>
+<h1 id="2016-11-17"><a href="#2016-11-17" class="headerlink" title="2016-11-17"></a>2016-11-17</h1><p>由于老婆要去学泰北按摩，9点就得到，所以我们8点就去吃饭了，在住的别墅附近就有一家早餐店，人还是很多的，很多当地的人在那边吃，3个人，吃了180泰铢，算挺便宜，尤其是粥非常好吃。吃完想去租摩托车，简直是日了狗，绕了20几分钟没找到开门的，泰国人一般都很晚起来，10点开门算很早了。后来没办法只能坐双条去目的地，一个人20泰铢。老婆自己去旅游，我们就自己到城内自己溜达。贴上几张第一天的图片。<br><img src="/img/%E6%B8%85%E8%BF%88%E4%BD%8F%E5%AE%BF-airbnb-%E8%8A%B1%E5%9B%AD.JPG" alt="清迈住宿-airbnb-花园" title="清迈住宿-airbnb-花园"><img src="/img/%E6%B8%85%E8%BF%88%E4%BD%8F%E5%AE%BF-airbnb-%E8%8A%B1%E5%9B%AD1.JPG" alt="清迈住宿-airbnb-花园" title="清迈住宿-airbnb-花园"><img src="/img/%E9%BE%99%E5%A9%86%E6%89%98%E5%8F%8A%E6%9F%B4%E8%BF%AA%E9%9A%86%E5%AF%BA.jpg" alt="龙婆托及柴迪隆寺" title="龙婆托及柴迪隆寺"><img src="/img/%E9%BE%99%E5%A9%86%E6%89%98%E5%8F%8A%E6%9F%B4%E8%BF%AA%E9%9A%86%E5%AF%BA1.jpg" alt="龙婆托及柴迪隆寺的一棵大树" title="龙婆托及柴迪隆寺的一棵大树"><img src="/img/%E4%B8%80%E6%9D%A1%E8%A1%97.jpg" alt="一条街" title="一条街"><br>清迈到处都有好吃的，又便宜，尤其是清迈门附近的一家小店，芒果糯米饭特别好吃，椰子也很好喝，在国内还没喝过如此好喝的。其实只要按着猫途鹰上面的推荐去吃就行了，然后菠萝饭和绿咖喱也要吃，其中一家叫<strong>Taste From Heaven Vegan and Vegetarian Restaurant</strong>的绿咖喱和菠萝饭最好吃。</p>
+<h1 id="2016-11-18"><a href="#2016-11-18" class="headerlink" title="2016-11-18"></a>2016-11-18</h1><p>由于马杀鸡店的老板觉得我学泰北按摩很有天赋，因此这一天一直在陪老婆学泰北按摩。没有怎么去玩。</p>
+<h1 id="2016-11-19"><a href="#2016-11-19" class="headerlink" title="2016-11-19"></a>2016-11-19</h1><p>按照计划，早上继续学习按摩，下午搭<strong>Green Bus</strong>去清莱。所以一大早，我就骑车到清迈<strong>Arcade Bus Station</strong>买票。下午按计划搭车到清莱，泰国的长途汽车真是便宜30块左右，3个小时路程，还提供饼干，矿泉水，湿纸巾。从清迈到清莱都是山路，不过还挺好走的，道路两边就像原始深林似得。<br>我们是住在清莱钻石公园度假村，算挺贵的，其实，一晚两百多，不过房子很好，有阳台。<br>这天刚好是周六，有周六夜市，清莱的周六夜市感觉比清迈的周六夜市好很多。东西挺便宜，尤其是牛油果，比国内超市里面的牛油果大好几倍。在去周六夜市的路上，碰到一个开双条的，会讲中文，在后来的交流中才知道，他原来在台湾工作过好几年。约定第二天他用双条载我们去黑庙和白庙，总共才600泰铢，最后赔了我们好几个小时，从早上9点到下午2点多，不过我们搭乘的双条比较破，所以也比较便宜。上两张周六夜市拍的照片。<br><img src="/img/%E6%B8%85%E8%8E%B1%E5%91%A8%E5%85%AD%E5%A4%9C%E5%B8%82.JPG" alt="清莱周六夜市吃饭广场" title="清莱周六夜市"><img src="/img/%E6%B8%85%E8%8E%B1%E5%91%A8%E5%85%AD%E5%A4%9C%E5%B8%821.JPG" alt="清莱周六夜市灯塔" title="清莱周六夜市灯塔"><img src="/img/%E6%B8%85%E8%8E%B1%E5%91%A8%E5%85%AD%E5%A4%9C%E5%B8%822.JPG" alt="清莱周六夜市灯塔" title="清莱周六夜市灯塔"></p>
+<h1 id="2016-11-20"><a href="#2016-11-20" class="headerlink" title="2016-11-20"></a>2016-11-20</h1><p>我们住的地方刚好处于白庙和黑庙的中间。按照约定，我们先去白庙，说句真的，清莱也就白庙可以看，而且必须要来看，刚好那天天气很好，拍出来的照片很好看。黑庙没有什么必要过来，也就有一些特色的东西而已。来上几张图片。<br><img src="/img/%E7%99%BD%E5%BA%99.JPG" alt="白庙" title="白庙"><img src="/img/%E7%99%BD%E5%BA%991.JPG" alt="白庙" title="白庙"><img src="/img/%E9%BB%91%E5%BA%99.JPG" alt="黑庙" title="黑庙"><img src="/img/%E6%B8%85%E8%8E%B1%E5%8F%8C%E6%9D%A1.JPG" alt="清莱双条" title="清莱双条"></p>
+<h1 id="2016-11-21"><a href="#2016-11-21" class="headerlink" title="2016-11-21"></a>2016-11-21</h1><p>这天就要回清迈。给个建议，大家可以直接在在清迈订票，一天来回清莱，就直接看白庙够了。这次感觉有点浪费时间在清莱了，清迈还没玩够。<br>回到清迈之后，就开始买带回来的东西了。买东西的好去处是瓦洛洛，这里应有尽有，不过5点还是6点就休市了（真是爽啊），这个时候夜市也差不多快开始了，这里的夜市每天都有。说到这个，不得不说的是泰国的大象裤，之前随便在外面买，质量差的都需要100多泰铢，这次终于在瓦洛洛市场附近发现了个夜市，这里就是个批发市场，衣服很便宜，那种在路上卖2,3百泰铢的裤子，这里只要100泰铢，这个地方叫<strong>Night Bazaar</strong>，在谷歌地图上搜索下就能查到。</p>
+<h1 id="2016-11-22"><a href="#2016-11-22" class="headerlink" title="2016-11-22"></a>2016-11-22</h1><p>回家</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>流水账记完了，可能大家还有很多问题，其他问题我不太清楚，大家自己到网上查一下。</p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[清迈，清莱7日游]]>
+    
+      清迈，清莱7日游
     
     </summary>
     
-      <category term="travel" scheme="http://blog.angrytoro.com/tags/travel/"/>
+      <category term="生活" scheme="http://wangsu.co/categories/%E7%94%9F%E6%B4%BB/"/>
     
-      <category term="生活" scheme="http://blog.angrytoro.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+      <category term="travel" scheme="http://wangsu.co/tags/travel/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[express入门]]></title>
-    <link href="http://blog.angrytoro.com/2016/11/13/express%E5%85%A5%E9%97%A8/"/>
-    <id>http://blog.angrytoro.com/2016/11/13/express入门/</id>
+    <title>express入门</title>
+    <link href="http://wangsu.co/2016/11/13/express%E5%85%A5%E9%97%A8/"/>
+    <id>http://wangsu.co/2016/11/13/express入门/</id>
     <published>2016-11-13T11:27:37.000Z</published>
     <updated>2016-11-13T13:43:44.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="express_是什么鬼">express 是什么鬼</h1><p>了解express前，请先了解下nodejs，不了解的人，赶紧去恶补。简单的说，nodejs给前端开发提供了使用js编写服务器应用的能力，而express让这个能力简单化。正式了解express之前，我们先了解下一个请求的完整过程。</p>
-<h1 id="请求的完整过程">请求的完整过程</h1><p>请求通过express输出到客户端，无非如下几个过程<br><img src="/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="express请求处理过程"><br>从图中可以看出几个要素</p>
+    
+    <content type="html"><![CDATA[<h1 id="express-是什么鬼"><a href="#express-是什么鬼" class="headerlink" title="express 是什么鬼"></a>express 是什么鬼</h1><p>了解express前，请先了解下nodejs，不了解的人，赶紧去恶补。简单的说，nodejs给前端开发提供了使用js编写服务器应用的能力，而express让这个能力简单化。正式了解express之前，我们先了解下一个请求的完整过程。</p>
+<h1 id="请求的完整过程"><a href="#请求的完整过程" class="headerlink" title="请求的完整过程"></a>请求的完整过程</h1><p>请求通过express输出到客户端，无非如下几个过程<br><img src="/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="express请求处理过程"><br>从图中可以看出几个要素</p>
 <ul>
 <li>request（请求）</li>
 <li>middleware（中间件）</li>
 <li>router（路由）</li>
-<li>response（响应）<br>因此express无非也是提供这四个主要的功能接口。<h1 id="express主要功能介绍">express主要功能介绍</h1>这里不会跟大家介绍怎么使用，只是从概念上，简单解释。<h2 id="request">request</h2>顾名思义，这个功能的作用封装用户的请求信息，我们可以从这个接口中获取用户请求头，只要跟用户有关的请求信息，这里都能获取到。<h2 id="router">router</h2>路由器更容易解释了，大家自行脑补。<h2 id="response">response</h2>响应接口，这个接口封装了一些方便我们提供响应的函数，如：json，render等。<h2 id="middleware">middleware</h2>express提供了实现和使用中间件的方案，自身带的功能有限，剩下的都需要程序员自行扩展。说到中间件，如果开发过后端的同学应该很清楚，这东西类似于Java中的过滤器。express的中间件既可以作为过滤器，也可以作为功能增强器。如果不懂也不要紧，下面会用通俗易懂的语言和图画解释清楚。<br>先用伪代码来解释下<br>```JavaScript<br>if(判断正确) {<br>do 某些增强功能或者做某些其他事情<br>next(); //进入下个过滤器<br>} else {<br>next(错误信息);<br>}<br>```<br>如果是增强功能，则会往req上面增加某些对象属性或者函数。例如：session<br>如果是过滤器，则只需要判断条件是否可行，如果可行，那么执行next，进入下个过滤器，否则响应错误。<br><img src="/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png" alt="express中间件"><br><strong>可以把中间件看做一叠扑克牌，需要的时候网上叠，不喜欢哪张就抽调哪张</strong>，这个比喻可能不是很形象，但是能比较清楚的说明中间件这个东西。<h1 id="总结">总结</h1>其实express没什么难的，知道了它给开发者提供了什么，那么我们就能很容易的上手。建议现在不要去用koa，这货变化太快，中间件又没有express丰富，经常需要自己去填坑。</li>
+<li>response（响应）<br>因此express无非也是提供这四个主要的功能接口。<h1 id="express主要功能介绍"><a href="#express主要功能介绍" class="headerlink" title="express主要功能介绍"></a>express主要功能介绍</h1>这里不会跟大家介绍怎么使用，只是从概念上，简单解释。<h2 id="request"><a href="#request" class="headerlink" title="request"></a>request</h2>顾名思义，这个功能的作用封装用户的请求信息，我们可以从这个接口中获取用户请求头，只要跟用户有关的请求信息，这里都能获取到。<h2 id="router"><a href="#router" class="headerlink" title="router"></a>router</h2>路由器更容易解释了，大家自行脑补。<h2 id="response"><a href="#response" class="headerlink" title="response"></a>response</h2>响应接口，这个接口封装了一些方便我们提供响应的函数，如：json，render等。<h2 id="middleware"><a href="#middleware" class="headerlink" title="middleware"></a>middleware</h2>express提供了实现和使用中间件的方案，自身带的功能有限，剩下的都需要程序员自行扩展。说到中间件，如果开发过后端的同学应该很清楚，这东西类似于Java中的过滤器。express的中间件既可以作为过滤器，也可以作为功能增强器。如果不懂也不要紧，下面会用通俗易懂的语言和图画解释清楚。<br>先用伪代码来解释下<br>```JavaScript<br>if(判断正确) {<br>do 某些增强功能或者做某些其他事情<br>next(); //进入下个过滤器<br>} else {<br>next(错误信息);<br>}<br>```<br>如果是增强功能，则会往req上面增加某些对象属性或者函数。例如：session<br>如果是过滤器，则只需要判断条件是否可行，如果可行，那么执行next，进入下个过滤器，否则响应错误。<br><img src="/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png" alt="express中间件"><br><strong>可以把中间件看做一叠扑克牌，需要的时候网上叠，不喜欢哪张就抽调哪张</strong>，这个比喻可能不是很形象，但是能比较清楚的说明中间件这个东西。<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1>其实express没什么难的，知道了它给开发者提供了什么，那么我们就能很容易的上手。建议现在不要去用koa，这货变化太快，中间件又没有express丰富，经常需要自己去填坑。</li>
 </ul>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[以简单明了的方式讲解express，估计白痴都能看得懂]]>
+    
+      以简单明了的方式讲解express，估计白痴都能看得懂
     
     </summary>
     
-      <category term="nodejs" scheme="http://blog.angrytoro.com/tags/nodejs/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+      <category term="nodejs" scheme="http://wangsu.co/tags/nodejs/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[reactjs杂谈]]></title>
-    <link href="http://blog.angrytoro.com/2016/03/26/reactjs%E6%9D%82%E8%B0%88/"/>
-    <id>http://blog.angrytoro.com/2016/03/26/reactjs杂谈/</id>
+    <title>reactjs杂谈</title>
+    <link href="http://wangsu.co/2016/03/26/reactjs%E6%9D%82%E8%B0%88/"/>
+    <id>http://wangsu.co/2016/03/26/reactjs杂谈/</id>
     <published>2016-03-26T01:33:39.000Z</published>
     <updated>2016-03-27T03:37:31.000Z</updated>
+    
     <content type="html"><![CDATA[<p>春节后闲得慌，先写了个markdown编辑器。中途想用reactjs，实现公司目前做的一款app，然后又只想先实现webapp，再封装成混合app。所以，有了这篇杂文。</p>
-<h1 id="技术选型">技术选型</h1><p>先说下背景，要实现的app是一款比较简单的，用于公司内部使用的app。既然要用js来实现，那就要选个市场接受度比较高的框架，于是有了下面两个选择：</p>
+<p>#技术选型</p>
+<p>先说下背景，要实现的app是一款比较简单的，用于公司内部使用的app。既然要用js来实现，那就要选个市场接受度比较高的框架，于是有了下面两个选择：</p>
 <blockquote>
 <ol>
 <li>angular</li>
@@ -249,16 +264,16 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li>最终想尝试下react-native，看看这货开发起来顺手不</li>
 <li>既然大家都说不错，那就尝试下了</li>
 </ol>
-<h1 id="学习之路">学习之路</h1><p>reactjs实在是够灵活，所以要学习的东西很多。</p>
-<h2 id="webpack">webpack</h2><p>这货很灵活，实在是太强大了，不过强大的代价就是学习成本高，很多东西，网上解释了，看了也一知半解，所有就自己弄个个脑图来记忆，防止以后忘记<a href="http://naotu.baidu.com/file/50cc151d07b6890c99f0314f9fa7364f?token=e7649a889ca0c73e" target="_blank" rel="external">webpack主要模块脑图</a></p>
-<h2 id="reactjs">reactjs</h2><p>在某次为了提高一个页面性能的时候，使用过，不过很久没用就忘记了，现学现用吧，需要学习的东西挺多的，除了<code>reactjs</code>外，我们还要学习<code>react-router</code>, <code>redux</code>(看过，然后忘记了)，等等。最近在学习的时候，发现需要边学习边整理下脑图，这样可以增强我们的理解，和记忆。</p>
-<h1 id="ui选型">ui选型</h1><p>差不多花了2天的时间来研究material-ui，react-toolbox，之间的优劣。最后发现两者竟然都不合适，中途还研究过ant-design。<br>本身的需求是这样的：</p>
+<p>#学习之路<br>reactjs实在是够灵活，所以要学习的东西很多。</p>
+<p>##webpack<br>这货很灵活，实在是太强大了，不过强大的代价就是学习成本高，很多东西，网上解释了，看了也一知半解，所有就自己弄个个脑图来记忆，防止以后忘记<a href="http://naotu.baidu.com/file/50cc151d07b6890c99f0314f9fa7364f?token=e7649a889ca0c73e" target="_blank" rel="external">webpack主要模块脑图</a></p>
+<p>##reactjs<br>在某次为了提高一个页面性能的时候，使用过，不过很久没用就忘记了，现学现用吧，需要学习的东西挺多的，除了<code>reactjs</code>外，我们还要学习<code>react-router</code>, <code>redux</code>(看过，然后忘记了)，等等。最近在学习的时候，发现需要边学习边整理下脑图，这样可以增强我们的理解，和记忆。</p>
+<p>#ui选型<br>差不多花了2天的时间来研究material-ui，react-toolbox，之间的优劣。最后发现两者竟然都不合适，中途还研究过ant-design。<br>本身的需求是这样的：</p>
 <ol>
 <li>移动化</li>
 <li>metarial设计</li>
 <li>组件要丰富</li>
 </ol>
-<h2 id="material-ui">material-ui</h2><p>优势：</p>
+<p>##material-ui<br>优势：</p>
 <ol>
 <li>组件丰富，设计精美</li>
 </ol>
@@ -267,7 +282,7 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li>使用inline-style，这实在让人蛋疼，修改起来很麻烦，或许是我自己不熟悉吧</li>
 <li>单位使用的都是px，不是rem，导致自适应能力差</li>
 </ol>
-<h2 id="react-toolbox">react-toolbox</h2><p>优势：</p>
+<p>##react-toolbox<br>优势：</p>
 <ol>
 <li>使用rem做单位，自适应能力好</li>
 <li>使用css module，这点我比较喜欢</li>
@@ -277,27 +292,31 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li>组件不够丰富，不够流畅</li>
 </ol>
 <p>综合评定：material-ui不能自适应，而且使用的是inline-style，不合适做webapp。react-toolbox，这货的组件太少，material设计应用不够流畅。所以都不合适。考察了下ant-design，这个牛逼东西没有应用material设计，而且是适用于PC的。所以也是排除。最后不得不直接学习react-native来开发。</p>
-<h1 id="后记">后记</h1><p>写过一段时间的angular，对比react，还是比较喜欢angular这种把什么事情都做好，约束好的框架，而且还是喜欢把css，html，js分开。react实在灵活，有很多东西需要学习，相对来说个人感觉，学习曲线会相对高。在效率方面，或许reactjs的虚拟dom可以提高性能，在webapp上有很大的优势，不过对于pc端，我还是偏向选择angular，在维护上，比较方便，由于有强约束，可以让团队的编码趋于一致，而且TypeScript实在好用，我喜欢~~，当然如果团队前端牛逼，可以选择reactjs，ant-design是个很好用的东西，大家可以试试。</p>
+<p>#后记<br>写过一段时间的angular，对比react，还是比较喜欢angular这种把什么事情都做好，约束好的框架，而且还是喜欢把css，html，js分开。react实在灵活，有很多东西需要学习，相对来说个人感觉，学习曲线会相对高。在效率方面，或许reactjs的虚拟dom可以提高性能，在webapp上有很大的优势，不过对于pc端，我还是偏向选择angular，在维护上，比较方便，由于有强约束，可以让团队的编码趋于一致，而且TypeScript实在好用，我喜欢~~，当然如果团队前端牛逼，可以选择reactjs，ant-design是个很好用的东西，大家可以试试。</p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[涉及到框架选型，基本工具学习]]>
+    
+      涉及到框架选型，基本工具学习
     
     </summary>
     
-      <category term="reactjs" scheme="http://blog.angrytoro.com/tags/reactjs/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+      <category term="reactjs" scheme="http://wangsu.co/tags/reactjs/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[node截图服务可用性报告]]></title>
-    <link href="http://blog.angrytoro.com/2016/01/27/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E6%88%AA%E5%9B%BE%E5%BC%95%E5%8F%91%E7%9A%84%E8%A1%80%E6%A1%88/"/>
-    <id>http://blog.angrytoro.com/2016/01/27/服务器端截图引发的血案/</id>
+    <title>node截图服务可用性报告</title>
+    <link href="http://wangsu.co/2016/01/27/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E6%88%AA%E5%9B%BE%E5%BC%95%E5%8F%91%E7%9A%84%E8%A1%80%E6%A1%88/"/>
+    <id>http://wangsu.co/2016/01/27/服务器端截图引发的血案/</id>
     <published>2016-01-27T13:27:39.000Z</published>
     <updated>2016-02-15T14:25:01.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="前言">前言</h1><p>服务器端截图可以做什么？<br>个人观点：省去跟报表有关的EDM开发，直接从系统上截图，然后发图片给用户就搞定。剩下的自己脑补。<br>既然这么好，为毛不赶紧弄。需要用到的工具坑太多，没有尝试，不敢拿上去用。</p>
-<h1 id="环境准备">环境准备</h1><p>如果是window环境就更简单了，大家自行处理，这里不做介绍。</p>
+    
+    <content type="html"><![CDATA[<p>#前言<br>服务器端截图可以做什么？<br>个人观点：省去跟报表有关的EDM开发，直接从系统上截图，然后发图片给用户就搞定。剩下的自己脑补。<br>既然这么好，为毛不赶紧弄。需要用到的工具坑太多，没有尝试，不敢拿上去用。</p>
+<p>#环境准备<br>如果是window环境就更简单了，大家自行处理，这里不做介绍。</p>
 <ol>
 <li>centos6.5（5.x版本来落后了，不要用，会出问题的。其他高级版本，自己掂量着用，公司提供给我的测试机只有6.5版本）</li>
 <li>phantomjs 2.x （1.9.x版本的各种bug，测试的时候并发一起来，进程各种crash，所以大家别脑残用1.9.x的）</li>
@@ -305,111 +324,38 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li>安装windows字体（按网上的说明来，安装完成要重启机器。不安装会出现中文字体不显示的问题）</li>
 </ol>
 <a id="more"></a>
-<h1 id="安装步骤">安装步骤</h1><p>我知道很多人比较懒，也有很多人，这也不懂，那也不懂。所以为了不让大家浪费时间，给大家安装环境步骤，由于系统是64位，因此下面的步骤都是按64位来。windows环境下的安装，自己看文档。</p>
-<h2 id="安装phantomjs_2-x">安装phantomjs 2.x</h2><ol>
+<p>#安装步骤<br>我知道很多人比较懒，也有很多人，这也不懂，那也不懂。所以为了不让大家浪费时间，给大家安装环境步骤，由于系统是64位，因此下面的步骤都是按64位来。windows环境下的安装，自己看文档。</p>
+<p>##安装phantomjs 2.x</p>
+<ol>
 <li>到<a href="http://phantomjs.org/download.html" target="_blank" rel="external">http://phantomjs.org/download.html</a>页面下载相应的版本，<a href="https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2" target="_blank" rel="external">https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2</a></li>
 <li>解压 <code>tar -xvfz phantomjs-2.1.1-linux-x86_64.tar.bz2</code></li>
 <li>创建软链，<code>ln -s 相应phantomjs文件夹/phantomjs /usr/bin/phantomjs</code>   <code>ln -s 相应phantomjs文件夹/phantomjs /usr/local/bin/phantomjs</code></li>
 <li>测试phantomjs命令能不能使用（如果不可以，大家自己看着办）</li>
 </ol>
-<h2 id="安装nodejs0-12-x">安装nodejs0.12.x</h2><p>参考：<a href="http://www.laozuo.org/6421.html" target="_blank" rel="external">http://www.laozuo.org/6421.html</a></p>
+<p>##安装nodejs0.12.x<br>参考：<a href="http://www.laozuo.org/6421.html" target="_blank" rel="external">http://www.laozuo.org/6421.html</a></p>
 <ol>
 <li>到官网下载node-v0.12.9.tar.gz，特别注意，是源码，不是编译后的</li>
 <li>解压node-v0.12.9.tar.gz</li>
 <li>进入解压后的文件夹逐步执行两条命令1 <code>./configure</code> 2 <code>make &amp;&amp; make install</code></li>
 <li>验证<code>node -v</code> 看看版本号是不是跟我们安装的一样</li>
 </ol>
-<h2 id="安装windows下的字体">安装windows下的字体</h2><p>这个直接参考<a href="http://www.tuicool.com/articles/VfiqqiA" target="_blank" rel="external">http://www.tuicool.com/articles/VfiqqiA</a></p>
-<h1 id="启动服务">启动服务</h1><ol>
+<p>##安装windows下的字体<br>这个直接参考<a href="http://www.tuicool.com/articles/VfiqqiA" target="_blank" rel="external">http://www.tuicool.com/articles/VfiqqiA</a></p>
+<p>#启动服务</p>
+<ol>
 <li>拷贝源码<a href="https://github.com/angrytoro/webshot" target="_blank" rel="external">https://github.com/angrytoro/webshot</a></li>
 <li>进到根目录后，执行<code>cnpm install</code>来安装相关的模块（因为npm在国内太慢了，经常慢到让你安装错误）</li>
 <li>安装模块成功后，执行<code>node index.js</code>，端口是3000</li>
 <li>在浏览器上浏览</li>
 </ol>
-<h1 id="界面介绍">界面介绍</h1><p>直接给图说明比较方便<br><img src="/img/界面说明.png" alt="界面说明"><br><img src="/img/界面说明1.png" alt="界面说明"></p>
-<h1 id="截图效果">截图效果</h1><p><img src="/img/qq官网.jpg" alt="qq官网"></p>
-<h2 id="并发请求结果">并发请求结果</h2><p>ps（在另外一台服务器上用wrk测试）<br>介绍下截图服务机器的硬件配置：2核cpu，4g内存<br>由于我在程序中限定了开启3个phantomjs，每个phantomjs最多同时做5个页面的渲染和截图。因此我开启了15个线程，保持15个链接同时请求，持续1分钟的时间，效果如下图：<br><img src="/img/并发测试效果.png" alt="并发测试效果"></p>
-<h2 id="五组测试数据统计">五组测试数据统计</h2><table>
-<thead>
-<tr>
-<th style="text-align:center">序号</th>
-<th style="text-align:center">网址</th>
-<th style="text-align:center">持续时间（s）</th>
-<th style="text-align:center">并发链接</th>
-<th style="text-align:center">请求总数</th>
-<th style="text-align:center">成功</th>
-<th style="text-align:center">失败</th>
-<th style="text-align:center">崩溃</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">qq.com</td>
-<td style="text-align:center">60</td>
-<td style="text-align:center">15</td>
-<td style="text-align:center">47</td>
-<td style="text-align:center">47</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">2</td>
-<td style="text-align:center">qq.com</td>
-<td style="text-align:center">60</td>
-<td style="text-align:center">15</td>
-<td style="text-align:center">54</td>
-<td style="text-align:center">54</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">3</td>
-<td style="text-align:center">qq.com</td>
-<td style="text-align:center">60</td>
-<td style="text-align:center">15</td>
-<td style="text-align:center">45</td>
-<td style="text-align:center">45</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">qq.com</td>
-<td style="text-align:center">60</td>
-<td style="text-align:center">15</td>
-<td style="text-align:center">57</td>
-<td style="text-align:center">57</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">5</td>
-<td style="text-align:center">qq.com</td>
-<td style="text-align:center">60</td>
-<td style="text-align:center">15</td>
-<td style="text-align:center">49</td>
-<td style="text-align:center">49</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-</tr>
-<tr>
-<td style="text-align:center">平均</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">60</td>
-<td style="text-align:center">15</td>
-<td style="text-align:center">50.4</td>
-<td style="text-align:center">50.4</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-</tr>
-</tbody>
-</table>
+<p>#界面介绍<br>直接给图说明比较方便<br><img src="/img/界面说明.png" alt="界面说明"><br><img src="/img/界面说明1.png" alt="界面说明"></p>
+<p>#截图效果<br><img src="/img/qq官网.jpg" alt="qq官网"></p>
+<p>##并发请求结果<br>ps（在另外一台服务器上用wrk测试）<br>介绍下截图服务机器的硬件配置：2核cpu，4g内存<br>由于我在程序中限定了开启3个phantomjs，每个phantomjs最多同时做5个页面的渲染和截图。因此我开启了15个线程，保持15个链接同时请求，持续1分钟的时间，效果如下图：<br><img src="/img/并发测试效果.png" alt="并发测试效果"></p>
+<p>##五组测试数据统计<br>| 序号     | 网址 | 持续时间（s）| 并发链接 | 请求总数 | 成功    | 失败 | 崩溃 |<br>| :–: | :–: | :——-: | :—–: | :—–: | :–: | :–: | :–: |<br>| 1    | qq.com |  60     |   15    |    47   |  47  |  0   |   0  |<br>| 2    | qq.com |  60     |   15    |    54   |  54  |  0   |   0  |<br>| 3    | qq.com |  60     |   15    |    45   |  45  |  0   |   0  |<br>| 4    | qq.com |  60     |   15    |    57   |  57  |  0   |   0  |<br>| 5    | qq.com |  60     |   15    |    49   |  49  |  0   |   0  |<br>| 平均  |        |  60     |   15    |   50.4  | 50.4|  0   |   0  |</p>
 <p>从中可以看出在截取<strong>qq.com</strong>的时候，大概平均每秒处理<strong>0.84</strong>个截图请求。</p>
 <p>当然这是在有条件限制的情况下得出的数据，在测试的时候，查看了下cpu的峰值，大概是<strong>60%</strong>，也就是说这个还有提升的空间。而且我们是用<strong>qq.com</strong>做测试，如果是比较简单的页面，速度肯定还会提升。</p>
 <p>不信请看，我请求<a href="http://alinode.aliyun.com/blog/23" target="_blank" rel="external">http://alinode.aliyun.com/blog/23</a>这个网址的测试<br><img src="/img/并发测试效果1.png" alt="并发测试效果"></p>
 <p>这里数据显示1分钟内总共处理了<strong>150</strong>个请求。平均每秒处理<strong>2.5</strong>个。</p>
-<h1 id="稳定性">稳定性</h1><p>下图是跑了1小时的报告，蛮看看。<br><img src="/img/截图稳定性.png" alt="截图稳定性"></p>
+<p>#稳定性<br>下图是跑了1小时的报告，蛮看看。<br><img src="/img/截图稳定性.png" alt="截图稳定性"></p>
 <p>在一个小时之内连续的对qq.com首页做截图，总共是处理了562个请求，平均每秒0.16个，太忧伤了。大家有没有发现，其实出现了202个读错误，562个超时，平均网速才225.54kb，诶，这也太坑爹了。</p>
 <p>不知道这是什么原因造成的，到底是网速慢了，还是qq官网首页服务器做了安全策略。面对如此惨淡的数据，自信心都没了。</p>
 <p>其实在早些时候，有尝试跑一个晚上的并发，可惜好像是因为断网问题，导致测试没有完成。之后有进行了持续6个小时的并发测试，在跑到2个多小时的时候，出现了内存溢出，导致服务中断的情况。非常的忧伤，</p>
@@ -420,35 +366,41 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li>由于V8的内存限制机制，导致在同时渲染15个页面的时候出现内存溢出。</li>
 </ol>
 <p>其实每次的并发测试都会出现超时的情况，这个问题不知道是什么原因造成的。<br>理论上要渲染一个页面，其实是得花不少时间的，加载页面就大概需要2~3秒的时间，加上渲染大概至少需要5秒左右的时间，有些垃圾网站更长，然后我们还要截图，加起来，这大概得花个6~8秒的时间吧。</p>
-<h1 id="总结">总结</h1><p>按照目前并发测试的结果来说是不适合用于生产环境的。如果要小范围的做生产测试，还需要解决下面几个问题</p>
+<p>#总结<br>按照目前并发测试的结果来说是不适合用于生产环境的。如果要小范围的做生产测试，还需要解决下面几个问题</p>
 <ol>
 <li>将某些计算扔给GPU，毕竟GPU在渲染方面还是比较好的。</li>
 <li>提升v8引擎的内存限制</li>
 <li>查找内存溢出的原因并且解决</li>
 </ol>
-<h1 id="后记">后记</h1><p>服务器端截图还是挺有意思的一件事情，如果稳定性提高了，相信可以用于很多地方。由于代码是写来做测试的，所以写得挺烂的，还有很多可以改进的地方。<br>如果大家觉得这个点子不错，可以继续开发下去，请到github上点个赞，并给点改进意见。</p>
+<p>#后记</p>
+<p>服务器端截图还是挺有意思的一件事情，如果稳定性提高了，相信可以用于很多地方。由于代码是写来做测试的，所以写得挺烂的，还有很多可以改进的地方。<br>如果大家觉得这个点子不错，可以继续开发下去，请到github上点个赞，并给点改进意见。</p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[利用node和phantomjs，在服务器端做网站截图]]>
+    
+      利用node和phantomjs，在服务器端做网站截图
     
     </summary>
     
-      <category term="NodeJS" scheme="http://blog.angrytoro.com/tags/NodeJS/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+      <category term="NodeJS" scheme="http://wangsu.co/tags/NodeJS/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[Mac下面WebStorm10没法调试nodejs的解决方案]]></title>
-    <link href="http://blog.angrytoro.com/2015/11/21/Mac%E4%B8%8B%E9%9D%A2WebStorm10%E6%B2%A1%E6%B3%95%E8%B0%83%E8%AF%95nodejs%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    <id>http://blog.angrytoro.com/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/</id>
+    <title>Mac下面WebStorm10没法调试nodejs的解决方案</title>
+    <link href="http://wangsu.co/2015/11/21/Mac%E4%B8%8B%E9%9D%A2WebStorm10%E6%B2%A1%E6%B3%95%E8%B0%83%E8%AF%95nodejs%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>http://wangsu.co/2015/11/21/Mac下面WebStorm10没法调试nodejs的解决方案/</id>
     <published>2015-11-21T12:51:26.000Z</published>
     <updated>2015-11-21T12:56:00.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="Bug场景">Bug场景</h1><blockquote>
+    
+    <content type="html"><![CDATA[<p>#Bug场景</p>
+<blockquote>
 <p>Cannot stop on breakpoint due to internal error: org.jetbrains.v8.V8CommandProcessor$1: TypeError: f is not a function at Function.t.getScopes (eval at undefined, :217:15) at t.describeFrame (eval at undefined, :213:33) at t.getFrames (eval at undefined, :114:89) at DebugCommandProcessor.r.processDebugJSONRequest (eval at undefined, :348:15) …</p>
 </blockquote>
-<p>在升级nodejs到最新版本之后就曝出了上面这种问题，谷歌上说是webstorm的问题，然后webstorm官网给出了响应的解决方案。在webstorm.vmoptions里面加上下面一句<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dnodejs<span class="class">.debugger</span><span class="class">.use</span><span class="class">.jb</span><span class="class">.support</span>=false</span><br></pre></td></tr></table></figure></p>
+<p>在升级nodejs到最新版本之后就曝出了上面这种问题，谷歌上说是webstorm的问题，然后webstorm官网给出了响应的解决方案。在webstorm.vmoptions里面加上下面一句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-Dnodejs.debugger.use.jb.support=false</div></pre></td></tr></table></figure></p>
 <p>最后重启下webstorm，搞定。</p>
 <p>由于Mac下查找和修改webstorm.vmoptions比较繁琐，下面给出相应的步骤：</p>
 <ol>
@@ -458,120 +410,139 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li>在最后面加上<code>-Dnodejs.debugger.use.jb.support=false</code></li>
 <li>保存退出</li>
 </ol>
-<h1 id="备注">备注</h1><p>因为权限问题所以不能够直接编辑<strong>/Applications/WebStorm.app/Contents/bin</strong>下的<strong>webstorm.vmoptions</strong>，因此需要把它拷贝到<strong>~/Library/Preferences/WebStorm10/</strong>再进行编辑</p>
-<h1 id="参考">参考</h1><ol>
+<p>#备注<br>因为权限问题所以不能够直接编辑<strong>/Applications/WebStorm.app/Contents/bin</strong>下的<strong>webstorm.vmoptions</strong>，因此需要把它拷贝到<strong>~/Library/Preferences/WebStorm10/</strong>再进行编辑</p>
+<p>#参考</p>
+<ol>
 <li><a href="http://stackoverflow.com/questions/33515777/node-v5-breaks-webstorms-debugger" target="_blank" rel="external">Node v5 breaks Webstorm’s debugger</a></li>
 <li><a href="https://youtrack.jetbrains.com/issue/IDEA-139990" target="_blank" rel="external">Debugging is broken with io.js v2.0.0</a></li>
 <li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827537-Configuring-JVM-options-and-platform-properties" target="_blank" rel="external">Configuring JVM options and platform properties</a></li>
 <li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827437-Directories-used-by-the-IDE-to-store-settings-caches-plugins-and-logs" target="_blank" rel="external">Directories used by the IDE to store settings, caches, plugins and logs</a></li>
 </ol>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[估计是因为nodejs升级的问题，导致了webstorm在debug的时候出现问题，nodejs版本是最新的5.0，webstorm版本是10.]]>
+    
+      估计是因为nodejs升级的问题，导致了webstorm在debug的时候出现问题，nodejs版本是最新的5.0，webstorm版本是10.
     
     </summary>
     
-      <category term="NodeJS" scheme="http://blog.angrytoro.com/tags/NodeJS/"/>
+      <category term="工具" scheme="http://wangsu.co/categories/%E5%B7%A5%E5%85%B7/"/>
     
-      <category term="工具" scheme="http://blog.angrytoro.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="NodeJS" scheme="http://wangsu.co/tags/NodeJS/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[如何让worker支持不加外链]]></title>
-    <link href="http://blog.angrytoro.com/2015/10/26/%E5%A6%82%E4%BD%95%E8%AE%A9worker%E6%94%AF%E6%8C%81%E4%B8%8D%E5%8A%A0%E5%A4%96%E9%93%BE/"/>
-    <id>http://blog.angrytoro.com/2015/10/26/如何让worker支持不加外链/</id>
+    <title>如何让worker支持不加外链</title>
+    <link href="http://wangsu.co/2015/10/26/%E5%A6%82%E4%BD%95%E8%AE%A9worker%E6%94%AF%E6%8C%81%E4%B8%8D%E5%8A%A0%E5%A4%96%E9%93%BE/"/>
+    <id>http://wangsu.co/2015/10/26/如何让worker支持不加外链/</id>
     <published>2015-10-26T12:39:48.000Z</published>
     <updated>2015-10-26T13:14:34.000Z</updated>
-    <content type="html"><![CDATA[<p>相信很多人很少用到worker，主要是因为先对比较少有业务需要用到这个。看了下网上的博客，几乎100%的例子都是从外部引入js文件，这其实很烦，能不能直接我们传入一个函数，worker就帮我们创建一个线程。<br>参考了神人的博客<a href="http://ucren.com/blog/" target="_blank" rel="external">将 webworker 改造成无外链文件模式</a>,突然恍然大悟，尼玛神器，膜拜下。<br>先看下大神的代码（命名有点改变）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> FnWorker = <span class="function"><span class="keyword">function</span><span class="params">(fn)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> functionBodyRegx, URL, contentType, code, url;</span><br><span class="line"></span><br><span class="line">	functionBodyRegx = <span class="regexp">/^[^&#123;]+\&#123;([\s\S]*)\&#125;$/</span>;</span><br><span class="line">	URL = <span class="built_in">window</span>.URL || <span class="built_in">window</span>.webkitURL;</span><br><span class="line">	contentType = &#123; type: <span class="string">"text/javascript; charset=utf-8"</span> &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(fn)</span> </span>&#123;</span><br><span class="line">		code = fn.toString().match(functionBodyRegx)[<span class="number">1</span>];</span><br><span class="line">		url = <span class="built_in">window</span>.opera ? <span class="string">"data:application/javascript,"</span> + <span class="built_in">encodeURIComponent</span>( code ) : URL.createObjectURL( <span class="keyword">new</span> Blob( [ code ], contentType ) );</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Worker(url);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;();</span><br></pre></td></tr></table></figure></p>
-<p>用法如下：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> worker = <span class="keyword">new</span> FnWorker( <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    postMessage(&#123; message: <span class="string">"hello myWorker!"</span> &#125;);</span><br><span class="line">&#125; );</span><br><span class="line"></span><br><span class="line">worker.onmessage = <span class="function"><span class="keyword">function</span><span class="params">( event )</span></span>&#123;</span><br><span class="line">    alert( event.data.message );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+    
+    <content type="html"><![CDATA[<p>相信很多人很少用到worker，主要是因为先对比较少有业务需要用到这个。看了下网上的博客，几乎100%的例子都是从外部引入js文件，这其实很烦，能不能直接我们传入一个函数，worker就帮我们创建一个线程。<br>参考了神人的博客<a href="http://ucren.com/blog/" target="_blank" rel="external">将 webworker 改造成无外链文件模式</a>,突然恍然大悟，尼玛神器，膜拜下。<br>先看下大神的代码（命名有点改变）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">var FnWorker = function(fn) &#123;</div><div class="line">	var functionBodyRegx, URL, contentType, code, url;</div><div class="line"></div><div class="line">	functionBodyRegx = /^[^&#123;]+\&#123;([\s\S]*)\&#125;$/;</div><div class="line">	URL = window.URL || window.webkitURL;</div><div class="line">	contentType = &#123; type: &quot;text/javascript; charset=utf-8&quot; &#125;;</div><div class="line"></div><div class="line">	return function(fn) &#123;</div><div class="line">		code = fn.toString().match(functionBodyRegx)[1];</div><div class="line">		url = window.opera ? &quot;data:application/javascript,&quot; + encodeURIComponent( code ) : URL.createObjectURL( new Blob( [ code ], contentType ) );</div><div class="line"></div><div class="line">		return new Worker(url);</div><div class="line">	&#125;;</div><div class="line">&#125;();</div></pre></td></tr></table></figure></p>
+<p>用法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var worker = new FnWorker( function()&#123;</div><div class="line">    postMessage(&#123; message: &quot;hello myWorker!&quot; &#125;);</div><div class="line">&#125; );</div><div class="line"></div><div class="line">worker.onmessage = function( event )&#123;</div><div class="line">    alert( event.data.message );</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>大神利用URL和Blob这两个牛逼的东西，然后创建出url。碉堡了有没有？代码大家自己去想研究。</p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<p>相信很多人很少用到worker，主要是因为先对比较少有业务需要用到这个。看了下网上的博客，几乎100%的例子都是从外部引入js文件，这其实很烦，能不能直接我们传入一个函数，worker就帮我们创建一个线程。<br>参考了神人的博客<a href="http://ucren.]]>
+    
+      &lt;p&gt;相信很多人很少用到worker，主要是因为先对比较少有业务需要用到这个。看了下网上的博客，几乎100%的例子都是从外部引入js文件，这其实很烦，能不能直接我们传入一个函数，worker就帮我们创建一个线程。&lt;br&gt;参考了神人的博客&lt;a href=&quot;http://ucren.
+    
     </summary>
     
-      <category term="worker" scheme="http://blog.angrytoro.com/tags/worker/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+      <category term="worker" scheme="http://wangsu.co/tags/worker/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[wepack学习]]></title>
-    <link href="http://blog.angrytoro.com/2015/08/06/wepack%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://blog.angrytoro.com/2015/08/06/wepack学习/</id>
+    <title>wepack学习</title>
+    <link href="http://wangsu.co/2015/08/06/wepack%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://wangsu.co/2015/08/06/wepack学习/</id>
     <published>2015-08-06T14:29:59.000Z</published>
     <updated>2016-03-26T01:35:56.000Z</updated>
+    
     <content type="html"><![CDATA[<p>回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这智商看不懂，没办法，只能自己硬着头皮满满啃英文，慢慢尝试了。(又唠叨了。)</p>
-<h1 id="配置说明">配置说明</h1><p><em>target:</em>用来指定这些代码是为什么平台准备的，有多种选择’web\webworker\node\async-node\node-webkit\atom’，大家根据需要自行选择。<br><em>cache:</em>还没搞懂，等搞懂了告诉大家<br><em>entry:</em>用来告诉webpack，我们要编译那些文件，如果大家有很页面需要编译，那不好意思，大家只能一条一条写上去了，不能像gulp或者grunt那样直接正则匹配了<br><em>resolve:</em>这货底下有多个配置，其中有一个很特殊很高效值得推荐，<em>modulesDirectories</em>这个配置告诉webpack到哪里找资源，省得webpack到处找，提高编译效率<br><em>output:</em>这货告诉webpack，编译后的资源要放在那里<br><em>output.filename:</em>编译后的文件怎么取名，看大家的喜好和需求了，跟entry是有映射关系的<br><em>output.publicPath:</em>应该是用来告诉web-dev-server请求资源的时候应该去哪个文件夹请求，等实验后再跟大家汇报<br><em>output.library:</em>这货也不知道怎么用<br><em>output.chunkFilename:</em>这货在我使用require.ensure的时候，有用到，其余的不知道咋用了。<br><em>module.loaders</em>这东西其实就是用来放预编译插件的，很重要的一点是，loader这个配置可以加参数，大家别傻傻的不知道。<br><em>plugins</em>一些webpack插件，我暂时之用到了CommonsChunkPlugin，这是用来提取公用代码的。</p>
-<h1 id="TODO">TODO</h1><p>边写个react简单应用，然后搞清楚webpack的大部分特性。</p>
+<p>#配置说明<br><em>target:</em>用来指定这些代码是为什么平台准备的，有多种选择’web\webworker\node\async-node\node-webkit\atom’，大家根据需要自行选择。<br><em>cache:</em>还没搞懂，等搞懂了告诉大家<br><em>entry:</em>用来告诉webpack，我们要编译那些文件，如果大家有很页面需要编译，那不好意思，大家只能一条一条写上去了，不能像gulp或者grunt那样直接正则匹配了<br><em>resolve:</em>这货底下有多个配置，其中有一个很特殊很高效值得推荐，<em>modulesDirectories</em>这个配置告诉webpack到哪里找资源，省得webpack到处找，提高编译效率<br><em>output:</em>这货告诉webpack，编译后的资源要放在那里<br><em>output.filename:</em>编译后的文件怎么取名，看大家的喜好和需求了，跟entry是有映射关系的<br><em>output.publicPath:</em>应该是用来告诉web-dev-server请求资源的时候应该去哪个文件夹请求，等实验后再跟大家汇报<br><em>output.library:</em>这货也不知道怎么用<br><em>output.chunkFilename:</em>这货在我使用require.ensure的时候，有用到，其余的不知道咋用了。<br><em>module.loaders</em>这东西其实就是用来放预编译插件的，很重要的一点是，loader这个配置可以加参数，大家别傻傻的不知道。<br><em>plugins</em>一些webpack插件，我暂时之用到了CommonsChunkPlugin，这是用来提取公用代码的。</p>
+<p>#TODO<br>边写个react简单应用，然后搞清楚webpack的大部分特性。</p>
 <blockquote>
 <p><a href="https://underthehood.myob.com/changing-of-the-guard-in-web-technologies/" target="_blank" rel="external">A CHANGING OF THE GUARD IN WEB TECHNOLOGY </a><br><a href="http://segmentfault.com/a/1190000002552008#articleHeader10" target="_blank" rel="external">Webpack 怎么用</a><br><a href="http://segmentfault.com/a/1190000002551952" target="_blank" rel="external">Webpack 入门指迷</a><br><a href="http://www.w2bc.com/Article/50764" target="_blank" rel="external">webpack 入门指南</a><br><a href="https://fakefish.github.io/react-webpack-cookbook/index.html" target="_blank" rel="external">React Webpack cookbook</a><br><a href="http://www.infoq.com/cn/articles/react-and-webpack?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" target="_blank" rel="external">React开发神器Webpack</a><br><a href="http://www.jianshu.com/p/8adf4c2bfa51" target="_blank" rel="external">Webpack-dev-server结合后端服务器的热替换配置</a></p>
 </blockquote>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<p>回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这]]>
+    
+      &lt;p&gt;回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这
+    
     </summary>
     
-      <category term="reactjs" scheme="http://blog.angrytoro.com/tags/reactjs/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+      <category term="reactjs" scheme="http://wangsu.co/tags/reactjs/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[然而大部分期权并没有什么用]]></title>
-    <link href="http://blog.angrytoro.com/2015/06/22/%E7%84%B6%E8%80%8C%E5%A4%A7%E9%83%A8%E5%88%86%E6%9C%9F%E6%9D%83%E5%B9%B6%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8/"/>
-    <id>http://blog.angrytoro.com/2015/06/22/然而大部分期权并没有什么用/</id>
+    <title>然而大部分期权并没有什么用</title>
+    <link href="http://wangsu.co/2015/06/22/%E7%84%B6%E8%80%8C%E5%A4%A7%E9%83%A8%E5%88%86%E6%9C%9F%E6%9D%83%E5%B9%B6%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8/"/>
+    <id>http://wangsu.co/2015/06/22/然而大部分期权并没有什么用/</id>
     <published>2015-06-22T14:47:20.000Z</published>
     <updated>2015-06-22T15:22:09.000Z</updated>
+    
     <content type="html"><![CDATA[<blockquote>
 <p>首先声明下，这篇博文是引用自<strong>100offer</strong>的订阅号，献给非常单纯的程序员。由于最近实在是没有什么长进，一直在做业务，吃老本，陪妹子，所以没有自己的内容可以写（大哭）。不过可能接下去鄙人要在ghost上下点功夫，到时候就会有一些干货可以分享给大家啦。好了，废（zhen）话（luo）不（说）多说。</p>
 </blockquote>
 <p>最近有个用户拿到了Uber的offer，其中包含期权，他看不懂便向我咨询期权的细节和意义。我的观点是：大部分的期权并没有什么卵用。</p>
-<h1 id="期权激励的初心">期权激励的初心</h1><p>其实期权是有正向作用的，让我们从目标谈起：<br><img src="/img/无股权激励下的公司与员工.jpg" alt="无股权激励下的公司与员工"><br>假设一家公司的目标是1，团队会形成分工来拆解目标，比如研发团队的目标可能是1.1，而一个普通程序员被分配到的目标可能是1.1.1。如果只有基本薪资，程序员认为出色完成1.1.1就完成了工作，因为这是全部目标。<br><a id="more"></a><br><img src="/img/股权或期权激励下的公司与员工.jpg" alt="股权或期权激励下的公司与员工"><br>但如果采用高薪资结合期权的激励方式，大家会分享到公司的成长。员工会向上寻找目标，完成整个部门的目标，甚至整个公司的目标也义不容辞。在这个过程中，员工不仅与公司一起快速成长，自身能力还得到了提升，良好的激励方式会形成一个双赢的局面。<br>就像 Fenng（冯大辉）虽然是技术负责人，但是看看他的社交媒体，满屏尽是「丁香园产品推广」——这或许也是Fenng大大给自己设定的目标吧！</p>
-<h1 id="过去的互联网公司在处理「期权」这件事上，常出现这几种现象：">过去的互联网公司在处理「期权」这件事上，常出现这几种现象：</h1><p><strong>A、初创公司画饼忽悠</strong></p>
+<p>#期权激励的初心<br>其实期权是有正向作用的，让我们从目标谈起：<br><img src="/img/无股权激励下的公司与员工.jpg" alt="无股权激励下的公司与员工"><br>假设一家公司的目标是1，团队会形成分工来拆解目标，比如研发团队的目标可能是1.1，而一个普通程序员被分配到的目标可能是1.1.1。如果只有基本薪资，程序员认为出色完成1.1.1就完成了工作，因为这是全部目标。<br><a id="more"></a><br><img src="/img/股权或期权激励下的公司与员工.jpg" alt="股权或期权激励下的公司与员工"><br>但如果采用高薪资结合期权的激励方式，大家会分享到公司的成长。员工会向上寻找目标，完成整个部门的目标，甚至整个公司的目标也义不容辞。在这个过程中，员工不仅与公司一起快速成长，自身能力还得到了提升，良好的激励方式会形成一个双赢的局面。<br>就像 Fenng（冯大辉）虽然是技术负责人，但是看看他的社交媒体，满屏尽是「丁香园产品推广」——这或许也是Fenng大大给自己设定的目标吧！</p>
+<p>#过去的互联网公司在处理「期权」这件事上，常出现这几种现象：<br><strong>A、初创公司画饼忽悠</strong></p>
 <p>A创业公司，招人时老板总谈降薪拿期权，爱招BAT背景的员工，口头禅是「员工要靠伴随公司成长来实现自我价值」。某员工降薪拿期权进入A公司，实际能力远高于offer岗位需求。工作了1年多后，他发现公司的成长完全不及预期，自己一直在做一些技术能力无法成长的事。失望之下，他试探了下外面的机会，发现世界变化很快，同类型的职位收到的薪资竟然是现公司的2~3倍。</p>
 <p><strong>B、成长型公司打土豪易、分田地难</strong></p>
 <p>B公司，国内风光一时的互联网上市公司，曾经期权是他们offer中重要的一环，某年12月IPO之夜，全公司员工们举杯、狂欢。然而现实很骨感，随着原先许诺好的期权变成了18：1换股，早期员工也失去了憧憬。</p>
 <p><strong>C、上市公司的成熟分配机制</strong></p>
 <p>阿里、百度、奇虎，为典型。期权被视为一种长期激励，而非利益捆绑。对优秀员工的激励方式是高薪资+部分期权。拿百度举例，T5工程师Package一般为30万/年，其中12-20%为期权；T9工程师Package一般为100~300万/年，40%左右为期权；由于已上市，兑现相对容易。<br><img src="/img/百度期权占比.jpg" alt="百度期权占比"></p>
-<h1 id="那么，为何会出现AB式「反人性」的激励方式？">那么，为何会出现AB式「反人性」的激励方式？</h1><p>我想，A公司的老板是这么想的：<br><img src="/img/A公司老板的想法.jpg" alt="A公司老板的想法"></p>
+<p>#那么，为何会出现AB式「反人性」的激励方式？<br>我想，A公司的老板是这么想的：<br><img src="/img/A公司老板的想法.jpg" alt="A公司老板的想法"></p>
 <p>然并卵，员工的真实心理是这样的：<br><img src="/img/A公司员工想法.jpg" alt="A公司员工想法"></p>
 <p>我太理解这种态度了，这种想法也是很合理的：期权到最后套现，是一个漫长不确定的路，如果我失去该得的薪资和奖金，时间成本和机会成本的损失是划不来的。</p>
 <p>对于B公司，老板的心理活动也许是这样的：<br><img src="/img/B公司老板的想法.jpg" alt="B公司老板的想法"></p>
 <p>B类公司过去也有成功者，分布在传统行业居多，他们的行业竞争并没有互联网领域激烈，让老板误认为「我就是那么牛逼」。对于「老二非死不可」的互联网行业，公司出现此类现象，更要警惕。</p>
-<h1 id="So，普通员工/程序员如何辨别靠谱的互联网公司？">So，普通员工/程序员如何辨别靠谱的互联网公司？</h1><p>在期权这件事上，不同公司激励的方法、时间点均不相同，但靠谱的还是有几点共性：</p>
+<p>#So，普通员工/程序员如何辨别靠谱的互联网公司？<br>在期权这件事上，不同公司激励的方法、时间点均不相同，但靠谱的还是有几点共性：</p>
 <p><strong>1、成功并长久的企业都会提供期权激励</strong><br>星巴克作为行业内绝对的利润垄断企业，期权激励应该也是星巴克成功的秘诀之一。<br><img src="/img/星巴克期权激励.jpg" alt="星巴克期权激励"></p>
 <p><strong>2、对于普通员工，期权建立在合理薪资的基础上</strong><br>对于创业团队，期权+低工资的组合是很难招来靠谱的Team Leader的，用期权压低薪资的公司不太靠谱。</p>
 <p><strong>3、期权激励后置且大方</strong><br>对比魅族和小米，我们可以发现与魅族不同的是，小米从第一天就很重视股权激励。留出足够的期权池，找到靠谱的团队，慷慨地配以股权或期权，是小米的特点。</p>
 <p>最后，我想说，<br>如果能够获得必要的信息，同时自上而下地看问题，选择其实可以相对理性。但大部分情况下，你选择的不过是运气。若你斟酌了很久还在纠结，不如跟着第一感觉走。</p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<blockquote>
-<p>首先声明下，这篇博文是引用自<strong>100offer</strong>的订阅号，献给非常单纯的程序员。由于最近实在是没有什么长进，一直在做业务，吃老本，陪妹子，所以没有自己的内容可以写（大哭）。不过可能接下去鄙人要在ghost上下点功夫，到时候就会有一些干货可以分享给大家啦。好了，废（zhen）话（luo）不（说）多说。</p>
-</blockquote>
-<p>最近有个用户拿到了Uber的offer，其中包含期权，他看不懂便向我咨询期权的细节和意义。我的观点是：大部分的期权并没有什么卵用。</p>
-<h1 id="期权激励的初心">期权激励的初心</h1><p>其实期权是有正向作用的，让我们从目标谈起：<br><img src="/img/无股权激励下的公司与员工.jpg" alt="无股权激励下的公司与员工"><br>假设一家公司的目标是1，团队会形成分工来拆解目标，比如研发团队的目标可能是1.1，而一个普通程序员被分配到的目标可能是1.1.1。如果只有基本薪资，程序员认为出色完成1.1.1就完成了工作，因为这是全部目标。<br>]]>
+    
+      &lt;blockquote&gt;
+&lt;p&gt;首先声明下，这篇博文是引用自&lt;strong&gt;100offer&lt;/strong&gt;的订阅号，献给非常单纯的程序员。由于最近实在是没有什么长进，一直在做业务，吃老本，陪妹子，所以没有自己的内容可以写（大哭）。不过可能接下去鄙人要在ghost上下点功夫，到时候就会有一些干货可以分享给大家啦。好了，废（zhen）话（luo）不（说）多说。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最近有个用户拿到了Uber的offer，其中包含期权，他看不懂便向我咨询期权的细节和意义。我的观点是：大部分的期权并没有什么卵用。&lt;/p&gt;
+&lt;p&gt;#期权激励的初心&lt;br&gt;其实期权是有正向作用的，让我们从目标谈起：&lt;br&gt;&lt;img src=&quot;/img/无股权激励下的公司与员工.jpg&quot; alt=&quot;无股权激励下的公司与员工&quot;&gt;&lt;br&gt;假设一家公司的目标是1，团队会形成分工来拆解目标，比如研发团队的目标可能是1.1，而一个普通程序员被分配到的目标可能是1.1.1。如果只有基本薪资，程序员认为出色完成1.1.1就完成了工作，因为这是全部目标。&lt;br&gt;
     
     </summary>
     
-      <category term="杂文" scheme="http://blog.angrytoro.com/categories/%E6%9D%82%E6%96%87/"/>
+      <category term="杂文" scheme="http://wangsu.co/categories/%E6%9D%82%E6%96%87/"/>
+    
     
   </entry>
   
   <entry>
-    <title><![CDATA[ES6 Generator]]></title>
-    <link href="http://blog.angrytoro.com/2015/05/10/ES6-Generator/"/>
-    <id>http://blog.angrytoro.com/2015/05/10/ES6-Generator/</id>
+    <title>ES6 Generator</title>
+    <link href="http://wangsu.co/2015/05/10/ES6-Generator/"/>
+    <id>http://wangsu.co/2015/05/10/ES6-Generator/</id>
     <published>2015-05-10T14:42:49.000Z</published>
     <updated>2015-05-14T13:10:05.000Z</updated>
+    
     <content type="html"><![CDATA[<p>最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。<br>我们先看下阮一峰《es6入门》的一段解释</p>
 <blockquote>
 <p>可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以理解成发生某些事件）。ES6引入Generator函数，作用就是可以完全控制函数的内部状态的变化，依次遍历这些状态。<br>在形式上，Generator是一个普通函数，但是有两个特征。一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态（yield语句在英语里的意思就是“产出”）。</p>
 </blockquote>
-<h1 id="Generator">Generator</h1><p>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">gen</span> = function* (x) &#123;</span><br><span class="line">	<span class="keyword">var</span> a = yield x+1;</span><br><span class="line">	<span class="keyword">var</span> b = yield a+2;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(2);</span><br><span class="line"><span class="keyword">g</span>.next();<span class="comment">//返回&#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next(4); <span class="comment">//返回&#123;value: 6, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next();  <span class="comment">//返回 &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>#Generator<br>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var gen = function* (x) &#123;</div><div class="line">	var a = yield x+1;</div><div class="line">	var b = yield a+2;</div><div class="line">	return b;</div><div class="line">&#125;;</div><div class="line">var g = gen(2);</div><div class="line">g.next();//返回&#123;value: 3, done: false&#125;</div><div class="line">g.next(4); //返回&#123;value: 6, done: false&#125;</div><div class="line">g.next();  //返回 &#123;value: undefined, done: true&#125;</div></pre></td></tr></table></figure></p>
 <p>咋们来解释下上面的代码：</p>
 <ol>
 <li>先运行gen(2),得到一个迭代器g</li>
@@ -580,120 +551,136 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li>运行g.next(),返回{value: undefined, done: true}，因为我们没有为b赋值，所以就是undefined</li>
 </ol>
 <p>我们可以发现上面是我们手动一步步执行的。也就是上面说的，Generator遇到yield的时候会挂起，暂停执行。<br>这里不讨论Generator当做普通迭代器的用法，这里讨论的是如何使用Generator来让异步编程看起来更优美。所以这里，我们必须先解释下<strong>Thunk</strong>这东西。<br><a id="more"></a></p>
-<h1 id="Thunk">Thunk</h1><p>先看一段代码<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(fileName, <span class="keyword">callback</span>); <span class="comment">//正常版本的readFile</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> readFileThunk = (<span class="function"><span class="keyword">function</span><span class="params">(fileName)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>&#123; <span class="comment">//返回Thunk函数</span></span><br><span class="line">		<span class="keyword">return</span> fs.readFile(fileName, <span class="keyword">callback</span>);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;)(fileName);</span><br></pre></td></tr></table></figure></p>
+<p>#Thunk<br>先看一段代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fs.readFile(fileName, callback); //正常版本的readFile</div><div class="line"></div><div class="line">var readFileThunk = (function(fileName) &#123;</div><div class="line">	return function(callback) &#123; //返回Thunk函数</div><div class="line">		return fs.readFile(fileName, callback);</div><div class="line">	&#125;;</div><div class="line">&#125;)(fileName);</div></pre></td></tr></table></figure></p>
 <p>上面那段代码中的匿名函数就是<strong>Thunk</strong>函数。现在就能解释Thunk函数的意思了。</p>
 <blockquote>
 <p>任何函数，只要参数中包含有回调，我们就能转化成单参数的函数，这个函数只接受回调函数作为参数，例如上面的<code>readFileThunk</code>,这个单参数的函数就叫做Thunk函数。</p>
 </blockquote>
 <p>OK，解释完这个之后，可以真正进入Generator的异步编程了。</p>
-<h1 id="Generator异步编程">Generator异步编程</h1><p>直接看代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> readFile = <span class="function"><span class="keyword">function</span><span class="params">(fileName)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> fs.readFile(fileName, callback);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gen = <span class="function"><span class="keyword">function</span>*<span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> r1 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/hosts'</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(r1.toString());</span><br><span class="line">	<span class="keyword">var</span> r2 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/shells'</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(r2.toString());</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>我们先不管是不是异步编程，上面gen这个Generator函数的函数体看起来是不是非常的像在做同步编程<br>但实际上做的是异步编程，我们看下面的手动执行解析就能很清楚的知道执行机制是什么。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//手动执行文件读取，更加直观的看Generator是怎么执行的</span></span><br><span class="line"><span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>();</span><br><span class="line"><span class="keyword">var</span> r1 = <span class="keyword">g</span>.next();</span><br><span class="line">r1.value(function(<span class="keyword">err</span>, data) &#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">err</span>) throw <span class="keyword">err</span>;</span><br><span class="line">	<span class="keyword">var</span> r2 = <span class="keyword">g</span>.next(data); <span class="comment">//把data值赋值给gen中的r1</span></span><br><span class="line">	r2.value(function(<span class="keyword">err</span>, data) &#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">err</span>) throw <span class="keyword">err</span>;</span><br><span class="line">		<span class="keyword">g</span>.next(data); <span class="comment">//把data值赋值给gen中的r2</span></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>#Generator异步编程<br>直接看代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var readFile = function(fileName) &#123;</div><div class="line">	return function(callback) &#123;</div><div class="line">		return fs.readFile(fileName, callback);</div><div class="line">	&#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var gen = function*() &#123;</div><div class="line">	var r1 = yield readFile(&apos;/etc/hosts&apos;);</div><div class="line">	console.log(r1.toString());</div><div class="line">	var r2 = yield readFile(&apos;/etc/shells&apos;);</div><div class="line">	console.log(r2.toString());</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>我们先不管是不是异步编程，上面gen这个Generator函数的函数体看起来是不是非常的像在做同步编程<br>但实际上做的是异步编程，我们看下面的手动执行解析就能很清楚的知道执行机制是什么。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//手动执行文件读取，更加直观的看Generator是怎么执行的</div><div class="line">var g = gen();</div><div class="line">var r1 = g.next();</div><div class="line">r1.value(function(err, data) &#123;</div><div class="line">	if(err) throw err;</div><div class="line">	var r2 = g.next(data); //把data值赋值给gen中的r1</div><div class="line">	r2.value(function(err, data) &#123;</div><div class="line">		if(err) throw err;</div><div class="line">		g.next(data); //把data值赋值给gen中的r2</div><div class="line">	&#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
 <p>OK，如果有很多异步读取文件的操作，我们总不能手动一个一个写吧，那也实在太low了。所以牛逼的TJ大神出了CO这个库</p>
-<h1 id="CO">CO</h1><p>使用了CO是个神马感觉呢？先看代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> co = <span class="built_in">require</span>(<span class="string">'co'</span>);</span><br><span class="line"><span class="keyword">var</span> thunkify = <span class="built_in">require</span>(<span class="string">'thunkify'</span>); <span class="comment">//TJ大神写的，把函数转换成Thunk的库</span></span><br><span class="line"><span class="keyword">var</span> readFile = thunkify(fs.readFile);</span><br><span class="line">co(<span class="function"><span class="keyword">function</span>* <span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> r1 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/hosts'</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(r1.toString());</span><br><span class="line">	<span class="keyword">var</span> r2 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/shells'</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(r2.toString());</span><br><span class="line">&#125;)(<span class="function"><span class="keyword">function</span><span class="params">(err, data)</span> </span>&#123; <span class="comment">//匿名回调函数，每次读取完文件后，都会执行一遍</span></span><br><span class="line">	<span class="built_in">console</span>.log(err, data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>看了上面的代码，是不是有种惊讶的感觉，怎么能够这么精炼，是的就是这么精炼。<br>来看看精简版的co实现<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> co = function(generator) &#123;</span><br><span class="line">	<span class="keyword">return</span> function(callback) &#123;</span><br><span class="line">		<span class="keyword">var</span> gen = generator();</span><br><span class="line">		function next(err, <span class="literal">result</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span>(err) &#123;</span><br><span class="line">				<span class="keyword">return</span> callback(err);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">var</span> step = gen.next(<span class="literal">result</span>);</span><br><span class="line">			<span class="keyword">if</span>(!step.done) &#123; //如果未完成</span><br><span class="line">				step.value(next);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				callback(null, step.value);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		next();</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>很精炼的几句代码就完成了很牛逼的工作。上面代码是网上别人提炼出来的。<br>现在co已经支持promise了，博主写了段代码，来猜测co的promise实现，不知道正不正确，等鄙人拜读co源码之后再确定下，现在先放出鄙人写的代码。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function co(generator) &#123;</span><br><span class="line">	<span class="keyword">var</span> deferred = $.<span class="type">Deferred</span>();</span><br><span class="line">	<span class="keyword">var</span> gen = generator();</span><br><span class="line">	function next(err, <span class="literal">result</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span>(err) &#123;</span><br><span class="line">			deferred.reject(err);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">var</span> step = gen.next(<span class="literal">result</span>);</span><br><span class="line">		<span class="keyword">if</span>(!step.done) &#123;</span><br><span class="line">			gen.value(next);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			deferred.resolve(<span class="literal">result</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	next();</span><br><span class="line">	<span class="keyword">return</span> deferred;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>#CO<br>使用了CO是个神马感觉呢？先看代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var fs = require(&apos;fs&apos;);</div><div class="line">var co = require(&apos;co&apos;);</div><div class="line">var thunkify = require(&apos;thunkify&apos;); //TJ大神写的，把函数转换成Thunk的库</div><div class="line">var readFile = thunkify(fs.readFile);</div><div class="line">co(function* () &#123;</div><div class="line">	var r1 = yield readFile(&apos;/etc/hosts&apos;);</div><div class="line">	console.log(r1.toString());</div><div class="line">	var r2 = yield readFile(&apos;/etc/shells&apos;);</div><div class="line">	console.log(r2.toString());</div><div class="line">&#125;)(function(err, data) &#123; //匿名回调函数，每次读取完文件后，都会执行一遍</div><div class="line">	console.log(err, data);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>看了上面的代码，是不是有种惊讶的感觉，怎么能够这么精炼，是的就是这么精炼。<br>来看看精简版的co实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">var co = function(generator) &#123;</div><div class="line">	return function(callback) &#123;</div><div class="line">		var gen = generator();</div><div class="line">		function next(err, result) &#123;</div><div class="line">			if(err) &#123;</div><div class="line">				return callback(err);</div><div class="line">			&#125;</div><div class="line">			var step = gen.next(result);</div><div class="line">			if(!step.done) &#123; //如果未完成</div><div class="line">				step.value(next);</div><div class="line">			&#125; else &#123;</div><div class="line">				callback(null, step.value);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		next();</div><div class="line">	&#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>很精炼的几句代码就完成了很牛逼的工作。上面代码是网上别人提炼出来的。<br>现在co已经支持promise了，博主写了段代码，来猜测co的promise实现，不知道正不正确，等鄙人拜读co源码之后再确定下，现在先放出鄙人写的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">function co(generator) &#123;</div><div class="line">	var deferred = $.Deferred();</div><div class="line">	var gen = generator();</div><div class="line">	function next(err, result) &#123;</div><div class="line">		if(err) &#123;</div><div class="line">			deferred.reject(err);</div><div class="line">		&#125;</div><div class="line">		var step = gen.next(result);</div><div class="line">		if(!step.done) &#123;</div><div class="line">			gen.value(next);</div><div class="line">		&#125; else &#123;</div><div class="line">			deferred.resolve(result);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	next();</div><div class="line">	return deferred;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<p>最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。<br>我们先看下阮一峰《es6入门》的一段解释</p>
-<blockquote>
-<p>可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以理解成发生某些事件）。ES6引入Generator函数，作用就是可以完全控制函数的内部状态的变化，依次遍历这些状态。<br>在形式上，Generator是一个普通函数，但是有两个特征。一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态（yield语句在英语里的意思就是“产出”）。</p>
-</blockquote>
-<h1 id="Generator">Generator</h1><p>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">gen</span> = function* (x) &#123;</span><br><span class="line">	<span class="keyword">var</span> a = yield x+1;</span><br><span class="line">	<span class="keyword">var</span> b = yield a+2;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(2);</span><br><span class="line"><span class="keyword">g</span>.next();<span class="comment">//返回&#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next(4); <span class="comment">//返回&#123;value: 6, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next();  <span class="comment">//返回 &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure></p>
-<p>咋们来解释下上面的代码：</p>
-<ol>
-<li>先运行gen(2),得到一个迭代器g</li>
-<li>运行g.next(),系统执行x+1(x=2),返回{value: 3, done: false}</li>
-<li>运行g.next(4),把4赋值给a，然后返回{value: 6, done: false}，不要问为什么a不是等于3，反正语法就是这样。</li>
-<li>运行g.next(),返回{value: undefined, done: true}，因为我们没有为b赋值，所以就是undefined</li>
-</ol>
-<p>我们可以发现上面是我们手动一步步执行的。也就是上面说的，Generator遇到yield的时候会挂起，暂停执行。<br>这里不讨论Generator当做普通迭代器的用法，这里讨论的是如何使用Generator来让异步编程看起来更优美。所以这里，我们必须先解释下<strong>Thunk</strong>这东西。<br>]]>
+    
+      &lt;p&gt;最近查看了下ES6的某些特性，最让博主不不解的是Generator，这个特性。一直在考虑，这鬼东东是干嘛用的？哥有Promise就好了，为嘛还要你这东东？理解起来还忒麻烦，还得配合thunk或者promise来使用。不过存在即合理，虽然不是特别理解ES6，出这个的用意。&lt;br&gt;我们先看下阮一峰《es6入门》的一段解释&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以理解成发生某些事件）。ES6引入Generator函数，作用就是可以完全控制函数的内部状态的变化，依次遍历这些状态。&lt;br&gt;在形式上，Generator是一个普通函数，但是有两个特征。一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态（yield语句在英语里的意思就是“产出”）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;#Generator&lt;br&gt;Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;var gen = function* (x) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	var a = yield x+1;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	var b = yield a+2;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	return b;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var g = gen(2);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;g.next();//返回&amp;#123;value: 3, done: false&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;g.next(4); //返回&amp;#123;value: 6, done: false&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;g.next();  //返回 &amp;#123;value: undefined, done: true&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;咋们来解释下上面的代码：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先运行gen(2),得到一个迭代器g&lt;/li&gt;
+&lt;li&gt;运行g.next(),系统执行x+1(x=2),返回{value: 3, done: false}&lt;/li&gt;
+&lt;li&gt;运行g.next(4),把4赋值给a，然后返回{value: 6, done: false}，不要问为什么a不是等于3，反正语法就是这样。&lt;/li&gt;
+&lt;li&gt;运行g.next(),返回{value: undefined, done: true}，因为我们没有为b赋值，所以就是undefined&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们可以发现上面是我们手动一步步执行的。也就是上面说的，Generator遇到yield的时候会挂起，暂停执行。&lt;br&gt;这里不讨论Generator当做普通迭代器的用法，这里讨论的是如何使用Generator来让异步编程看起来更优美。所以这里，我们必须先解释下&lt;strong&gt;Thunk&lt;/strong&gt;这东西。&lt;br&gt;
     
     </summary>
     
-      <category term="ES6" scheme="http://blog.angrytoro.com/tags/ES6/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+      <category term="ES6" scheme="http://wangsu.co/tags/ES6/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[如何编写node命令]]></title>
-    <link href="http://blog.angrytoro.com/2015/04/28/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99node%E5%91%BD%E4%BB%A4/"/>
-    <id>http://blog.angrytoro.com/2015/04/28/如何编写node命令/</id>
+    <title>如何编写node命令</title>
+    <link href="http://wangsu.co/2015/04/28/%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99node%E5%91%BD%E4%BB%A4/"/>
+    <id>http://wangsu.co/2015/04/28/如何编写node命令/</id>
     <published>2015-04-28T12:57:28.000Z</published>
     <updated>2015-04-28T14:30:14.000Z</updated>
+    
     <content type="html"><![CDATA[<p>平时我们都是用别人编写好的nodejs命令，某些时候，我们也想写个命令玩下，咋整。好了，接下去这边流水账就是从头告诉你怎么写一个node命令的。<br>要写一个nodejs命令，首先要储备4个知识点。</p>
 <ol>
 <li>Commander模块</li>
 <li>怎么告诉nodejs，这是一条命令</li>
 <li>如何调试node</li>
-<li>如何发布node插件<h1 id="Commander">Commander</h1>TJ大神写的<a href="https://github.com/tj/commander.js" target="_blank" rel="external">commander</a>（也有Ruby版本），很方便大伙儿写命令，本人就不在这儿翻译commander的说明文档了，大家自己去查看。这里给个官方例子，看看有多方便。<figure class="highlight rsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var program = require(<span class="string">'commander'</span>);</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .version(<span class="string">'0.0.1'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-p, --peppers'</span>, <span class="string">'Add peppers'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-P, --pineapple'</span>, <span class="string">'Add pineapple'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-b, --bbq-sauce'</span>, <span class="string">'Add bbq sauce'</span>)</span><br><span class="line">  .<span class="built_in">option</span>(<span class="string">'-c, --cheese [type]'</span>, <span class="string">'Add the specified type of cheese [marble]'</span>, <span class="string">'marble'</span>)</span><br><span class="line">  .parse(process.argv);</span><br><span class="line"></span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'you ordered a pizza with:'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.peppers) console.<span class="built_in">log</span>(<span class="string">'  - peppers'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.pineapple) console.<span class="built_in">log</span>(<span class="string">'  - pineapple'</span>);</span><br><span class="line"><span class="keyword">if</span> (program.bbqSauce) console.<span class="built_in">log</span>(<span class="string">'  - bbq'</span>);</span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'  - %s cheese'</span>, program.cheese);</span><br></pre></td></tr></table></figure>
+<li>如何发布node插件<br>#Commander<br>TJ大神写的<a href="https://github.com/tj/commander.js" target="_blank" rel="external">commander</a>（也有Ruby版本），很方便大伙儿写命令，本人就不在这儿翻译commander的说明文档了，大家自己去查看。这里给个官方例子，看看有多方便。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var program = require(&apos;commander&apos;);</div><div class="line"></div><div class="line">program</div><div class="line">  .version(&apos;0.0.1&apos;)</div><div class="line">  .option(&apos;-p, --peppers&apos;, &apos;Add peppers&apos;)</div><div class="line">  .option(&apos;-P, --pineapple&apos;, &apos;Add pineapple&apos;)</div><div class="line">  .option(&apos;-b, --bbq-sauce&apos;, &apos;Add bbq sauce&apos;)</div><div class="line">  .option(&apos;-c, --cheese [type]&apos;, &apos;Add the specified type of cheese [marble]&apos;, &apos;marble&apos;)</div><div class="line">  .parse(process.argv);</div><div class="line"></div><div class="line">console.log(&apos;you ordered a pizza with:&apos;);</div><div class="line">if (program.peppers) console.log(&apos;  - peppers&apos;);</div><div class="line">if (program.pineapple) console.log(&apos;  - pineapple&apos;);</div><div class="line">if (program.bbqSauce) console.log(&apos;  - bbq&apos;);</div><div class="line">console.log(&apos;  - %s cheese&apos;, program.cheese);</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h1 id="如何配置package-json">如何配置package.json</h1><p>我们要在package.json中添加一个字段<code>bin</code><br><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="string">"name"</span>: <span class="string">"xxx"</span>, //命令的名字（一定是npm里面没有的）</span><br><span class="line">  	<span class="string">"version"</span>: <span class="string">"0.0.1"</span>, //版本号</span><br><span class="line">  	<span class="string">"bin"</span>: <span class="string">"./bin/yourCommander"</span>, //命令存放的位置</span><br><span class="line">  	<span class="keyword">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>yourCommander文件中需要添加一行<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/usr/bin/env node</span></span><br></pre></td></tr></table></figure></p>
-<p>例如我写的命令<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">require</span>(<span class="string">'../index.js'</span>); <span class="regexp">//</span>程序的入口</span><br></pre></td></tr></table></figure></p>
-<p>假设我们采用全局安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> xxx -g</span><br></pre></td></tr></table></figure></p>
+<p>#如何配置package.json<br>我们要在package.json中添加一个字段<code>bin</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;name&quot;: &quot;xxx&quot;, //命令的名字（一定是npm里面没有的）</div><div class="line">  	&quot;version&quot;: &quot;0.0.1&quot;, //版本号</div><div class="line">  	&quot;bin&quot;: &quot;./bin/yourCommander&quot;, //命令存放的位置</div><div class="line">  	...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>yourCommander文件中需要添加一行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env node</div></pre></td></tr></table></figure></p>
+<p>例如我写的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env node</div><div class="line">require(&apos;../index.js&apos;); //程序的入口</div></pre></td></tr></table></figure></p>
+<p>假设我们采用全局安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install xxx -g</div></pre></td></tr></table></figure></p>
 <p>那么我们就能够直接在终端里面输入<code>xxx -oo</code>（只是举例）来调用我们的命令。</p>
-<h1 id="如何调试node">如何调试node</h1><p>好吧，我只认<code>node-inspector</code>。先全局安装<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span> node-inspector -g</span><br></pre></td></tr></table></figure></p>
-<p>然后直接运行<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node-<span class="keyword">debug</span> xxx/xxx</span><br></pre></td></tr></table></figure></p>
+<p>#如何调试node<br>好吧，我只认<code>node-inspector</code>。先全局安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install node-inspector -g</div></pre></td></tr></table></figure></p>
+<p>然后直接运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node-debug xxx/xxx</div></pre></td></tr></table></figure></p>
 <p>xxx/xxx是bin文件的路径，这样我们就能在chrome浏览器的控制面板上看到相应的断点了。</p>
-<h1 id="如何发布node插件">如何发布node插件</h1><p>OK，当我们写好了命令，那要怎么发布呢？<br>最好是先本地安装一下，实验看看能不能正确运行<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install <span class="tag">&lt;<span class="title">本地路径</span>&gt;</span> -g</span><br></pre></td></tr></table></figure></p>
-<p>然后就能测试自己边写的命令。如果正确执行，那么我们就能够发布到npm上<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">npm</span> adduser <span class="regexp">//</span>创建<span class="built_in">npm</span>账户</span><br></pre></td></tr></table></figure></p>
-<p>执行此命令后，会依次出现输入用户名、Email、密码的提示，输入好之后等待一会儿就可以了。<br>接下去就是发布了<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm publish <span class="tag">&lt;<span class="title">本地路径</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>#如何发布node插件<br>OK，当我们写好了命令，那要怎么发布呢？<br>最好是先本地安装一下，实验看看能不能正确运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install &lt;本地路径&gt; -g</div></pre></td></tr></table></figure></p>
+<p>然后就能测试自己边写的命令。如果正确执行，那么我们就能够发布到npm上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm adduser //创建npm账户</div></pre></td></tr></table></figure></p>
+<p>执行此命令后，会依次出现输入用户名、Email、密码的提示，输入好之后等待一会儿就可以了。<br>接下去就是发布了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm publish &lt;本地路径&gt;</div></pre></td></tr></table></figure></p>
 <p>如果要更新程序包，只要修改一下package.json中的版本号，再重新执行发布命令就可以了。</p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<p>平时我们都是用别人编写好的nodejs命令，某些时候，我们也想写个命令玩下，咋整。好了，接下去这边流水账就是从头告诉你怎么写一个node命令的。<br>要写一个nodejs命令，首先要储备4个知识点。</p>
-<ol>
-<li>Commander模块</li>
-<li>怎么]]>
+    
+      &lt;p&gt;平时我们都是用别人编写好的nodejs命令，某些时候，我们也想写个命令玩下，咋整。好了，接下去这边流水账就是从头告诉你怎么写一个node命令的。&lt;br&gt;要写一个nodejs命令，首先要储备4个知识点。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Commander模块&lt;/li&gt;
+&lt;li&gt;怎么
+    
     </summary>
     
-      <category term="NodeJS" scheme="http://blog.angrytoro.com/tags/NodeJS/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+      <category term="NodeJS" scheme="http://wangsu.co/tags/NodeJS/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[es6编译成es5]]></title>
-    <link href="http://blog.angrytoro.com/2015/04/19/es6%E7%BC%96%E8%AF%91%E6%88%90es5/"/>
-    <id>http://blog.angrytoro.com/2015/04/19/es6编译成es5/</id>
+    <title>es6编译成es5</title>
+    <link href="http://wangsu.co/2015/04/19/es6%E7%BC%96%E8%AF%91%E6%88%90es5/"/>
+    <id>http://wangsu.co/2015/04/19/es6编译成es5/</id>
     <published>2015-04-19T02:03:39.000Z</published>
     <updated>2015-04-19T07:28:31.000Z</updated>
+    
     <content type="html"><![CDATA[<p>这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具<a href="https://github.com/google/traceur-compiler" target="_blank" rel="external">traceur</a>和比较多人用的<a href="https://babeljs.io/" target="_blank" rel="external">babel</a>。发现两个编译工具都有各自的缺点。</p>
-<h1 id="traceur和babel编译器的优缺点">traceur和babel编译器的优缺点</h1><ul>
+<p>#traceur和babel编译器的优缺点</p>
+<ul>
 <li>traceur: 这货编译成的代码的<strong>可读性还是挺好的</strong>。不过比较坑爹的是，traceur需要引入<code>traceur-runtime.js</code>这个运行时脚本，并且在运行时会出现一些莫名的错误。估计是还不成熟。<br><img src="/img/traceur编译.jpg" alt="traceur编译"><a id="more"></a></li>
 <li>babel: 看了<a href="https://babeljs.io/" target="_blank" rel="external">官网</a>，使用这货的牛逼公司还挺多。编译后运行没有什么大问题,就是编译后代码可读性比较欠缺，它有个牛逼的功能是支持commonjs。如果我们用browserify,那就更欢乐了。<br><img src="/img/babel编译.jpg" alt="babel编译"></li>
 </ul>
-<h1 id="compjs编译器">compjs编译器</h1><p>折腾了一阵子，写了个node工具<a href="https://github.com/angrytoro/6to5" target="_blank" rel="external">compjs</a>，整合了traceur和babel，让compjs支持traceur和babel编译，目前的命令还比较简单，只支持最基本的编译（将源文件夹下的文件，编译到输出文件夹中）。<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ compjs --<span class="keyword">help</span> <span class="comment">//查看帮助</span></span><br></pre></td></tr></table></figure></p>
-<p>进入到相应项目文件夹下，输入<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>compjs</span><br></pre></td></tr></table></figure></p>
+<p>#compjs编译器<br>折腾了一阵子，写了个node工具<a href="https://github.com/angrytoro/6to5" target="_blank" rel="external">compjs</a>，整合了traceur和babel，让compjs支持traceur和babel编译，目前的命令还比较简单，只支持最基本的编译（将源文件夹下的文件，编译到输出文件夹中）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ compjs --help //查看帮助</div></pre></td></tr></table></figure></p>
+<p>进入到相应项目文件夹下，输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ compjs</div></pre></td></tr></table></figure></p>
 <p>就会把相应的es6文件，编译到gsrc文件夹下，当然也可以自己指定编译后的位置。<br>有兴趣的朋友可以安装下试试。也可以贡献<a href="https://github.com/angrytoro/6to5" target="_blank" rel="external">compjs</a>源码。</p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<p>这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具<a href="https://github.com/google/traceur-compiler">traceur</a>和比较多人用的<a href="https://babeljs.io/">babel</a>。发现两个编译工具都有各自的缺点。</p>
-<h1 id="traceur和babel编译器的优缺点">traceur和babel编译器的优缺点</h1><ul>
-<li>traceur: 这货编译成的代码的<strong>可读性还是挺好的</strong>。不过比较坑爹的是，traceur需要引入<code>traceur-runtime.js</code>这个运行时脚本，并且在运行时会出现一些莫名的错误。估计是还不成熟。<br><img src="/img/traceur编译.jpg" alt="traceur编译">]]>
+    
+      &lt;p&gt;这ES6变准还没完成，前端界已经蠢蠢欲动。看了下ES6的语法，确实是比ES5好非常的多。难怪前端界那么兴奋。小编本着折腾死的精神，尝试了下谷歌开发的编译工具&lt;a href=&quot;https://github.com/google/traceur-compiler&quot;&gt;traceur&lt;/a&gt;和比较多人用的&lt;a href=&quot;https://babeljs.io/&quot;&gt;babel&lt;/a&gt;。发现两个编译工具都有各自的缺点。&lt;/p&gt;
+&lt;p&gt;#traceur和babel编译器的优缺点&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;traceur: 这货编译成的代码的&lt;strong&gt;可读性还是挺好的&lt;/strong&gt;。不过比较坑爹的是，traceur需要引入&lt;code&gt;traceur-runtime.js&lt;/code&gt;这个运行时脚本，并且在运行时会出现一些莫名的错误。估计是还不成熟。&lt;br&gt;&lt;img src=&quot;/img/traceur编译.jpg&quot; alt=&quot;traceur编译&quot;&gt;
     
     </summary>
     
-      <category term="NodeJS" scheme="http://blog.angrytoro.com/tags/NodeJS/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+    
+      <category term="NodeJS" scheme="http://wangsu.co/tags/NodeJS/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[Chrome浏览器Network面板]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/30/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8Network%E9%9D%A2%E6%9D%BF/"/>
-    <id>http://blog.angrytoro.com/2015/03/30/Chrome浏览器Network面板/</id>
+    <title>Chrome浏览器Network面板</title>
+    <link href="http://wangsu.co/2015/03/30/Chrome%E6%B5%8F%E8%A7%88%E5%99%A8Network%E9%9D%A2%E6%9D%BF/"/>
+    <id>http://wangsu.co/2015/03/30/Chrome浏览器Network面板/</id>
     <published>2015-03-30T15:12:18.000Z</published>
     <updated>2015-04-01T15:10:24.000Z</updated>
+    
     <content type="html"><![CDATA[<p>前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？</p>
-<h1 id="Resource_Timing_API">Resource Timing API</h1><p>这个面板使用<a href="http://www.w3.org/TR/resource-timing/" target="_blank" rel="external">Resource Timing API</a>来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考<a href="http://www.w3cfuns.com/article-5598442-1-1.html" target="_blank" rel="external">Navigation Timing 测试网页加载速度</a>，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。<br><img src="/img/resource-timing-overview.png" alt="network timing data points"><br>咋们看看每个请求，都包含有哪些数据。在控制台输入<code>performance.getEntries()[0]</code><br><a id="more"></a><br><img src="/img/performance.getEntries.png" alt="这个api记录的第一个请求的数据"><br>有这些数据，我们可以做详细的网站性能统计。<br>这里只记录了每个请求的每个节点所花的时间，那么有没有接口记录整个网页的加载详情呢。有的，<code>performance.timing</code>这个接口记录了整个网页加载的详细时间数据。<br><img src="/img/performance.timing.png" alt="performance.timing"></p>
-<h1 id="Timing_details_tab">Timing details tab</h1><p>当我们在测试某个接口，或者某个资源的加载速度时，我们最常用的就是<strong>Timing details tab</strong>这个东东了，先看下，它到底是什么，然后咋们在来解释每个字段的意思。<br><img src="/img/Timing details tab.png" alt="Timing details tab"><br>这个截图没有包含<strong>Timing details tab</strong>的所有字段。</p>
-<h2 id="字段解释">字段解释</h2><ul>
+<p>#Resource Timing API<br>这个面板使用<a href="http://www.w3.org/TR/resource-timing/" target="_blank" rel="external">Resource Timing API</a>来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考<a href="http://www.w3cfuns.com/article-5598442-1-1.html" target="_blank" rel="external">Navigation Timing 测试网页加载速度</a>，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。<br><img src="/img/resource-timing-overview.png" alt="network timing data points"><br>咋们看看每个请求，都包含有哪些数据。在控制台输入<code>performance.getEntries()[0]</code><br><a id="more"></a><br><img src="/img/performance.getEntries.png" alt="这个api记录的第一个请求的数据"><br>有这些数据，我们可以做详细的网站性能统计。<br>这里只记录了每个请求的每个节点所花的时间，那么有没有接口记录整个网页的加载详情呢。有的，<code>performance.timing</code>这个接口记录了整个网页加载的详细时间数据。<br><img src="/img/performance.timing.png" alt="performance.timing"></p>
+<p>#Timing details tab<br>当我们在测试某个接口，或者某个资源的加载速度时，我们最常用的就是<strong>Timing details tab</strong>这个东东了，先看下，它到底是什么，然后咋们在来解释每个字段的意思。<br><img src="/img/Timing details tab.png" alt="Timing details tab"><br>这个截图没有包含<strong>Timing details tab</strong>的所有字段。</p>
+<p>##字段解释</p>
+<ul>
 <li><strong>Stalled/Blocking:</strong>是浏览器得到发出请求指令，到请求可以发出所等待的时间.包括等待代理协商等待的时间，除此之外还有浏览器等待可复用的连接的时间（Chrome下，同一个域名下最多可同时并行6个请求，不同浏览器的可同时并发请求连接数量不一样，详情请参考<a href="http://www.zhihu.com/question/20474326" target="_blank" rel="external">浏览器允许的并发请求资源数是什么意思</a>）</li>
 <li><strong>Proxy Negotiation:</strong>链接代理服务器所花的协商时间</li>
 <li><strong>DNS Lookup:</strong>dns查询所花的时间(像刚才的截图，我们可以发现这个网站花在dns查找的时间太多了)</li>
@@ -701,65 +688,75 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li><strong>SSL:</strong>如果是https请求，那么浏览器还要话费SSL握手时间。</li>
 <li><strong>Request Sent / Sending:</strong>请求发送完成所花的时间</li>
 <li><strong>Waiting (TTFB):</strong>请求发出后，到接收第一个字节所花的时间（在网速稳定的情况下，如果花的时间很长，那么就要检查下是程序写得有问题还是服务器出问题了）</li>
-<li><strong>Content Download / Downloading:</strong>接收服务器传来的数据所花的时间<br>以上所有时间加起来就是这个请求所花的时间。如果网页加载慢，从这里我们大概可以检查哪个请求有异常。<h1 id="如何查看我们网页首屏加载时间">如何查看我们网页首屏加载时间</h1>先看一张图片<br><img src="/img/页面加载时间.png" alt="页面加载时间"><br>这里有两个参数<strong>DOMContentLoaded</strong>和<strong>load</strong><br><strong>DOMContentLoaded:</strong>表示 DOM 与 CSSOM 皆已准备就绪(很多 JavaScript 框架会在执行它们自己的逻辑前等待这个事件的触发)。这个所花时间越长，证明这个页面越复杂，或者你的代码有问题。首屏对用户很重要，所以这个时间不要太长。<br><strong>load:</strong>表示页面所需的资源已经都加载了，如果这个花很长时间，该看看哪个坑爹的资源出问题了。<br>目前看过对首屏优化做得最好的之一是亚马逊，那速度简直是变态的快。<h1 id="总结">总结</h1>当我们网站加载速度慢的时候，看看这个tab，检查下哪些地方可以优化。</li>
+<li><strong>Content Download / Downloading:</strong>接收服务器传来的数据所花的时间<br>以上所有时间加起来就是这个请求所花的时间。如果网页加载慢，从这里我们大概可以检查哪个请求有异常。<br>#如何查看我们网页首屏加载时间<br>先看一张图片<br><img src="/img/页面加载时间.png" alt="页面加载时间"><br>这里有两个参数<strong>DOMContentLoaded</strong>和<strong>load</strong><br><strong>DOMContentLoaded:</strong>表示 DOM 与 CSSOM 皆已准备就绪(很多 JavaScript 框架会在执行它们自己的逻辑前等待这个事件的触发)。这个所花时间越长，证明这个页面越复杂，或者你的代码有问题。首屏对用户很重要，所以这个时间不要太长。<br><strong>load:</strong>表示页面所需的资源已经都加载了，如果这个花很长时间，该看看哪个坑爹的资源出问题了。<br>目前看过对首屏优化做得最好的之一是亚马逊，那速度简直是变态的快。<br>#总结<br>当我们网站加载速度慢的时候，看看这个tab，检查下哪些地方可以优化。</li>
 </ul>
-<h1 id="参考">参考</h1><blockquote>
+<p>#参考</p>
+<blockquote>
 <p><a href="https://developer.chrome.com/devtools/docs/network" target="_blank" rel="external">Evaluating network performance</a><br><a href="http://www.w3.org/TR/resource-timing/" target="_blank" rel="external">Resource Timing</a><br><a href="http://www.w3cfuns.com/article-5598442-1-1.html" target="_blank" rel="external">Navigation Timing 测试网页加载速度</a><br><a href="http://www.th7.cn/web/html-css/201311/14802.shtml" target="_blank" rel="external">初探performance.timing API</a><br><a href="http://segmentfault.com/q/1010000002399481/a-1020000002399855" target="_blank" rel="external">chrome的timeline的问题？</a><br><a href="http://www.zhihu.com/question/20474326" target="_blank" rel="external">浏览器允许的并发请求资源数是什么意思？</a></p>
 </blockquote>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<p>前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？</p>
-<h1 id="Resource_Timing_API">Resource Timing API</h1><p>这个面板使用<a href="http://www.w3.org/TR/resource-timing/">Resource Timing API</a>来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考<a href="http://www.w3cfuns.com/article-5598442-1-1.html">Navigation Timing 测试网页加载速度</a>，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。<br><img src="/img/resource-timing-overview.png" alt="network timing data points"><br>咋们看看每个请求，都包含有哪些数据。在控制台输入<code>performance.getEntries()[0]</code><br>]]>
+    
+      &lt;p&gt;前端程序员在调试页面的时候，最常用到的几个面板：Elements, Network, Sources。其中比较让新手疑惑的是Network面板。那些时间线分别代表什么呢？每个字段，分别代表神马意思呢？&lt;/p&gt;
+&lt;p&gt;#Resource Timing API&lt;br&gt;这个面板使用&lt;a href=&quot;http://www.w3.org/TR/resource-timing/&quot;&gt;Resource Timing API&lt;/a&gt;来计算相应的数据。只要对这个api有足够的了解，我们也能做出跟Chrome Network面板一样的时间轴。由于本文不是主要介绍这个API，因此，如果大家对这个api感兴趣，那么请参考&lt;a href=&quot;http://www.w3cfuns.com/article-5598442-1-1.html&quot;&gt;Navigation Timing 测试网页加载速度&lt;/a&gt;，这里面做了非常详细的解释，有了这个API，我们还能考虑通过这个API做些网站性能数据分析(题外话)。&lt;br&gt;&lt;img src=&quot;/img/resource-timing-overview.png&quot; alt=&quot;network timing data points&quot;&gt;&lt;br&gt;咋们看看每个请求，都包含有哪些数据。在控制台输入&lt;code&gt;performance.getEntries()[0]&lt;/code&gt;&lt;br&gt;
     
     </summary>
     
-      <category term="chrome" scheme="http://blog.angrytoro.com/tags/chrome/"/>
+      <category term="工具" scheme="http://wangsu.co/categories/%E5%B7%A5%E5%85%B7/"/>
     
-      <category term="工具" scheme="http://blog.angrytoro.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="chrome" scheme="http://wangsu.co/tags/chrome/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[对于JavaScript中继承的思考]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/24/%E5%AF%B9%E4%BA%8EJavaScript%E4%B8%AD%E7%BB%A7%E6%89%BF%E7%9A%84%E6%80%9D%E8%80%83/"/>
-    <id>http://blog.angrytoro.com/2015/03/24/对于JavaScript中继承的思考/</id>
+    <title>对于JavaScript中继承的思考</title>
+    <link href="http://wangsu.co/2015/03/24/%E5%AF%B9%E4%BA%8EJavaScript%E4%B8%AD%E7%BB%A7%E6%89%BF%E7%9A%84%E6%80%9D%E8%80%83/"/>
+    <id>http://wangsu.co/2015/03/24/对于JavaScript中继承的思考/</id>
     <published>2015-03-23T16:25:26.000Z</published>
     <updated>2015-03-24T15:04:06.000Z</updated>
-    <content type="html"><![CDATA[<p>先附上一份代码让大家思考，直接看代码，猜猜最终执行的结果会是什么。<br>如果哪位能直接从代码中看出执行结果，那么这人的工资肯定不低于10K。请看全文解释<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">($)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> super_ = <span class="function"><span class="keyword">function</span><span class="params">(methodName, args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">var</span> method = <span class="keyword">this</span>.superClass_.prototype[methodName];</span><br><span class="line">		<span class="keyword">if</span>(method &amp;&amp; <span class="keyword">typeof</span> method === <span class="string">'function'</span>) &#123;</span><br><span class="line">			method.call(<span class="keyword">this</span>, args);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">  	$.inherit = <span class="function"><span class="keyword">function</span><span class="params">(subClass, superClass)</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">var</span> temp = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">	    temp.prototype = superClass.prototype;</span><br><span class="line">	    <span class="keyword">var</span> subPro = <span class="keyword">new</span> temp();</span><br><span class="line">	    subPro.constructor = subClass;</span><br><span class="line">	    subPro.super_ = super_;</span><br><span class="line">	    subPro.superClass_ = superClass;</span><br><span class="line">	    subClass.prototype = subPro;</span><br><span class="line">  	&#125;;</span><br><span class="line">&#125;)(jQuery);</span><br><span class="line"><span class="keyword">var</span> Super = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Super'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.extend(Super.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Super'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> Sub1 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Sub1'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.inherit(Sub1, Super);</span><br><span class="line">$.extend(Sub1.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.super_(<span class="string">'say'</span>, <span class="built_in">arguments</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Sub1'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Sub1().say();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'========'</span>);</span><br><span class="line"><span class="keyword">var</span> Sub2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Sub2'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.inherit(Sub2, Sub1);</span><br><span class="line">$.extend(Sub2.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.super_(<span class="string">'say'</span>, <span class="built_in">arguments</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Sub2'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Sub2().say();</span><br></pre></td></tr></table></figure></p>
+    
+    <content type="html"><![CDATA[<p>先附上一份代码让大家思考，直接看代码，猜猜最终执行的结果会是什么。<br>如果哪位能直接从代码中看出执行结果，那么这人的工资肯定不低于10K。请看全文解释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">(function($) &#123;</div><div class="line">	var super_ = function(methodName, args) &#123;</div><div class="line">		var method = this.superClass_.prototype[methodName];</div><div class="line">		if(method &amp;&amp; typeof method === &apos;function&apos;) &#123;</div><div class="line">			method.call(this, args);</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line"></div><div class="line">  	$.inherit = function(subClass, superClass) &#123;</div><div class="line">	    var temp = function() &#123;&#125;;</div><div class="line">	    temp.prototype = superClass.prototype;</div><div class="line">	    var subPro = new temp();</div><div class="line">	    subPro.constructor = subClass;</div><div class="line">	    subPro.super_ = super_;</div><div class="line">	    subPro.superClass_ = superClass;</div><div class="line">	    subClass.prototype = subPro;</div><div class="line">  	&#125;;</div><div class="line">&#125;)(jQuery);</div><div class="line">var Super = function() &#123;</div><div class="line">	this.name = &apos;Super&apos;;</div><div class="line">&#125;;</div><div class="line">$.extend(Super.prototype, &#123;</div><div class="line">    say: function() &#123;</div><div class="line">        console.log(&apos;Super&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">var Sub1 = function() &#123;</div><div class="line">	this.name = &apos;Sub1&apos;;</div><div class="line">&#125;;</div><div class="line">$.inherit(Sub1, Super);</div><div class="line">$.extend(Sub1.prototype, &#123;</div><div class="line">    say: function() &#123;</div><div class="line">        this.super_(&apos;say&apos;, arguments);</div><div class="line">        console.log(&apos;Sub1&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">new Sub1().say();</div><div class="line">console.log(&apos;========&apos;);</div><div class="line">var Sub2 = function() &#123;</div><div class="line">	this.name = &apos;Sub2&apos;;</div><div class="line">&#125;;</div><div class="line">$.inherit(Sub2, Sub1);</div><div class="line">$.extend(Sub2.prototype, &#123;</div><div class="line">    say: function() &#123;</div><div class="line">        this.super_(&apos;say&apos;, arguments);</div><div class="line">        console.log(&apos;Sub2&apos;);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">new Sub2().say();</div></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <p>这份代码的最终执行结果是<strong>死循环</strong>。<img src="/img/对于JavaScript中继承的思考-执行结果.png" alt="执行结果"><br>这份代码的目的是实现<code>JavaScript</code>的继承，并且希望子类能通过<code>this.super_(methodName, arguments)</code>来实现调用父元素的相同方法。</p>
-<h1 id="代码解释">代码解释</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">(function($) &#123;</span><br><span class="line">	<span class="keyword">var</span> super_ = function(methodName, args) &#123;</span><br><span class="line">		<span class="keyword">var</span> <span class="keyword">method</span> = this.superClass_.prototype[methodName];</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">method</span> &amp;&amp; typeof <span class="keyword">method</span> === 'function') &#123;</span><br><span class="line">			<span class="keyword">method</span>.call(this, args);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">  	$.inherit = function(subClass, superClass) &#123;</span><br><span class="line">	    <span class="keyword">var</span> temp = function() &#123;&#125;;</span><br><span class="line">	    temp.prototype = superClass.prototype;</span><br><span class="line">	    <span class="keyword">var</span> subPro = new temp();</span><br><span class="line">	    subPro.constructor = subClass;</span><br><span class="line">	    subPro.super_ = super_;</span><br><span class="line">	    subPro.superClass_ = superClass;</span><br><span class="line">	    subClass.prototype = subPro;</span><br><span class="line">  	&#125;;</span><br><span class="line">&#125;)(jQuery);</span><br></pre></td></tr></table></figure>
-<p>这段代码主要实现了一个函数<code>$.inherit</code>,这个函数应用于<code>JavaScript</code>的继承。里面的代码是<code>JavaScript</code>最经典的继承实现方案。<br>不过呢，有个不足的地方，那就是，这段代码还想实现<code>this.super_(methodName, arguments)</code>。这个方法类似于OO语言,某种便捷的语法糖去调用基类中被子类覆盖的方法，例如Java中<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class A &#123;</span><br><span class="line">   <span class="type">void</span> <span class="keyword">method</span>() &#123;</span><br><span class="line">      <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"A"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class B &#123;</span><br><span class="line">    <span class="type">void</span> <span class="keyword">method</span>() &#123;</span><br><span class="line">        super.<span class="keyword">method</span>();</span><br><span class="line">        <span class="type">System</span>.<span class="keyword">out</span>.println(<span class="string">"B"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#代码解释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">(function($) &#123;</div><div class="line">	var super_ = function(methodName, args) &#123;</div><div class="line">		var method = this.superClass_.prototype[methodName];</div><div class="line">		if(method &amp;&amp; typeof method === &apos;function&apos;) &#123;</div><div class="line">			method.call(this, args);</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line"></div><div class="line">  	$.inherit = function(subClass, superClass) &#123;</div><div class="line">	    var temp = function() &#123;&#125;;</div><div class="line">	    temp.prototype = superClass.prototype;</div><div class="line">	    var subPro = new temp();</div><div class="line">	    subPro.constructor = subClass;</div><div class="line">	    subPro.super_ = super_;</div><div class="line">	    subPro.superClass_ = superClass;</div><div class="line">	    subClass.prototype = subPro;</div><div class="line">  	&#125;;</div><div class="line">&#125;)(jQuery);</div></pre></td></tr></table></figure></p>
+<p>这段代码主要实现了一个函数<code>$.inherit</code>,这个函数应用于<code>JavaScript</code>的继承。里面的代码是<code>JavaScript</code>最经典的继承实现方案。<br>不过呢，有个不足的地方，那就是，这段代码还想实现<code>this.super_(methodName, arguments)</code>。这个方法类似于OO语言,某种便捷的语法糖去调用基类中被子类覆盖的方法，例如Java中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class A &#123;</div><div class="line">   void method() &#123;</div><div class="line">      System.out.println(&quot;A&quot;);</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class B &#123;</div><div class="line">    void method() &#123;</div><div class="line">        super.method();</div><div class="line">        System.out.println(&quot;B&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>我们这里的实现方法，如果说是继承后，不重写父级方法，或者在重写父级方法的时候，不调用<code>this.super_(methodName, arguments)</code>，那么没有神马问题，你可以各种深度继承<code>B继承A，C继承B，D继承C</code>，这些都没有问题。<br><strong>可是！</strong>这玩意儿没法没法让我们实现类似最上面那段代码的继承方式，<code>Sub1继承Supper，Sub2继承Sub1</code>，然后<code>Sub1,Sub2</code>都重写了<code>say</code>方法，并且<code>say</code>方法都调用了<code>this.super_(methodName, arguments)</code>，这个时候要出现死循环了.在调用<code>new Sub2().say();</code>的时，会先去调用<code>this.super_(&#39;say&#39;, arguments);</code>，然后执行<code>Sub1</code>里面的<code>say</code>，这个时候又执行<code>this.super_(&#39;say&#39;, arguments);</code>，问题就是出在这里，这个<code>this</code>对象可是<code>Sub2</code>的对象，也就是说<code>this.superClass_.prototype[methodName];</code>这段代码相当于<code>Sub1.prototype.say</code>，然后一直在这里循环。</p>
-<h1 id="寻求解决方案">寻求解决方案</h1><p>如果那位有牛逼的解决方案，请告诉各位苦逼程序员，谢谢~~o(&gt;_&lt;)o ~~。</p>
-<h1 id="参考">参考</h1><blockquote>
+<p>#寻求解决方案<br>如果那位有牛逼的解决方案，请告诉各位苦逼程序员，谢谢~~o(&gt;_&lt;)o ~~。</p>
+<p>#参考</p>
+<blockquote>
 <p><a href="http://efe.baidu.com/blog/oo-super-syntax-in-javascript/" target="_blank" rel="external">在 Javascript 中实现调用父类同名方法的语法糖(this._super())</a></p>
 </blockquote>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<p>先附上一份代码让大家思考，直接看代码，猜猜最终执行的结果会是什么。<br>如果哪位能直接从代码中看出执行结果，那么这人的工资肯定不低于10K。请看全文解释<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span><span class="params">($)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> super_ = <span class="function"><span class="keyword">function</span><span class="params">(methodName, args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">var</span> method = <span class="keyword">this</span>.superClass_.prototype[methodName];</span><br><span class="line">		<span class="keyword">if</span>(method &amp;&amp; <span class="keyword">typeof</span> method === <span class="string">'function'</span>) &#123;</span><br><span class="line">			method.call(<span class="keyword">this</span>, args);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">  	$.inherit = <span class="function"><span class="keyword">function</span><span class="params">(subClass, superClass)</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">var</span> temp = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">	    temp.prototype = superClass.prototype;</span><br><span class="line">	    <span class="keyword">var</span> subPro = <span class="keyword">new</span> temp();</span><br><span class="line">	    subPro.constructor = subClass;</span><br><span class="line">	    subPro.super_ = super_;</span><br><span class="line">	    subPro.superClass_ = superClass;</span><br><span class="line">	    subClass.prototype = subPro;</span><br><span class="line">  	&#125;;</span><br><span class="line">&#125;)(jQuery);</span><br><span class="line"><span class="keyword">var</span> Super = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Super'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.extend(Super.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Super'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> Sub1 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Sub1'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.inherit(Sub1, Super);</span><br><span class="line">$.extend(Sub1.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.super_(<span class="string">'say'</span>, <span class="built_in">arguments</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Sub1'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Sub1().say();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'========'</span>);</span><br><span class="line"><span class="keyword">var</span> Sub2 = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'Sub2'</span>;</span><br><span class="line">&#125;;</span><br><span class="line">$.inherit(Sub2, Sub1);</span><br><span class="line">$.extend(Sub2.prototype, &#123;</span><br><span class="line">    say: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.super_(<span class="string">'say'</span>, <span class="built_in">arguments</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'Sub2'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> Sub2().say();</span><br></pre></td></tr></table></figure></p>]]>
+    
+      &lt;p&gt;先附上一份代码让大家思考，直接看代码，猜猜最终执行的结果会是什么。&lt;br&gt;如果哪位能直接从代码中看出执行结果，那么这人的工资肯定不低于10K。请看全文解释&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;35&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;36&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;37&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;38&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;39&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;40&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;41&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;42&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;43&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;44&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;45&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;46&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;47&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;48&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;49&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;(function($) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	var super_ = function(methodName, args) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		var method = this.superClass_.prototype[methodName];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		if(method &amp;amp;&amp;amp; typeof method === &amp;apos;function&amp;apos;) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;			method.call(this, args);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	$.inherit = function(subClass, superClass) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    var temp = function() &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    temp.prototype = superClass.prototype;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    var subPro = new temp();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    subPro.constructor = subClass;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    subPro.super_ = super_;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    subPro.superClass_ = superClass;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    subClass.prototype = subPro;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;)(jQuery);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var Super = function() &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	this.name = &amp;apos;Super&amp;apos;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$.extend(Super.prototype, &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    say: function() &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        console.log(&amp;apos;Super&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var Sub1 = function() &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	this.name = &amp;apos;Sub1&amp;apos;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$.inherit(Sub1, Super);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$.extend(Sub1.prototype, &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    say: function() &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        this.super_(&amp;apos;say&amp;apos;, arguments);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        console.log(&amp;apos;Sub1&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;new Sub1().say();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;console.log(&amp;apos;========&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var Sub2 = function() &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	this.name = &amp;apos;Sub2&amp;apos;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$.inherit(Sub2, Sub1);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$.extend(Sub2.prototype, &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    say: function() &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        this.super_(&amp;apos;say&amp;apos;, arguments);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        console.log(&amp;apos;Sub2&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;new Sub2().say();&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
+    
     
   </entry>
   
   <entry>
-    <title><![CDATA[为了运行fekit sync，在服务器配置rsync的时候遇到的问题]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/12/%E4%B8%BA%E4%BA%86%E8%BF%90%E8%A1%8Cfekit-sync%EF%BC%8C%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AErsync%E7%9A%84%E6%97%B6%E5%80%99%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>http://blog.angrytoro.com/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/</id>
+    <title>为了运行fekit sync，在服务器配置rsync的时候遇到的问题</title>
+    <link href="http://wangsu.co/2015/03/12/%E4%B8%BA%E4%BA%86%E8%BF%90%E8%A1%8Cfekit-sync%EF%BC%8C%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AErsync%E7%9A%84%E6%97%B6%E5%80%99%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://wangsu.co/2015/03/12/为了运行fekit-sync，在服务器配置rsync的时候遇到的问题/</id>
     <published>2015-03-12T14:40:48.000Z</published>
     <updated>2015-03-12T14:48:46.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="问题一、sudo：抱歉，您必须拥有一个终端来执行_sudo">问题一、<code>sudo：抱歉，您必须拥有一个终端来执行 sudo</code></h2><p>在执行<code>fekit sync</code>的时候遇到这个问题。解决办法</p>
+    
+    <content type="html"><![CDATA[<p>##问题一、<code>sudo：抱歉，您必须拥有一个终端来执行 sudo</code><br>在执行<code>fekit sync</code>的时候遇到这个问题。解决办法</p>
 <blockquote>
 <p>以root权限进入服务器，编辑<code>/etc/sudoers</code>，注释掉 <code>Default requiretty</code>这 一行</p>
 </blockquote>
-<h2 id="问题二、sudo:_no_tty_present_and_no_askpass_program_specified">问题二、<code>sudo: no tty present and no askpass program specified</code></h2><p>第一个问题解决后运行时曝出了这个错误，解决办法</p>
+<p>##问题二、<code>sudo: no tty present and no askpass program specified</code><br>第一个问题解决后运行时曝出了这个错误，解决办法</p>
 <blockquote>
 <p>以root权限进入服务器，编辑<code>/etc/sudoers</code>，设置<code>Defaults visiblepw</code></p>
 </blockquote>
-<h2 id="问题三、Error:_Command_failed:_[sudo]_password_for_xxx">问题三、<code>Error: Command failed: [sudo] password for xxx</code></h2><p>上面的解决后，在运行<code>fekit sync</code>还是会爆出这个错误，其中<code>xxx</code>是用户名。那是因为你配置了免密码登录，但是普通用户在运行<code>sudo</code>的时候还是需要输入密码，这导致了这个错误的出现。解决办法</p>
+<p>##问题三、<code>Error: Command failed: [sudo] password for xxx</code><br>上面的解决后，在运行<code>fekit sync</code>还是会爆出这个错误，其中<code>xxx</code>是用户名。那是因为你配置了免密码登录，但是普通用户在运行<code>sudo</code>的时候还是需要输入密码，这导致了这个错误的出现。解决办法</p>
 <blockquote>
 <p>以root权限进入服务器，输入<code>visudo</code>，然后有几种方法</p>
 <ol>
@@ -768,39 +765,46 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li><code>%groupname ALL= NOPASSWD:/usr/bin/rsync</code>——只为<code>rsync</code>开了sudo的免密码。相对安全。</li>
 </ol>
 </blockquote>
-<h1 id="总结">总结</h1><p>按照上面的解决办法绝对可以成功免密码rsync。谢谢大家。</p>
-<h2 id="配置免密码fekit_sync注意事项">配置免密码fekit sync注意事项</h2><blockquote>
+<p>#总结<br>按照上面的解决办法绝对可以成功免密码rsync。谢谢大家。</p>
+<p>##配置免密码fekit sync注意事项</p>
+<blockquote>
 <ol>
 <li>用户需要配置免密码ssh</li>
 <li>用户需要有sudo权限</li>
 </ol>
 </blockquote>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<h2 id="问题一、sudo：抱歉，您必须拥有一个终端来执行_sudo">问题一、<code>sudo：抱歉，您必须拥有一个终端来执行 sudo</code></h2><p>在执行<code>fekit sync</code>的时候遇到这个问题。解决办法</p>
-<block]]>
+    
+      &lt;p&gt;##问题一、&lt;code&gt;sudo：抱歉，您必须拥有一个终端来执行 sudo&lt;/code&gt;&lt;br&gt;在执行&lt;code&gt;fekit sync&lt;/code&gt;的时候遇到这个问题。解决办法&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;以root权限进入服务器，编辑&lt;code&gt;/etc/su
+    
     </summary>
     
-      <category term="linux" scheme="http://blog.angrytoro.com/categories/linux/"/>
+      <category term="linux" scheme="http://wangsu.co/categories/linux/"/>
+    
     
   </entry>
   
   <entry>
-    <title><![CDATA[如何对服务器进行免密码登录配置]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/12/%E5%A6%82%E4%BD%95%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/"/>
-    <id>http://blog.angrytoro.com/2015/03/12/如何对服务器进行免密码登录配置/</id>
+    <title>如何对服务器进行免密码登录配置</title>
+    <link href="http://wangsu.co/2015/03/12/%E5%A6%82%E4%BD%95%E5%AF%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE/"/>
+    <id>http://wangsu.co/2015/03/12/如何对服务器进行免密码登录配置/</id>
     <published>2015-03-12T04:32:33.000Z</published>
     <updated>2015-03-18T13:42:08.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
+    
+    <content type="html"><![CDATA[<p>#用户组操作<br>命令解释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">grooupadd xxx //新建用户组</div><div class="line">chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)</div><div class="line">gpasswd -a user groupName //将用户user 添加到组groupName</div></pre></td></tr></table></figure></p>
 <hr>
-<h1 id="用户操作">用户操作</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx -<span class="keyword">g</span> groupName<span class="comment">//新增用户<span class="label">xxx并把它划分到groupName这个组</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>
+<p>#用户操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">useradd xxx -g groupName//新增用户xxx并把它划分到groupName这个组</div><div class="line">passwd xxx //为xxx用户设置密码</div></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<h1 id="新增用户并赋予某个组的脚本">新增用户并赋予某个组的脚本</h1><p>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line">useradd <span class="variable">$1</span> -g fontend</span><br><span class="line">passwd <span class="variable">$1</span></span><br></pre></td></tr></table></figure></p>
-<p>我们可以这么执行<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sh</span> useradd.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure></p>
-<p>也可以取一个别名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> addFontendUser = <span class="string">'sh useradd.sh'</span></span><br></pre></td></tr></table></figure></p>
-<p>那么之后我们就可以直接在系统执行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addFontendUser</span><br></pre></td></tr></table></figure></p>
+<p>#新增用户并赋予某个组的脚本<br>假设我已创建fontend组，那么创建一个useradd.sh脚本，内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">useradd $1 -g fontend</div><div class="line">passwd $1</div></pre></td></tr></table></figure></p>
+<p>我们可以这么执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh useradd.sh</div></pre></td></tr></table></figure></p>
+<p>也可以取一个别名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alias addFontendUser = &apos;sh useradd.sh&apos;</div></pre></td></tr></table></figure></p>
+<p>那么之后我们就可以直接在系统执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">addFontendUser</div></pre></td></tr></table></figure></p>
 <p>来添加fontend组的用户了</p>
-<h1 id="免密码登录">免密码登录</h1><p>假设创建了个用户abc，那么用abc登录服务器<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#cd</span> ~</span><br><span class="line"><span class="id">#mkdir</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#chmod</span> <span class="number">700</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#cd</span> <span class="class">.ssh</span></span><br><span class="line"><span class="id">#vi</span> authorized_keys <span class="comment">//将你pc的公钥放进去</span></span><br><span class="line"><span class="id">#chmod</span> <span class="number">655</span> authorized_keys</span><br></pre></td></tr></table></figure></p>
+<p>#免密码登录<br>假设创建了个用户abc，那么用abc登录服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#cd ~</div><div class="line">#mkdir .ssh</div><div class="line">#chmod 700 .ssh</div><div class="line">#cd .ssh</div><div class="line">#vi authorized_keys //将你pc的公钥放进去</div><div class="line">#chmod 655 authorized_keys</div></pre></td></tr></table></figure></p>
 <p>设置完，退出登录，然后就可以享受免密码登录了<br>注意事项</p>
 <blockquote>
 <ol>
@@ -809,25 +813,30 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 </ol>
 </blockquote>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<h1 id="用户组操作">用户组操作</h1><p>命令解释<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grooupadd xxx <span class="comment">//新建用户组</span></span><br><span class="line">chgrp xxx -R fileName <span class="comment">//将某个文件夹(fileName)及其下面的所有文件的属组设置为<span class="label">xxx(用户组)</span></span></span><br><span class="line">gpasswd -<span class="tag">a</span> user groupName <span class="comment">//将用户user 添加到组groupName</span></span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="用户操作">用户操作</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd xxx -<span class="keyword">g</span> groupName<span class="comment">//新增用户<span class="label">xxx并把它划分到groupName这个组</span></span></span><br><span class="line">passwd xxx <span class="comment">//为<span class="label">xxx用户设置密码</span></span></span><br></pre></td></tr></table></figure>]]>
+    
+      &lt;p&gt;#用户组操作&lt;br&gt;命令解释&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;grooupadd xxx //新建用户组&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;chgrp xxx -R fileName //将某个文件夹(fileName)及其下面的所有文件的属组设置为xxx(用户组)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;gpasswd -a user groupName //将用户user 添加到组groupName&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;#用户操作&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;useradd xxx -g groupName//新增用户xxx并把它划分到groupName这个组&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;passwd xxx //为xxx用户设置密码&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
     
-      <category term="linux" scheme="http://blog.angrytoro.com/categories/linux/"/>
+      <category term="linux" scheme="http://wangsu.co/categories/linux/"/>
+    
     
   </entry>
   
   <entry>
-    <title><![CDATA[chrome重度用户必备插件]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/09/chrome%E9%87%8D%E5%BA%A6%E7%94%A8%E6%88%B7%E5%BF%85%E8%A3%85%E6%8F%92%E4%BB%B6/"/>
-    <id>http://blog.angrytoro.com/2015/03/09/chrome重度用户必装插件/</id>
+    <title>chrome重度用户必备插件</title>
+    <link href="http://wangsu.co/2015/03/09/chrome%E9%87%8D%E5%BA%A6%E7%94%A8%E6%88%B7%E5%BF%85%E8%A3%85%E6%8F%92%E4%BB%B6/"/>
+    <id>http://wangsu.co/2015/03/09/chrome重度用户必装插件/</id>
     <published>2015-03-09T12:48:05.000Z</published>
     <updated>2015-03-09T13:49:48.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="此文原创，转载请标明出处。谢谢。">此文原创，转载请标明出处。谢谢。</h1><p>博主使用chrome将近5年，这些插件是博主在使用chrome时精心收藏下来的，大家定会喜欢。事先说明，这篇博文适合那些懂翻墙的人看。对于每个插件，相信大家会使用的，不会使用的在下面被博主留言，必仔细教你怎么使用。</p>
-<h1 id="生活工具篇">生活工具篇</h1><ol>
+    
+    <content type="html"><![CDATA[<p>#此文原创，转载请标明出处。谢谢。<br>博主使用chrome将近5年，这些插件是博主在使用chrome时精心收藏下来的，大家定会喜欢。事先说明，这篇博文适合那些懂翻墙的人看。对于每个插件，相信大家会使用的，不会使用的在下面被博主留言，必仔细教你怎么使用。</p>
+<p>#生活工具篇</p>
+<ol>
 <li><a href="https://chrome.google.com/webstore/detail/adblock/gighmmpiobklfepjocnamgkkbiglidom" target="_blank" rel="external">AdBlock</a>:这个屏蔽广告插件简直是妇孺皆知，这里就不都做介绍了。</li>
 <li><a href="https://chrome.google.com/webstore/detail/cfhdojbkjhnklbpkdaibdccddilifddb" target="_blank" rel="external">Adblock Plus</a>:这个也是广告屏蔽插件，用了以上两个插件，妈妈再也不担心我被各种广告诱惑了。</li>
 <li><a href="https://chrome.google.com/webstore/detail/ajgnnllmjadopdlmpplonojbfogkjlcl" target="_blank" rel="external">PasswordBox</a>:1Password有没有很贵，lastpass有没有很坑爹，说好的免费呢。好吧，博主是个穷逼，只能找个免费的用，PasswordBox这个插件是密码管理插件，已经被英特尔收购，使用简单方便，全平台支持（windows，mac，ios，mac，linux，Android）弱智都能上手，还免费，尤其还是有英特尔这个靠山，两三年内应该不会倒闭。</li>
@@ -835,7 +844,8 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li><a href="https://chrome.google.com/webstore/detail/ojcflmmmcfpacggndoaaflkmcoblhnbh" target="_blank" rel="external">Wunderlist</a>:说白了就是个todo工具，简单好用，也是支持全平台，不用担心，免费的。</li>
 <li><a href="https://chrome.google.com/webstore/detail/keigpnkjljkelclbjbekcfnaomfodamj" target="_blank" rel="external">如意淘</a>:诶这大家一定要安装，网购比价神器，安装这个插件后，你只要浏览网站上的商品，它基本都会给你显示出最近一段时间，这个商品的价格走势。</li>
 </ol>
-<h1 id="开发篇">开发篇</h1><ol>
+<p>#开发篇</p>
+<ol>
 <li><a href="https://chrome.google.com/webstore/detail/ighdmehidhipcmcojjgiloacoafjmpfk" target="_blank" rel="external">AngularJS Batarang</a>:开发angular的时候必会用到的插件，功能强悍，用了就知道，这里不再详细介绍。</li>
 <li><a href="https://chrome.google.com/webstore/detail/bhlhnicpbhignbdhedgjhgdocnmhomnp" target="_blank" rel="external">ColorZilla</a>:网页上的颜色取色器，对web开发人员或者设计上很用用处。</li>
 <li><a href="https://chrome.google.com/webstore/detail/mfoaclfeiefiehgaojbmncmefhdnikeg" target="_blank" rel="external">HostAdmin App</a>:修改host应用，这个是离线应用，不是插件，原来是有插件的，相当好用，变成离线应用之后就just soso了。</li>
@@ -847,11 +857,12 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 <li><a href="https://chrome.google.com/webstore/detail/fhbjgbiflinjbdggehcddcbncdddomop" target="_blank" rel="external">Postman - REST Client</a>:提供功能强大的 Web API &amp; HTTP 请求调试。在调试接口的时候非常有用。</li>
 <li><a href="https://github.com/justjavac/ReplaceGoogleCDN" target="_blank" rel="external">Replace Google CDN</a>: 把谷歌cdn重定向到国内的服务器。诶，大家懂的，这工具还是挺有用的。</li>
 </ol>
-<h1 id="图表篇">图表篇</h1><ol>
+<p>#图表篇</p>
+<ol>
 <li><a href="https://chrome.google.com/webstore/detail/bhmicilclplefnflapjmnngmkkkkpfad" target="_blank" rel="external">Gliffy Diagrams</a>:就是画图表的，例如流程图，用例图等，没啥好介绍的。</li>
 <li><a href="https://chrome.google.com/webstore/detail/djejicklhojeokkfmdelnempiecmdomj" target="_blank" rel="external">Lucidchart 离线图表</a>:在线和离线绘制流程图、实体模型、UML、思维导图等。</li>
 </ol>
-<h1 id="其他">其他</h1><p>这些插件也是很好玩的</p>
+<p>#其他<br>这些插件也是很好玩的</p>
 <ol>
 <li><a href="https://chrome.google.com/webstore/detail/dbepggeogbaibhgnhhndojpepiihcmeb" target="_blank" rel="external">Vimium</a>:这个插件可以让你用vim的快捷键来控制网页，超级好用。</li>
 <li><a href="https://chrome.google.com/webstore/detail/padekgcemlokbadohgkifijomclgjgif" target="_blank" rel="external">Proxy SwitchyOmega</a>: 咋们想免费翻墙的时候经常需要用到的，轻松快捷地管理和切换多个代理设置。</li>
@@ -859,77 +870,96 @@ Project.hasMany(User)  //这种情况下，会为User添加project_id字段</spa
 </ol>
 <p>最后感谢这些开发者，给我们带来这么好的工具。</p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[chrome从出世到现在，博主最喜爱的插件，都在此了。]]>
+    
+      chrome从出世到现在，博主最喜爱的插件，都在此了。
     
     </summary>
     
-      <category term="chrome" scheme="http://blog.angrytoro.com/tags/chrome/"/>
+      <category term="工具" scheme="http://wangsu.co/categories/%E5%B7%A5%E5%85%B7/"/>
     
-      <category term="工具" scheme="http://blog.angrytoro.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="chrome" scheme="http://wangsu.co/tags/chrome/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[解决form.submit()无法触发onsubmit事件问]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/%E8%A7%A3%E5%86%B3form-submit-%E6%97%A0%E6%B3%95%E8%A7%A6%E5%8F%91onsubmit%E4%BA%8B%E4%BB%B6%E9%97%AE/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/解决form-submit-无法触发onsubmit事件问/</id>
+    <title>解决form.submit()无法触发onsubmit事件问</title>
+    <link href="http://wangsu.co/2015/03/08/%E8%A7%A3%E5%86%B3form-submit-%E6%97%A0%E6%B3%95%E8%A7%A6%E5%8F%91onsubmit%E4%BA%8B%E4%BB%B6%E9%97%AE/"/>
+    <id>http://wangsu.co/2015/03/08/解决form-submit-无法触发onsubmit事件问/</id>
     <published>2015-03-08T11:04:04.000Z</published>
     <updated>2015-03-08T11:04:40.000Z</updated>
+    
     <content type="html"><![CDATA[<p>有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:</p>
 <blockquote>
 <p>The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explorer 5.5 and later, you can call the fireEvent method with a value of onsubmit in the sEvent parameter. </p>
 </blockquote>
-<p>大家知道啥回事了吧。原生js在执行<code>form.submit()</code>的时候根本不会去触发onsubmit事件。<br>所以在<code>submit</code>之前，先手动绑定一个<strong>submit</strong>事件（叫其他名字也行，如<strong>gaga</strong>）:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> form = <span class="built_in">document</span>.getElementById(<span class="string">'xxx'</span>);</span><br><span class="line">$(form).bind(<span class="string">'submit'</span>,<span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123; <span class="comment">//绑定事件</span></span><br><span class="line">    <span class="built_in">console</span>.log(e);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(form.fireEvent) &#123; <span class="comment">// if IE Browser</span></span><br><span class="line">    form.fireEvent(<span class="string">'onsubmit'</span>); <span class="comment">//激活submit事件</span></span><br><span class="line">    form.submit(); <span class="comment">//促发sbumit事件</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">'HTMLEvents'</span>);</span><br><span class="line">    event.initEvent(<span class="string">'submit'</span>, <span class="literal">false</span>, <span class="literal">true</span>); <span class="comment">//初始化submit事件</span></span><br><span class="line">    event.dispatchEvent(event); <span class="comment">//触发submit事件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大家知道啥回事了吧。原生js在执行<code>form.submit()</code>的时候根本不会去触发onsubmit事件。<br>所以在<code>submit</code>之前，先手动绑定一个<strong>submit</strong>事件（叫其他名字也行，如<strong>gaga</strong>）:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var form = document.getElementById(&apos;xxx&apos;);</div><div class="line">$(form).bind(&apos;submit&apos;,function(e)&#123; //绑定事件</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">if(form.fireEvent) &#123; // if IE Browser</div><div class="line">    form.fireEvent(&apos;onsubmit&apos;); //激活submit事件</div><div class="line">    form.submit(); //促发sbumit事件</div><div class="line">&#125; else &#123;</div><div class="line">    var event = document.createEvent(&apos;HTMLEvents&apos;);</div><div class="line">    event.initEvent(&apos;submit&apos;, false, true); //初始化submit事件</div><div class="line">    event.dispatchEvent(event); //触发submit事件</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>也就是我们不能简单的<code>form.submit()</code>。得在之前构造相应的函数，太费劲了。尽量绕过这种需求吧，实在是没办法的时候再用这种解决方案。</p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<p>有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:</p>
-<blockquote>
-<p>The submit method does not invoke the onsubmit event handler]]>
+    
+      &lt;p&gt;有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The submit method does not invoke the onsubmit event handler
+    
     </summary>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
+    
     
   </entry>
   
   <entry>
-    <title><![CDATA[不同浏览器求滚动距离的办法]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/%E4%B8%8D%E5%90%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B1%82%E6%BB%9A%E5%8A%A8%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%8A%9E%E6%B3%95/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/不同浏览器求滚动距离的办法/</id>
+    <title>不同浏览器求滚动距离的办法</title>
+    <link href="http://wangsu.co/2015/03/08/%E4%B8%8D%E5%90%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B1%82%E6%BB%9A%E5%8A%A8%E8%B7%9D%E7%A6%BB%E7%9A%84%E5%8A%9E%E6%B3%95/"/>
+    <id>http://wangsu.co/2015/03/08/不同浏览器求滚动距离的办法/</id>
     <published>2015-03-08T11:02:26.000Z</published>
     <updated>2015-03-08T11:03:15.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="chrome">chrome</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</span><br><span class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</span><br><span class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</span><br></pre></td></tr></table></figure>
-<h1 id="firefox">firefox</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.documentElement.scrollTop</span><br><span class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</span><br><span class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</span><br></pre></td></tr></table></figure>
-<h1 id="IE">IE</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</span><br></pre></td></tr></table></figure>
-<h1 id="注释">注释</h1><blockquote>
+    
+    <content type="html"><![CDATA[<p>#chrome<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</div><div class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</div><div class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</div></pre></td></tr></table></figure></p>
+<p>#firefox<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> <span class="built_in">document</span>.documentElement.scrollTop</div><div class="line"><span class="number">2.</span> <span class="built_in">window</span>.pageYOffset</div><div class="line"><span class="number">3.</span> <span class="built_in">window</span>.scrollY</div></pre></td></tr></table></figure></p>
+<p>#IE<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span> <span class="built_in">document</span>.body.scrollTop</div></pre></td></tr></table></figure></p>
+<p>#注释</p>
+<blockquote>
 <p>还没有测试safari,估计跟chrome的差不多。同理可以求X轴的偏移量。</p>
 </blockquote>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<h1 id="chrome">chrome</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span clas]]>
+    
+      &lt;p&gt;#chrome&lt;br&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div
+    
     </summary>
     
-      <category term="JavaScript" scheme="http://blog.angrytoro.com/categories/JavaScript/"/>
+      <category term="JavaScript" scheme="http://wangsu.co/categories/JavaScript/"/>
+    
     
   </entry>
   
   <entry>
-    <title><![CDATA[IE9 BUG overflow :auto 底部空白解决方案]]></title>
-    <link href="http://blog.angrytoro.com/2015/03/08/IE9-BUG-overflow-auto-%E5%BA%95%E9%83%A8%E7%A9%BA%E7%99%BD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    <id>http://blog.angrytoro.com/2015/03/08/IE9-BUG-overflow-auto-底部空白解决方案/</id>
+    <title>IE9 BUG overflow :auto 底部空白解决方案</title>
+    <link href="http://wangsu.co/2015/03/08/IE9-BUG-overflow-auto-%E5%BA%95%E9%83%A8%E7%A9%BA%E7%99%BD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>http://wangsu.co/2015/03/08/IE9-BUG-overflow-auto-底部空白解决方案/</id>
     <published>2015-03-08T11:00:17.000Z</published>
     <updated>2015-03-08T11:01:09.000Z</updated>
+    
     <content type="html"><![CDATA[<p>如果容器设置了max-height，overflow:auto。那么当js动态加载内容，或者鼠标点击容器的时候，容器底部会自动被撑大，留着空白。<br>解决办法是为容器添加min-height:0%。不过用grunt压缩的时候，会变成min-height:0;IE直接把这个当成min-height:0px。所以如果要压缩，那么我们应该把min-height设置成0.1%或者0.01%或者其他适合的数字。</p>
-<h3 id="参考">参考</h3><p><a href="http://social.microsoft.com/Forums/id-ID/1c239c1d-84d2-461b-991d-d7834edaa121/ie9bug?forum=267" target="_blank" rel="external">ie9渲染bug</a></p>
+<p>###参考<br><a href="http://social.microsoft.com/Forums/id-ID/1c239c1d-84d2-461b-991d-d7834edaa121/ie9bug?forum=267" target="_blank" rel="external">ie9渲染bug</a></p>
 ]]></content>
+    
     <summary type="html">
-    <![CDATA[<p>如果容器设置了max-height，overflow:auto。那么当js动态加载内容，或者鼠标点击容器的时候，容器底部会自动被撑大，留着空白。<br>解决办法是为容器添加min-height:0%。不过用grunt压缩的时候，会变成min-height:0;IE直接把这个]]>
+    
+      &lt;p&gt;如果容器设置了max-height，overflow:auto。那么当js动态加载内容，或者鼠标点击容器的时候，容器底部会自动被撑大，留着空白。&lt;br&gt;解决办法是为容器添加min-height:0%。不过用grunt压缩的时候，会变成min-height:0;IE直接把这个
+    
     </summary>
     
-      <category term="hack" scheme="http://blog.angrytoro.com/tags/hack/"/>
+      <category term="CSS" scheme="http://wangsu.co/categories/CSS/"/>
     
-      <category term="CSS" scheme="http://blog.angrytoro.com/categories/CSS/"/>
+    
+      <category term="hack" scheme="http://wangsu.co/tags/hack/"/>
     
   </entry>
   

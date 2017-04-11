@@ -17,26 +17,22 @@
   
   <title>解决form.submit()无法触发onsubmit事件问 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:
-
-The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explore">
+  <meta name="description" content="有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:  The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explore">
+<meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决form.submit()无法触发onsubmit事件问">
-<meta property="og:url" content="http://blog.angrytoro.com/2015/03/08/解决form-submit-无法触发onsubmit事件问/index.html">
+<meta property="og:url" content="http://wangsu.co/2015/03/08/解决form-submit-无法触发onsubmit事件问/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:
-
-The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explore">
+<meta property="og:description" content="有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:  The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explore">
+<meta property="og:updated_time" content="2015-03-08T11:04:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决form.submit()无法触发onsubmit事件问">
-<meta name="twitter:description" content="有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:
-
-The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explore">
+<meta name="twitter:description" content="有时候我们需要直接执行form.submit()，然后又想监听onsubmit事件。但是在DHTML手册里写到:  The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explore">
   
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -130,7 +126,7 @@ The submit method does not invoke the onsubmit event handler. Call the onsubmit 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -243,7 +239,7 @@ The submit method does not invoke the onsubmit event handler. Call the onsubmit 
 <blockquote>
 <p>The submit method does not invoke the onsubmit event handler. Call the onsubmit event handler directly. When using Microsoft® Internet Explorer 5.5 and later, you can call the fireEvent method with a value of onsubmit in the sEvent parameter. </p>
 </blockquote>
-<p>大家知道啥回事了吧。原生js在执行<code>form.submit()</code>的时候根本不会去触发onsubmit事件。<br>所以在<code>submit</code>之前，先手动绑定一个<strong>submit</strong>事件（叫其他名字也行，如<strong>gaga</strong>）:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> form = <span class="built_in">document</span>.getElementById(<span class="string">'xxx'</span>);</span><br><span class="line">$(form).bind(<span class="string">'submit'</span>,<span class="function"><span class="keyword">function</span><span class="params">(e)</span></span>&#123; <span class="comment">//绑定事件</span></span><br><span class="line">    <span class="built_in">console</span>.log(e);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(form.fireEvent) &#123; <span class="comment">// if IE Browser</span></span><br><span class="line">    form.fireEvent(<span class="string">'onsubmit'</span>); <span class="comment">//激活submit事件</span></span><br><span class="line">    form.submit(); <span class="comment">//促发sbumit事件</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> event = <span class="built_in">document</span>.createEvent(<span class="string">'HTMLEvents'</span>);</span><br><span class="line">    event.initEvent(<span class="string">'submit'</span>, <span class="literal">false</span>, <span class="literal">true</span>); <span class="comment">//初始化submit事件</span></span><br><span class="line">    event.dispatchEvent(event); <span class="comment">//触发submit事件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大家知道啥回事了吧。原生js在执行<code>form.submit()</code>的时候根本不会去触发onsubmit事件。<br>所以在<code>submit</code>之前，先手动绑定一个<strong>submit</strong>事件（叫其他名字也行，如<strong>gaga</strong>）:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var form = document.getElementById(&apos;xxx&apos;);</div><div class="line">$(form).bind(&apos;submit&apos;,function(e)&#123; //绑定事件</div><div class="line">    console.log(e);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">if(form.fireEvent) &#123; // if IE Browser</div><div class="line">    form.fireEvent(&apos;onsubmit&apos;); //激活submit事件</div><div class="line">    form.submit(); //促发sbumit事件</div><div class="line">&#125; else &#123;</div><div class="line">    var event = document.createEvent(&apos;HTMLEvents&apos;);</div><div class="line">    event.initEvent(&apos;submit&apos;, false, true); //初始化submit事件</div><div class="line">    event.dispatchEvent(event); //触发submit事件</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>也就是我们不能简单的<code>form.submit()</code>。得在之前构造相应的函数，太费劲了。尽量绕过这种需求吧，实在是没办法的时候再用这种解决方案。</p>
 
         
@@ -255,18 +251,18 @@ The submit method does not invoke the onsubmit event handler. Call the onsubmit 
     
 <nav id="article-nav">
   
-    <a href="/2015/03/09/chrome重度用户必装插件/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/03/08/不同浏览器求滚动距离的办法/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          chrome重度用户必备插件
+          不同浏览器求滚动距离的办法
         
       </div>
     </a>
   
   
-    <a href="/2015/03/08/不同浏览器求滚动距离的办法/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">不同浏览器求滚动距离的办法</div>
+    <a href="/2015/03/09/chrome重度用户必装插件/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">chrome重度用户必备插件</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -295,7 +291,7 @@ The submit method does not invoke the onsubmit event handler. Call the onsubmit 
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="解决form-submit-无法触发onsubmit事件问" data-title="解决form.submit()无法触发onsubmit事件问" data-url="http://blog.angrytoro.com/2015/03/08/解决form-submit-无法触发onsubmit事件问/"></div>
+	<div class="ds-thread" data-thread-key="解决form-submit-无法触发onsubmit事件问" data-title="解决form.submit()无法触发onsubmit事件问" data-url="http://wangsu.co/2015/03/08/解决form-submit-无法触发onsubmit事件问/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -329,12 +325,12 @@ The submit method does not invoke the onsubmit event handler. Call the onsubmit 
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

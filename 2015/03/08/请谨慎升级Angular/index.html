@@ -18,11 +18,13 @@
   <title>请谨慎升级Angular | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="升级Angular 1.3的时候请谨慎，没有必要就先不升级">
+<meta name="keywords" content="AngularJS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="请谨慎升级Angular">
-<meta property="og:url" content="http://blog.angrytoro.com/2015/03/08/请谨慎升级Angular/index.html">
+<meta property="og:url" content="http://wangsu.co/2015/03/08/请谨慎升级Angular/index.html">
 <meta property="og:site_name" content="freefish">
 <meta property="og:description" content="升级Angular 1.3的时候请谨慎，没有必要就先不升级">
+<meta property="og:updated_time" content="2015-03-08T09:57:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="请谨慎升级Angular">
 <meta name="twitter:description" content="升级Angular 1.3的时候请谨慎，没有必要就先不升级">
@@ -30,7 +32,7 @@
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -124,7 +126,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -239,10 +241,10 @@
       
         <p>这次Angular的升级带有挺多严重的bug。建议等到1.3稳定下来之后再进行升级，估计1.3.15左右才能把大bug解决掉。说一下升级1.3以后，遇到的两个大bug。</p>
 <hr>
-<h1 id="select">select</h1><p>相应的<a href="https://github.com/angular/angular.js/issues/9714" target="_blank" rel="external">issue</a>。这个bug导致的后果就是我们在设置默认值的时候，会没法正常显示。出现这一错误的angular源码是<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ngModelCtrl.$viewValue == <span class="keyword">value</span>) &#123;</span><br><span class="line">    $element.<span class="keyword">val</span>(<span class="keyword">value</span>);</span><br><span class="line">    <span class="keyword">if</span> (unknownOption.parent<span class="literal">()</span>) unknownOption.remove<span class="literal">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#select<br>相应的<a href="https://github.com/angular/angular.js/issues/9714" target="_blank" rel="external">issue</a>。这个bug导致的后果就是我们在设置默认值的时候，会没法正常显示。出现这一错误的angular源码是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if (ngModelCtrl.$viewValue == value) &#123;</div><div class="line">    $element.val(value);</div><div class="line">    if (unknownOption.parent()) unknownOption.remove();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <p>我们知道为<code>select</code>设置的<code>value</code>是跟<code>option</code>的value相对应的。那上面的代码导致<code>select</code>设置了一个<code>$viewValue</code>的值。而这个值不是真正的<code>option</code>上的<code>value</code>，而是展示给用户看的<code>value</code>。所以最终展示效果就是，用户看到<code>select</code>上显示出空白的一篇。原因是浏览器找不到相应的<code>value</code>对应的<code>option</code>。<br>不过火狐浏览器能够正确解析，我们只能说，太强大了。</p>
-<h1 id="ngShow">ngShow</h1><p>相应的<a href="https://github.com/angular/angular.js/issues/10323" target="_blank" rel="external">issue</a>。这个bug导致的问题是，我们在写<code>directive</code>的时候，<code>ngShow</code>不能按我们所设想的那样，显示或者隐藏标签。<br>出现这一错误的angular源码是<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scope.<span class="variable">$watch</span>(attr.ngShow, <span class="function"><span class="keyword">function</span> <span class="title">ngShowWatchAction</span><span class="params">(value)</span> </span>&#123;</span><br><span class="line">    <span class="variable">$animate</span>[value ? <span class="string">'removeClass'</span> : <span class="string">'addClass'</span>](element, NG_HIDE_CLASS, &#123;</span><br><span class="line">    tempClasses: NG_HIDE_IN_PROGRESS_CLASS</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>#ngShow<br>相应的<a href="https://github.com/angular/angular.js/issues/10323" target="_blank" rel="external">issue</a>。这个bug导致的问题是，我们在写<code>directive</code>的时候，<code>ngShow</code>不能按我们所设想的那样，显示或者隐藏标签。<br>出现这一错误的angular源码是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">scope.$watch(attr.ngShow, function ngShowWatchAction(value) &#123;</div><div class="line">    $animate[value ? &apos;removeClass&apos; : &apos;addClass&apos;](element, NG_HIDE_CLASS, &#123;</div><div class="line">    tempClasses: NG_HIDE_IN_PROGRESS_CLASS</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
 <p>跟踪了下代码，发现<code>value</code>的值永远是字符串，那么<code>$animate[value ? &#39;removeClass&#39; : &#39;addClass&#39;]</code>获得的值永远是<code>$animate[&#39;removeClass&#39;]</code>。这不出错才怪。</p>
 <blockquote>
 <p>Angular1.3相对1.2来说，代码做了很大的改变。隐藏的bug肯定很多，再次建议，等到1.3.15左右的时候再来做升级打算。如果各位朋友还遇到其他bug，请贴出来告知大家。</p>
@@ -257,15 +259,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/03/08/关于icon-font/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          关于icon font
-        
-      </div>
-    </a>
   
+    <a href="/2015/03/08/关于icon-font/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于icon font</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -292,7 +290,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="请谨慎升级Angular" data-title="请谨慎升级Angular" data-url="http://blog.angrytoro.com/2015/03/08/请谨慎升级Angular/"></div>
+	<div class="ds-thread" data-thread-key="请谨慎升级Angular" data-title="请谨慎升级Angular" data-url="http://wangsu.co/2015/03/08/请谨慎升级Angular/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -326,12 +324,12 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

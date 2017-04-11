@@ -20,7 +20,7 @@
   <meta name="description" content="this blog is just to record my learning">
 <meta property="og:type" content="website">
 <meta property="og:title" content="freefish">
-<meta property="og:url" content="http://blog.angrytoro.com/page/2/index.html">
+<meta property="og:url" content="http://wangsu.co/page/2/index.html">
 <meta property="og:site_name" content="freefish">
 <meta property="og:description" content="this blog is just to record my learning">
 <meta name="twitter:card" content="summary">
@@ -30,7 +30,7 @@
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -124,7 +124,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -224,10 +224,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Bug场景">Bug场景</h1><blockquote>
+        <p>#Bug场景</p>
+<blockquote>
 <p>Cannot stop on breakpoint due to internal error: org.jetbrains.v8.V8CommandProcessor$1: TypeError: f is not a function at Function.t.getScopes (eval at undefined, :217:15) at t.describeFrame (eval at undefined, :213:33) at t.getFrames (eval at undefined, :114:89) at DebugCommandProcessor.r.processDebugJSONRequest (eval at undefined, :348:15) …</p>
 </blockquote>
-<p>在升级nodejs到最新版本之后就曝出了上面这种问题，谷歌上说是webstorm的问题，然后webstorm官网给出了响应的解决方案。在webstorm.vmoptions里面加上下面一句<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dnodejs<span class="class">.debugger</span><span class="class">.use</span><span class="class">.jb</span><span class="class">.support</span>=false</span><br></pre></td></tr></table></figure></p>
+<p>在升级nodejs到最新版本之后就曝出了上面这种问题，谷歌上说是webstorm的问题，然后webstorm官网给出了响应的解决方案。在webstorm.vmoptions里面加上下面一句<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-Dnodejs.debugger.use.jb.support=false</div></pre></td></tr></table></figure></p>
 <p>最后重启下webstorm，搞定。</p>
 <p>由于Mac下查找和修改webstorm.vmoptions比较繁琐，下面给出相应的步骤：</p>
 <ol>
@@ -237,8 +238,9 @@
 <li>在最后面加上<code>-Dnodejs.debugger.use.jb.support=false</code></li>
 <li>保存退出</li>
 </ol>
-<h1 id="备注">备注</h1><p>因为权限问题所以不能够直接编辑<strong>/Applications/WebStorm.app/Contents/bin</strong>下的<strong>webstorm.vmoptions</strong>，因此需要把它拷贝到<strong>~/Library/Preferences/WebStorm10/</strong>再进行编辑</p>
-<h1 id="参考">参考</h1><ol>
+<p>#备注<br>因为权限问题所以不能够直接编辑<strong>/Applications/WebStorm.app/Contents/bin</strong>下的<strong>webstorm.vmoptions</strong>，因此需要把它拷贝到<strong>~/Library/Preferences/WebStorm10/</strong>再进行编辑</p>
+<p>#参考</p>
+<ol>
 <li><a href="http://stackoverflow.com/questions/33515777/node-v5-breaks-webstorms-debugger" target="_blank" rel="external">Node v5 breaks Webstorm’s debugger</a></li>
 <li><a href="https://youtrack.jetbrains.com/issue/IDEA-139990" target="_blank" rel="external">Debugging is broken with io.js v2.0.0</a></li>
 <li><a href="https://intellij-support.jetbrains.com/hc/en-us/articles/206827537-Configuring-JVM-options-and-platform-properties" target="_blank" rel="external">Configuring JVM options and platform properties</a></li>
@@ -306,8 +308,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>相信很多人很少用到worker，主要是因为先对比较少有业务需要用到这个。看了下网上的博客，几乎100%的例子都是从外部引入js文件，这其实很烦，能不能直接我们传入一个函数，worker就帮我们创建一个线程。<br>参考了神人的博客<a href="http://ucren.com/blog/" target="_blank" rel="external">将 webworker 改造成无外链文件模式</a>,突然恍然大悟，尼玛神器，膜拜下。<br>先看下大神的代码（命名有点改变）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> FnWorker = <span class="function"><span class="keyword">function</span><span class="params">(fn)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> functionBodyRegx, URL, contentType, code, url;</span><br><span class="line"></span><br><span class="line">	functionBodyRegx = <span class="regexp">/^[^&#123;]+\&#123;([\s\S]*)\&#125;$/</span>;</span><br><span class="line">	URL = <span class="built_in">window</span>.URL || <span class="built_in">window</span>.webkitURL;</span><br><span class="line">	contentType = &#123; type: <span class="string">"text/javascript; charset=utf-8"</span> &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(fn)</span> </span>&#123;</span><br><span class="line">		code = fn.toString().match(functionBodyRegx)[<span class="number">1</span>];</span><br><span class="line">		url = <span class="built_in">window</span>.opera ? <span class="string">"data:application/javascript,"</span> + <span class="built_in">encodeURIComponent</span>( code ) : URL.createObjectURL( <span class="keyword">new</span> Blob( [ code ], contentType ) );</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> Worker(url);</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;();</span><br></pre></td></tr></table></figure></p>
-<p>用法如下：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> worker = <span class="keyword">new</span> FnWorker( <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    postMessage(&#123; message: <span class="string">"hello myWorker!"</span> &#125;);</span><br><span class="line">&#125; );</span><br><span class="line"></span><br><span class="line">worker.onmessage = <span class="function"><span class="keyword">function</span><span class="params">( event )</span></span>&#123;</span><br><span class="line">    alert( event.data.message );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+        <p>相信很多人很少用到worker，主要是因为先对比较少有业务需要用到这个。看了下网上的博客，几乎100%的例子都是从外部引入js文件，这其实很烦，能不能直接我们传入一个函数，worker就帮我们创建一个线程。<br>参考了神人的博客<a href="http://ucren.com/blog/" target="_blank" rel="external">将 webworker 改造成无外链文件模式</a>,突然恍然大悟，尼玛神器，膜拜下。<br>先看下大神的代码（命名有点改变）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">var FnWorker = function(fn) &#123;</div><div class="line">	var functionBodyRegx, URL, contentType, code, url;</div><div class="line"></div><div class="line">	functionBodyRegx = /^[^&#123;]+\&#123;([\s\S]*)\&#125;$/;</div><div class="line">	URL = window.URL || window.webkitURL;</div><div class="line">	contentType = &#123; type: &quot;text/javascript; charset=utf-8&quot; &#125;;</div><div class="line"></div><div class="line">	return function(fn) &#123;</div><div class="line">		code = fn.toString().match(functionBodyRegx)[1];</div><div class="line">		url = window.opera ? &quot;data:application/javascript,&quot; + encodeURIComponent( code ) : URL.createObjectURL( new Blob( [ code ], contentType ) );</div><div class="line"></div><div class="line">		return new Worker(url);</div><div class="line">	&#125;;</div><div class="line">&#125;();</div></pre></td></tr></table></figure></p>
+<p>用法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var worker = new FnWorker( function()&#123;</div><div class="line">    postMessage(&#123; message: &quot;hello myWorker!&quot; &#125;);</div><div class="line">&#125; );</div><div class="line"></div><div class="line">worker.onmessage = function( event )&#123;</div><div class="line">    alert( event.data.message );</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>大神利用URL和Blob这两个牛逼的东西，然后创建出url。碉堡了有没有？代码大家自己去想研究。</p>
 
         
@@ -372,8 +374,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>回到一个二线城市之后，前端的知识只能靠自学了，再也没有大神带，让我跑厕所哭会儿。为了不让自己显得落后，咋们也得学点react，不过学这货之前还是得学点webpack。这webpack这货的说明又没有中文版，全部是英文版，看起来真是费劲啊。查了好多大神写的介绍，真是简洁到我这智商看不懂，没办法，只能自己硬着头皮满满啃英文，慢慢尝试了。(又唠叨了。)</p>
-<h1 id="配置说明">配置说明</h1><p><em>target:</em>用来指定这些代码是为什么平台准备的，有多种选择’web\webworker\node\async-node\node-webkit\atom’，大家根据需要自行选择。<br><em>cache:</em>还没搞懂，等搞懂了告诉大家<br><em>entry:</em>用来告诉webpack，我们要编译那些文件，如果大家有很页面需要编译，那不好意思，大家只能一条一条写上去了，不能像gulp或者grunt那样直接正则匹配了<br><em>resolve:</em>这货底下有多个配置，其中有一个很特殊很高效值得推荐，<em>modulesDirectories</em>这个配置告诉webpack到哪里找资源，省得webpack到处找，提高编译效率<br><em>output:</em>这货告诉webpack，编译后的资源要放在那里<br><em>output.filename:</em>编译后的文件怎么取名，看大家的喜好和需求了，跟entry是有映射关系的<br><em>output.publicPath:</em>应该是用来告诉web-dev-server请求资源的时候应该去哪个文件夹请求，等实验后再跟大家汇报<br><em>output.library:</em>这货也不知道怎么用<br><em>output.chunkFilename:</em>这货在我使用require.ensure的时候，有用到，其余的不知道咋用了。<br><em>module.loaders</em>这东西其实就是用来放预编译插件的，很重要的一点是，loader这个配置可以加参数，大家别傻傻的不知道。<br><em>plugins</em>一些webpack插件，我暂时之用到了CommonsChunkPlugin，这是用来提取公用代码的。</p>
-<h1 id="TODO">TODO</h1><p>边写个react简单应用，然后搞清楚webpack的大部分特性。</p>
+<p>#配置说明<br><em>target:</em>用来指定这些代码是为什么平台准备的，有多种选择’web\webworker\node\async-node\node-webkit\atom’，大家根据需要自行选择。<br><em>cache:</em>还没搞懂，等搞懂了告诉大家<br><em>entry:</em>用来告诉webpack，我们要编译那些文件，如果大家有很页面需要编译，那不好意思，大家只能一条一条写上去了，不能像gulp或者grunt那样直接正则匹配了<br><em>resolve:</em>这货底下有多个配置，其中有一个很特殊很高效值得推荐，<em>modulesDirectories</em>这个配置告诉webpack到哪里找资源，省得webpack到处找，提高编译效率<br><em>output:</em>这货告诉webpack，编译后的资源要放在那里<br><em>output.filename:</em>编译后的文件怎么取名，看大家的喜好和需求了，跟entry是有映射关系的<br><em>output.publicPath:</em>应该是用来告诉web-dev-server请求资源的时候应该去哪个文件夹请求，等实验后再跟大家汇报<br><em>output.library:</em>这货也不知道怎么用<br><em>output.chunkFilename:</em>这货在我使用require.ensure的时候，有用到，其余的不知道咋用了。<br><em>module.loaders</em>这东西其实就是用来放预编译插件的，很重要的一点是，loader这个配置可以加参数，大家别傻傻的不知道。<br><em>plugins</em>一些webpack插件，我暂时之用到了CommonsChunkPlugin，这是用来提取公用代码的。</p>
+<p>#TODO<br>边写个react简单应用，然后搞清楚webpack的大部分特性。</p>
 <blockquote>
 <p><a href="https://underthehood.myob.com/changing-of-the-guard-in-web-technologies/" target="_blank" rel="external">A CHANGING OF THE GUARD IN WEB TECHNOLOGY </a><br><a href="http://segmentfault.com/a/1190000002552008#articleHeader10" target="_blank" rel="external">Webpack 怎么用</a><br><a href="http://segmentfault.com/a/1190000002551952" target="_blank" rel="external">Webpack 入门指迷</a><br><a href="http://www.w2bc.com/Article/50764" target="_blank" rel="external">webpack 入门指南</a><br><a href="https://fakefish.github.io/react-webpack-cookbook/index.html" target="_blank" rel="external">React Webpack cookbook</a><br><a href="http://www.infoq.com/cn/articles/react-and-webpack?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=global" target="_blank" rel="external">React开发神器Webpack</a><br><a href="http://www.jianshu.com/p/8adf4c2bfa51" target="_blank" rel="external">Webpack-dev-server结合后端服务器的热替换配置</a></p>
 </blockquote>
@@ -443,7 +445,7 @@
 <p>首先声明下，这篇博文是引用自<strong>100offer</strong>的订阅号，献给非常单纯的程序员。由于最近实在是没有什么长进，一直在做业务，吃老本，陪妹子，所以没有自己的内容可以写（大哭）。不过可能接下去鄙人要在ghost上下点功夫，到时候就会有一些干货可以分享给大家啦。好了，废（zhen）话（luo）不（说）多说。</p>
 </blockquote>
 <p>最近有个用户拿到了Uber的offer，其中包含期权，他看不懂便向我咨询期权的细节和意义。我的观点是：大部分的期权并没有什么卵用。</p>
-<h1 id="期权激励的初心">期权激励的初心</h1><p>其实期权是有正向作用的，让我们从目标谈起：<br><img src="/img/无股权激励下的公司与员工.jpg" alt="无股权激励下的公司与员工"><br>假设一家公司的目标是1，团队会形成分工来拆解目标，比如研发团队的目标可能是1.1，而一个普通程序员被分配到的目标可能是1.1.1。如果只有基本薪资，程序员认为出色完成1.1.1就完成了工作，因为这是全部目标。<br>
+<p>#期权激励的初心<br>其实期权是有正向作用的，让我们从目标谈起：<br><img src="/img/无股权激励下的公司与员工.jpg" alt="无股权激励下的公司与员工"><br>假设一家公司的目标是1，团队会形成分工来拆解目标，比如研发团队的目标可能是1.1，而一个普通程序员被分配到的目标可能是1.1.1。如果只有基本薪资，程序员认为出色完成1.1.1就完成了工作，因为这是全部目标。<br>
         <hr/>
         <p class="article-more-link">
           <a  href="/2015/06/22/然而大部分期权并没有什么用/#more">more >></a>
@@ -502,7 +504,7 @@
 <blockquote>
 <p>可以把它理解成一个函数的内部状态的遍历器，每调用一次，函数的内部状态发生一次改变（可以理解成发生某些事件）。ES6引入Generator函数，作用就是可以完全控制函数的内部状态的变化，依次遍历这些状态。<br>在形式上，Generator是一个普通函数，但是有两个特征。一是，function命令与函数名之间有一个星号；二是，函数体内部使用yield语句，定义遍历器的每个成员，即不同的内部状态（yield语句在英语里的意思就是“产出”）。</p>
 </blockquote>
-<h1 id="Generator">Generator</h1><p>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">gen</span> = function* (x) &#123;</span><br><span class="line">	<span class="keyword">var</span> a = yield x+1;</span><br><span class="line">	<span class="keyword">var</span> b = yield a+2;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">g</span> = <span class="keyword">gen</span>(2);</span><br><span class="line"><span class="keyword">g</span>.next();<span class="comment">//返回&#123;value: 3, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next(4); <span class="comment">//返回&#123;value: 6, done: false&#125;</span></span><br><span class="line"><span class="keyword">g</span>.next();  <span class="comment">//返回 &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>#Generator<br>Generator函数在遇到yield的时候，就会暂停执行之后的内容。这挺起来挺别扭，看代码吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var gen = function* (x) &#123;</div><div class="line">	var a = yield x+1;</div><div class="line">	var b = yield a+2;</div><div class="line">	return b;</div><div class="line">&#125;;</div><div class="line">var g = gen(2);</div><div class="line">g.next();//返回&#123;value: 3, done: false&#125;</div><div class="line">g.next(4); //返回&#123;value: 6, done: false&#125;</div><div class="line">g.next();  //返回 &#123;value: undefined, done: true&#125;</div></pre></td></tr></table></figure></p>
 <p>咋们来解释下上面的代码：</p>
 <ol>
 <li>先运行gen(2),得到一个迭代器g</li>
@@ -563,12 +565,12 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

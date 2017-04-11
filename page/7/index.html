@@ -20,7 +20,7 @@
   <meta name="description" content="this blog is just to record my learning">
 <meta property="og:type" content="website">
 <meta property="og:title" content="freefish">
-<meta property="og:url" content="http://blog.angrytoro.com/page/7/index.html">
+<meta property="og:url" content="http://wangsu.co/page/7/index.html">
 <meta property="og:site_name" content="freefish">
 <meta property="og:description" content="this blog is just to record my learning">
 <meta name="twitter:card" content="summary">
@@ -30,7 +30,7 @@
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -124,7 +124,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -226,9 +226,10 @@
       
         <p>作为一个新手本来用一个新技术就比较困难，坑爹的天朝把开发文档都屏蔽了，这简直是不让人活的节奏。出于为人民做贡献的精神，在这里就记录下开发angularjs应用应该注意的事项。</p>
 <hr>
-<h3 id="angularjs适用的地方">angularjs适用的地方</h3><p>angularjs是比较适合用来开发后台管理系统的。</p>
-<h3 id="angularjs项目的结构组织">angularjs项目的结构组织</h3><p>todo：这个比较难讲</p>
-<h3 id="开发中注意事项">开发中注意事项</h3><blockquote>
+<p>###angularjs适用的地方<br>angularjs是比较适合用来开发后台管理系统的。</p>
+<p>###angularjs项目的结构组织<br>todo：这个比较难讲</p>
+<p>###开发中注意事项</p>
+<blockquote>
 <ol>
 <li>能不要用自带的<code>$http</code>来做ajax请求，就不要用。这会让你很蛋疼的，angularjs自带的<code>$http</code>封装的不是很好，如果要处理带中文的参数需要做特殊配置，既然这么麻烦干嘛不用千年神器<code>jquery</code>呢。但是坑爹的是<code>jquery</code>自带的ajax不能够触发<code>$scope.$digest()</code>。所以最好还是全局修改header,先不写了，参考<a href="http://victorblog.com/2012/12/20/make-angularjs-http-service-behave-like-jquery-ajax/" target="_blank" rel="external">Make AngularJS $http service behave like jQuery.ajax()</a></li>
 </ol>
@@ -364,7 +365,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="实践总结_-_不可错过的Angular应用技巧">实践总结 - 不可错过的Angular应用技巧</h4><ul>
+        <p>####实践总结 - 不可错过的Angular应用技巧</p>
+<ul>
 <li>很不错的一篇实践记录，<a href="http://my.oschina.net/blogshi/blog/293631" target="_blank" rel="external">链接地址</a></li>
 <li><a href="http://my.oschina.net/ilivebox/blog/290881" target="_blank" rel="external">Angularjs Interceptors(拦截器)</a></li>
 <li><a href="http://www.oschina.net/translate/angularjs-factory-vs-service-vs-provider" target="_blank" rel="external">AngularJS之Factory vs Service vs Provider</a></li>
@@ -433,7 +435,8 @@
       
         <p>如果android手机没有谷歌服务，那还用毛android啊。其他型号手机还好说，很容易root，可是这LG G2 一升级到4.4.2之后就不能root了，直到最近国外那个越狱大神George Francis Hotz （神奇小子）近日发布了一款神奇 Android ROOT 应用，号称可 ROOT 几乎所有 Android 设备。官网<a href="http://towelroot.com/" target="_blank" rel="external">http://towelroot.com/</a>可以下载，当然在豌豆荚或者其他第三方应用平台里面也有提供，豌豆荚里面叫做<strong>神奇root</strong>。</p>
 <hr>
-<h2 id="root并安装谷歌服务步骤">root并安装谷歌服务步骤</h2><ol>
+<p>##root并安装谷歌服务步骤</p>
+<ol>
 <li>下载安装<strong>神奇root</strong></li>
 <li>根据提示操作</li>
 <li>手机连接电脑，打开开发者选项</li>
@@ -559,12 +562,12 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

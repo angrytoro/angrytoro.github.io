@@ -18,21 +18,24 @@
   <title>express入门 | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="以简单明了的方式讲解express，估计白痴都能看得懂">
+<meta name="keywords" content="nodejs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="express入门">
-<meta property="og:url" content="http://blog.angrytoro.com/2016/11/13/express入门/index.html">
+<meta property="og:url" content="http://wangsu.co/2016/11/13/express入门/index.html">
 <meta property="og:site_name" content="freefish">
 <meta property="og:description" content="以简单明了的方式讲解express，估计白痴都能看得懂">
-<meta property="og:image" content="/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png">
-<meta property="og:image" content="/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png">
+<meta property="og:image" content="http://wangsu.co/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="http://wangsu.co/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png">
+<meta property="og:updated_time" content="2016-11-13T13:43:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="express入门">
 <meta name="twitter:description" content="以简单明了的方式讲解express，估计白痴都能看得懂">
+<meta name="twitter:image" content="http://wangsu.co/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png">
   
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -126,7 +129,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -239,13 +242,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="express_是什么鬼">express 是什么鬼</h1><p>了解express前，请先了解下nodejs，不了解的人，赶紧去恶补。简单的说，nodejs给前端开发提供了使用js编写服务器应用的能力，而express让这个能力简单化。正式了解express之前，我们先了解下一个请求的完整过程。</p>
-<h1 id="请求的完整过程">请求的完整过程</h1><p>请求通过express输出到客户端，无非如下几个过程<br><img src="/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="express请求处理过程"><br>从图中可以看出几个要素</p>
+        <h1 id="express-是什么鬼"><a href="#express-是什么鬼" class="headerlink" title="express 是什么鬼"></a>express 是什么鬼</h1><p>了解express前，请先了解下nodejs，不了解的人，赶紧去恶补。简单的说，nodejs给前端开发提供了使用js编写服务器应用的能力，而express让这个能力简单化。正式了解express之前，我们先了解下一个请求的完整过程。</p>
+<h1 id="请求的完整过程"><a href="#请求的完整过程" class="headerlink" title="请求的完整过程"></a>请求的完整过程</h1><p>请求通过express输出到客户端，无非如下几个过程<br><img src="/img/express%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B.png" alt="express请求处理过程"><br>从图中可以看出几个要素</p>
 <ul>
 <li>request（请求）</li>
 <li>middleware（中间件）</li>
 <li>router（路由）</li>
-<li>response（响应）<br>因此express无非也是提供这四个主要的功能接口。<h1 id="express主要功能介绍">express主要功能介绍</h1>这里不会跟大家介绍怎么使用，只是从概念上，简单解释。<h2 id="request">request</h2>顾名思义，这个功能的作用封装用户的请求信息，我们可以从这个接口中获取用户请求头，只要跟用户有关的请求信息，这里都能获取到。<h2 id="router">router</h2>路由器更容易解释了，大家自行脑补。<h2 id="response">response</h2>响应接口，这个接口封装了一些方便我们提供响应的函数，如：json，render等。<h2 id="middleware">middleware</h2>express提供了实现和使用中间件的方案，自身带的功能有限，剩下的都需要程序员自行扩展。说到中间件，如果开发过后端的同学应该很清楚，这东西类似于Java中的过滤器。express的中间件既可以作为过滤器，也可以作为功能增强器。如果不懂也不要紧，下面会用通俗易懂的语言和图画解释清楚。<br>先用伪代码来解释下<br>```JavaScript<br>if(判断正确) {<br>do 某些增强功能或者做某些其他事情<br>next(); //进入下个过滤器<br>} else {<br>next(错误信息);<br>}<br>```<br>如果是增强功能，则会往req上面增加某些对象属性或者函数。例如：session<br>如果是过滤器，则只需要判断条件是否可行，如果可行，那么执行next，进入下个过滤器，否则响应错误。<br><img src="/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png" alt="express中间件"><br><strong>可以把中间件看做一叠扑克牌，需要的时候网上叠，不喜欢哪张就抽调哪张</strong>，这个比喻可能不是很形象，但是能比较清楚的说明中间件这个东西。<h1 id="总结">总结</h1>其实express没什么难的，知道了它给开发者提供了什么，那么我们就能很容易的上手。建议现在不要去用koa，这货变化太快，中间件又没有express丰富，经常需要自己去填坑。</li>
+<li>response（响应）<br>因此express无非也是提供这四个主要的功能接口。<h1 id="express主要功能介绍"><a href="#express主要功能介绍" class="headerlink" title="express主要功能介绍"></a>express主要功能介绍</h1>这里不会跟大家介绍怎么使用，只是从概念上，简单解释。<h2 id="request"><a href="#request" class="headerlink" title="request"></a>request</h2>顾名思义，这个功能的作用封装用户的请求信息，我们可以从这个接口中获取用户请求头，只要跟用户有关的请求信息，这里都能获取到。<h2 id="router"><a href="#router" class="headerlink" title="router"></a>router</h2>路由器更容易解释了，大家自行脑补。<h2 id="response"><a href="#response" class="headerlink" title="response"></a>response</h2>响应接口，这个接口封装了一些方便我们提供响应的函数，如：json，render等。<h2 id="middleware"><a href="#middleware" class="headerlink" title="middleware"></a>middleware</h2>express提供了实现和使用中间件的方案，自身带的功能有限，剩下的都需要程序员自行扩展。说到中间件，如果开发过后端的同学应该很清楚，这东西类似于Java中的过滤器。express的中间件既可以作为过滤器，也可以作为功能增强器。如果不懂也不要紧，下面会用通俗易懂的语言和图画解释清楚。<br>先用伪代码来解释下<br>```JavaScript<br>if(判断正确) {<br>do 某些增强功能或者做某些其他事情<br>next(); //进入下个过滤器<br>} else {<br>next(错误信息);<br>}<br>```<br>如果是增强功能，则会往req上面增加某些对象属性或者函数。例如：session<br>如果是过滤器，则只需要判断条件是否可行，如果可行，那么执行next，进入下个过滤器，否则响应错误。<br><img src="/img/express%E4%B8%AD%E9%97%B4%E4%BB%B6.png" alt="express中间件"><br><strong>可以把中间件看做一叠扑克牌，需要的时候网上叠，不喜欢哪张就抽调哪张</strong>，这个比喻可能不是很形象，但是能比较清楚的说明中间件这个东西。<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1>其实express没什么难的，知道了它给开发者提供了什么，那么我们就能很容易的上手。建议现在不要去用koa，这货变化太快，中间件又没有express丰富，经常需要自己去填坑。</li>
 </ul>
 
         
@@ -257,18 +260,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/12/23/泰国游记/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/03/26/reactjs杂谈/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          泰国游记
+          reactjs杂谈
         
       </div>
     </a>
   
   
-    <a href="/2016/03/26/reactjs杂谈/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">reactjs杂谈</div>
+    <a href="/2016/12/23/泰国游记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">泰国游记</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -297,7 +300,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="express入门" data-title="express入门" data-url="http://blog.angrytoro.com/2016/11/13/express入门/"></div>
+	<div class="ds-thread" data-thread-key="express入门" data-title="express入门" data-url="http://wangsu.co/2016/11/13/express入门/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -331,12 +334,12 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->

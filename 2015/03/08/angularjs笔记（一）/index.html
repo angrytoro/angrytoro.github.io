@@ -17,26 +17,22 @@
   
   <title>angularjs笔记（一） | freefish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。
-
-scope对象Angular的scope对象是POJO（简单的javascript对象">
+  <meta name="description" content="我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。  ##scope对象Angular的scope对象是POJO（简单的javascript">
+<meta name="keywords" content="AngularJS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="angularjs笔记（一）">
-<meta property="og:url" content="http://blog.angrytoro.com/2015/03/08/angularjs笔记（一）/index.html">
+<meta property="og:url" content="http://wangsu.co/2015/03/08/angularjs笔记（一）/index.html">
 <meta property="og:site_name" content="freefish">
-<meta property="og:description" content="我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。
-
-scope对象Angular的scope对象是POJO（简单的javascript对象">
+<meta property="og:description" content="我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。  ##scope对象Angular的scope对象是POJO（简单的javascript">
+<meta property="og:updated_time" content="2015-03-08T09:57:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="angularjs笔记（一）">
-<meta name="twitter:description" content="我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。
-
-scope对象Angular的scope对象是POJO（简单的javascript对象">
+<meta name="twitter:description" content="我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。  ##scope对象Angular的scope对象是POJO（简单的javascript">
   
   
     <link rel="icon" href="/img/favicon.ico">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 
@@ -130,7 +126,7 @@ scope对象Angular的scope对象是POJO（简单的javascript对象">
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a><a href="/tags/ES6/" style="font-size: 10px;">ES6</a><a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a><a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a><a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a><a href="/tags/git/" style="font-size: 10px;">git</a><a href="/tags/hack/" style="font-size: 10px;">hack</a><a href="/tags/img/" style="font-size: 10px;">img</a><a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a><a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a><a href="/tags/travel/" style="font-size: 10px;">travel</a><a href="/tags/worker/" style="font-size: 10px;">worker</a><a href="/tags/手机/" style="font-size: 10px;">手机</a>
+						<a href="/tags/AngularJS/" style="font-size: 20px;">AngularJS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/NodeJS/" style="font-size: 16.67px;">NodeJS</a> <a href="/tags/chrome/" style="font-size: 13.33px;">chrome</a> <a href="/tags/font-icon/" style="font-size: 10px;">font,icon</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hack/" style="font-size: 10px;">hack</a> <a href="/tags/img/" style="font-size: 10px;">img</a> <a href="/tags/nodejs/" style="font-size: 13.33px;">nodejs</a> <a href="/tags/reactjs/" style="font-size: 13.33px;">reactjs</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/worker/" style="font-size: 10px;">worker</a> <a href="/tags/手机/" style="font-size: 10px;">手机</a>
 					</div>
 				</section>
 				
@@ -245,10 +241,11 @@ scope对象Angular的scope对象是POJO（简单的javascript对象">
       
         <p>我是有点小强迫症的人，在使用框架前，我必须要了解下它的机制是怎样的，不然我在写代码的时候会特别别扭，老是想着为啥要这么用，原理是什么。所以在使用angularjs前，还是先看看某些大神的笔记，偷学点东西。<br>第一节先学学scope和digest。据说这两个东西可以让人了解到angularjs的作用域是如何运转的。</p>
 <hr>
-<h2 id="scope对象">scope对象</h2><p>Angular的scope对象是POJO（简单的javascript对象），用构造函数创建的，简单版本如下：</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Scope</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##scope对象<br>Angular的scope对象是POJO（简单的javascript对象），用构造函数创建的，简单版本如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function Scope()&#123;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <a id="more"></a>
-<h3 id="Scope对象的两个属性$watch和$digest">Scope对象的两个属性<code>$watch</code>和<code>$digest</code></h3><p><code>$watch</code>和<code>$digest</code>是相辅相成的。两者一起，构成了Angular作用域的核心：数据变化的响应。<br>使用<code>$watch</code>，可以在scope上添加一个监听器。当Scope发生变化时，监听器会收到提示。给<code>$watch</code>定义两个函数就可以创建一个简体监听器。</p>
+<p>###Scope对象的两个属性<code>$watch</code>和<code>$digest</code></p>
+<p><code>$watch</code>和<code>$digest</code>是相辅相成的。两者一起，构成了Angular作用域的核心：数据变化的响应。<br>使用<code>$watch</code>，可以在scope上添加一个监听器。当Scope发生变化时，监听器会收到提示。给<code>$watch</code>定义两个函数就可以创建一个简体监听器。</p>
 <ul>
 <li>一个监控函数，用户指定所关注的那部分数据。</li>
 <li>一个监听函数，用户数据变更的时候接受提示。</li>
@@ -256,7 +253,7 @@ scope对象Angular的scope对象是POJO（简单的javascript对象">
 <blockquote>
 <p>作为一名Angular用户，一般来说，是监控一个表达式，而不是使用监控函数。监控表达式是一个字符串，比如说“user.firstName”，通常在数据绑定，指令的属性，或者JavaScript代码中指定，它被Angular解析和编译成一个监控函数。在这篇文章的后面部分我们会探讨这是如何做的。在这篇文章中，我们将使用稍微低级的方法直接提供监控功能。</p>
 </blockquote>
-<p>为了实现$watch，我们需要存储注册过的所有监听器。我们在Scope构造函数上添加一个数组：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Scope</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.$$watcers = [];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为了实现$watch，我们需要存储注册过的所有监听器。我们在Scope构造函数上添加一个数组：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function Scope()&#123;</div><div class="line">    this.$$watcers = [];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
         
       
@@ -267,18 +264,18 @@ scope对象Angular的scope对象是POJO（简单的javascript对象">
     
 <nav id="article-nav">
   
-    <a href="/2015/03/08/angularjs常用解决技巧/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/03/08/新手开发angularjs注意事项/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          angularjs常用解决技巧
+          新手开发angularjs注意事项
         
       </div>
     </a>
   
   
-    <a href="/2015/03/08/新手开发angularjs注意事项/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">新手开发angularjs注意事项</div>
+    <a href="/2015/03/08/angularjs常用解决技巧/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">angularjs常用解决技巧</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -307,7 +304,7 @@ scope对象Angular的scope对象是POJO（简单的javascript对象">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="angularjs笔记（一）" data-title="angularjs笔记（一）" data-url="http://blog.angrytoro.com/2015/03/08/angularjs笔记（一）/"></div>
+	<div class="ds-thread" data-thread-key="angularjs笔记（一）" data-title="angularjs笔记（一）" data-url="http://wangsu.co/2015/03/08/angularjs笔记（一）/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -341,12 +338,12 @@ scope对象Angular的scope对象是POJO（简单的javascript对象">
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
 
 
 <!-- Google Analytics -->
